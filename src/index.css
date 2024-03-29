@@ -1,0 +1,30 @@
+:root {
+  --primary-color: #f5f1ed;
+  --secondary-color: #eeebea;
+  --accent-color: #593b28;
+  --fg-color: #261911;
+  --fg-secondary-color: #3c3029;
+  --red-color: #780000;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  font-family: "Nunito Sans", sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100vh;
+  background-color: var(--primary-color);
+  color: var(--fg-color);
+  padding: 3% 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
