@@ -15,15 +15,16 @@
 html {
   font-size: 62.5%;
   overflow-x: hidden;
+  min-height: 100%;
   font-family: "Nunito Sans", sans-serif;
   scroll-behavior: smooth;
 }
 
 body {
-  height: 100vh;
   background-color: var(--primary-color);
   color: var(--fg-color);
-  padding: 3% 10%;
+  min-height: 100vh;
+  padding: 5rem 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
