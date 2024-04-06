@@ -1,0 +1,30 @@
+.button {
+  border-radius: 1rem;
+  padding: 2rem 0;
+}
+
+.correct {
+  background-color: var(--green-color);
+  color: var(--primary-color);
+}
+
+.incorrect {
+  background-color: var(--red-color);
+  color: var(--primary-color);
+}
+
+.none {
+  background-color: var(--primary-color);
+  color: var(--fg-color);
+  border: 1px solid var(--fg-color);
+
+  &:hover {
+    background-color: var(--gray-color);
+    color: var(--primary-color);
+  }
+}
+
+.next {
+  background-color: var(--gray-color);
+  color: var(--primary-color);
+}

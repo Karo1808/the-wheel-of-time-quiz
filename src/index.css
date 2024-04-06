@@ -4,7 +4,9 @@
   --accent-color: #593b28;
   --fg-color: #261911;
   --fg-secondary-color: #3c3029;
-  --red-color: #780000;
+  --gray-color: #b6afaa;
+  --red-color: #9d2933;
+  --green-color: #3f704d;
 }
 * {
   padding: 0;

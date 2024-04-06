@@ -1,7 +1,7 @@
-import WelcomePage from "./pages/WelcomePage";
+import QuizPage from "./pages/QuizPage";
 
 const App = () => {
-  return <WelcomePage />;
+  return <QuizPage />;
 };
 
 export default App;
