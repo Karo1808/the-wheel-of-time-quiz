@@ -1,0 +1,23 @@
+.button {
+  position: absolute;
+  top: 45%;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  font-size: 4.8rem;
+  color: var(--fg-color);
+  opacity: 30%;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 60%;
+  }
+}
+
+.left {
+  left: -12%;
+}
+
+.right {
+  right: -12%;
+}

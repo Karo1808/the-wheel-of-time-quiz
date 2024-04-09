@@ -1,30 +1,26 @@
 export const question = {
   number: 1,
-  label: "Who is the Dragon Reborn",
+  label: "Who is the Dragon Reborn?",
   answers: [
     {
-      number: "1",
+      number: 1,
       label: "Matrim Cauthon",
       isCorrect: false,
-      isAnswered: false,
     },
     {
-      number: "2",
+      number: 2,
       label: "Rand al'Thor",
       isCorrect: true,
-      isAnswered: false,
     },
     {
-      number: "3",
+      number: 3,
       label: "Egwene al'Vere",
       isCorrect: false,
-      isAnswered: false,
     },
     {
-      number: "4",
+      number: 4,
       label: "Perrin Ayabara",
       isCorrect: false,
-      isAnswered: false,
     },
   ],
 };

@@ -26,7 +26,6 @@ body {
   background-color: var(--primary-color);
   color: var(--fg-color);
   min-height: 100vh;
-  padding: 5rem 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
