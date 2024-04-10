@@ -4,6 +4,12 @@
   font-size: 1.8rem;
   cursor: pointer;
   transition: all 500ms ease;
+  border: none;
+  outline: none;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .correct {
@@ -35,4 +41,10 @@
   background-color: var(--gray-color);
   color: var(--primary-color);
   border: 1px solid var(--gray-color);
+}
+
+.disabled {
+  background-color: var(--primary-color);
+  color: var(--fg-color);
+  filter: brightness(0.8);
 }
