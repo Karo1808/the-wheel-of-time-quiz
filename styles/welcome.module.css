@@ -1,5 +1,8 @@
+.page {
+  margin: 10rem auto;
+}
+
 .header {
-  margin: 0 auto;
   margin-bottom: 5rem;
 }
 

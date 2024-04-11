@@ -2,7 +2,14 @@ import styles from "../../styles/button.module.css";
 
 interface Props {
   text: string;
-  state: "correct" | "incorrect" | "none" | "disabled" | "next" | "disabled";
+  state:
+    | "correct"
+    | "incorrect"
+    | "none"
+    | "disabled"
+    | "next"
+    | "disabled"
+    | "invisible";
   className?: string;
   onClick?: () => void;
 }

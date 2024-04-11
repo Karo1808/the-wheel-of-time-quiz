@@ -1,5 +1,6 @@
 .button {
   border-radius: 1rem;
+  letter-spacing: 1px;
   padding: 2rem 0;
   font-size: 1.8rem;
   cursor: pointer;
@@ -47,4 +48,9 @@
   background-color: var(--primary-color);
   color: var(--fg-color);
   filter: brightness(0.8);
+}
+
+.invisible {
+  opacity: 0;
+  pointer-events: none;
 }

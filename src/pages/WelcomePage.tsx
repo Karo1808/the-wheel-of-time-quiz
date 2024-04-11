@@ -20,7 +20,7 @@ const WelcomePage = () => {
   }, []);
 
   return (
-    <>
+    <div className={styles.page}>
       <header className={styles.header}>
         <>
           <h1 className={styles.h1}>
@@ -66,7 +66,7 @@ const WelcomePage = () => {
           <button className={styles.button}>Unravel the Pattern</button>
         </section>
       </div>
-    </>
+    </div>
   );
 };
 

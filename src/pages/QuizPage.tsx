@@ -3,12 +3,46 @@ import styles from "../../styles/quiz.module.css";
 import Button from "../components/Button";
 import ButtonDirection from "../components/ButtonDirection";
 import { useStopwatch } from "react-timer-hook";
-import { useQuizStore } from "../hooks/useQuizStore";
+import useQuizStore from "../hooks/useQuizStore";
+import { useShallow } from "zustand/react/shallow";
+import { useEffect } from "react";
 
 const QuizPage = () => {
-  const { seconds, minutes, pause } = useStopwatch({ autoStart: true });
+  const { seconds, minutes, pause, reset } = useStopwatch({ autoStart: true });
   const size = useWindowSize();
-  const quizState = useQuizStore((state) => state);
+
+  const quizState = useQuizStore(
+    useShallow((state) => state.questions[state.currentQuestionNumber - 1])
+  );
+
+  const setQuestionTimer = useQuizStore(
+    useShallow((state) => state.setQuestionTimer)
+  );
+
+  const answer = useQuizStore(useShallow((state) => state.answer));
+
+  const nextQuestion = useQuizStore(useShallow((state) => state.nextQuestion));
+  const previousQuestion = useQuizStore(
+    useShallow((state) => state.previousQuestion)
+  );
+
+  const currentQuestion = useQuizStore(
+    useShallow((state) => state.currentQuestionNumber)
+  );
+  const currentScore = useQuizStore(useShallow((state) => state.currentScore));
+
+  const numberOfQuestions = useQuizStore(
+    useShallow((state) => state.numberOfQuestions)
+  );
+
+  const numberOfQuestionsAnswered = useQuizStore(
+    useShallow((state) => state.numberOfQuestionsAnswered)
+  );
+
+  useEffect(() => {
+    reset();
+  }, [currentQuestion, reset]);
+
   if (!size.width) return;
   return (
     <main className={styles.page}>
@@ -50,12 +84,12 @@ const QuizPage = () => {
               className={styles.button}
               onClick={() => {
                 pause();
-                quizState.setQuestionTimer(
+                setQuestionTimer(
                   `${minutes.toString().padStart(2, "0")}:${seconds
                     .toString()
                     .padStart(2, "0")}`
                 );
-                quizState.answer(ans.answerNumber);
+                answer(ans.answerNumber);
               }}
             />
           );
@@ -65,16 +99,33 @@ const QuizPage = () => {
         <>
           <progress
             className={styles.progress}
-            value={quizState.questionNumber}
-            max="20"
+            value={currentScore}
+            max={numberOfQuestions}
           ></progress>
-          <ButtonDirection direction="left" />
-          <ButtonDirection direction="right" />
+          <ButtonDirection
+            disabled={currentQuestion - 1 < 1}
+            onClick={previousQuestion}
+            direction="left"
+          />
+          <ButtonDirection
+            disabled={
+              currentQuestion + 1 > numberOfQuestions ||
+              currentQuestion > numberOfQuestionsAnswered
+            }
+            onClick={nextQuestion}
+            direction="right"
+          />
         </>
       ) : (
         <Button
           text="Next"
-          state="next"
+          state={
+            currentQuestion + 1 > numberOfQuestions ||
+            currentQuestion > numberOfQuestionsAnswered
+              ? "invisible"
+              : "next"
+          }
+          onClick={nextQuestion}
           className={`${styles.button} ${styles.next}`}
         />
       )}
