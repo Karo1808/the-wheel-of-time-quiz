@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "../../styles/welcome.module.css";
 import Typewriter from "../components/Typewriter";
+import Button from "../components/Button";
 const WelcomePage = () => {
   const [isOpaqueFirstSection, setIsOpaqueFirstSection] =
     useState<boolean>(true);
@@ -63,7 +64,12 @@ const WelcomePage = () => {
             Pattern guide you. May the Light illuminate your path as you venture
             into the heart of the Wheel of Time.
           </blockquote>
-          <button className={styles.button}>Unravel the Pattern</button>
+          <Button
+            className={styles.button}
+            text="Unravel the Pattern"
+            state="none"
+            onClick={() => {}}
+          />
         </section>
       </div>
     </div>
