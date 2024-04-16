@@ -45,7 +45,7 @@ const QuizPage = () => {
 
   if (!size.width) return;
   return (
-    <main className={styles.page}>
+    <>
       <header className={styles.header}>
         <span>{`Question ${quizState.questionNumber}`}</span>
         <span>
@@ -79,7 +79,6 @@ const QuizPage = () => {
           return (
             <Button
               key={ans.answerNumber}
-              text={ans.answerLabel}
               state={state}
               className={styles.button}
               onClick={() => {
@@ -91,7 +90,9 @@ const QuizPage = () => {
                 );
                 answer(ans.answerNumber);
               }}
-            />
+            >
+              {ans.answerLabel}
+            </Button>
           );
         })}
       </section>
@@ -118,7 +119,6 @@ const QuizPage = () => {
         </>
       ) : (
         <Button
-          text="Next"
           state={
             currentQuestion + 1 > numberOfQuestions ||
             currentQuestion > numberOfQuestionsAnswered
@@ -127,9 +127,11 @@ const QuizPage = () => {
           }
           onClick={nextQuestion}
           className={`${styles.button} ${styles.next}`}
-        />
+        >
+          Next
+        </Button>
       )}
-    </main>
+    </>
   );
 };
 

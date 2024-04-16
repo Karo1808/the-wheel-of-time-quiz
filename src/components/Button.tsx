@@ -1,7 +1,7 @@
 import styles from "../../styles/button.module.css";
 
 interface Props {
-  text: string;
+  children: React.ReactNode;
   state:
     | "correct"
     | "incorrect"
@@ -14,7 +14,7 @@ interface Props {
   onClick?: () => void;
 }
 
-const Button = ({ text, state, className, onClick }: Props) => {
+const Button = ({ children, state, className, onClick }: Props) => {
   return (
     <button
       onClick={onClick}
@@ -23,7 +23,7 @@ const Button = ({ text, state, className, onClick }: Props) => {
         state === "disabled" || state === "correct" || state === "incorrect"
       }
     >
-      {text}
+      {children}
     </button>
   );
 };

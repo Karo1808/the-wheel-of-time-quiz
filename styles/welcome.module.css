@@ -1,88 +1,86 @@
-.page {
-  display: flex;
-  flex-direction: column;
-  margin: 2rem 3rem;
-}
-
-.header {
-  margin-bottom: 5rem;
-}
-
-.h1 {
-  font-size: 3.2rem;
-  text-align: center;
-  margin-bottom: 0;
-  @media screen and (min-width: 1200px) {
-    font-size: 4.8rem;
-  }
-}
-
-.section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3rem;
-  transition: all 2s ease;
-}
-
-.img {
-  max-width: 25%;
-  @media screen and (min-width: 700px) {
-    max-width: 10%;
-  }
-  @media screen and (min-width: 1200px) {
-    max-width: 6%;
-  }
-}
-
-.blockquote {
-  text-align: center;
-  font-size: 2rem;
-  max-width: 100%;
-
-  @media screen and (min-width: 1000px) {
-    max-width: 80%;
-  }
-
-  @media screen and (min-width: 1200px) {
-    max-width: 50%;
-    font-size: 2.4rem;
-  }
-}
-
 .container {
   display: flex;
+  gap: 4rem;
   flex-direction: column;
-  align-items: center;
-  gap: 3rem;
-  margin-top: 5rem;
-}
-
-.warning {
-  font-size: 3.2rem;
-  font-weight: 700;
+  text-align: center;
   @media screen and (min-width: 1200px) {
-    font-size: 4.8rem;
-  }
-}
-
-.button {
-  width: 100%;
-  margin-top: 2rem;
-  @media screen and (min-width: 700px) {
     & {
-      margin-top: 6rem;
-      width: 40rem;
+      text-align: left;
+      gap: 12rem;
     }
   }
 }
 
-@keyframes show {
-  0% {
-    opacity: 0;
+.title {
+  font-size: 2.8rem;
+  color: var(--fg-color);
+  font-weight: 600;
+  @media screen and (min-width: 1200px) {
+    & {
+      font-size: 3.6rem;
+    }
   }
-  100% {
-    opacity: 1;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.logo {
+  width: 8rem;
+  align-self: center;
+  @media screen and (min-width: 1200px) {
+    & {
+      width: 10rem;
+    }
   }
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  @media screen and (min-width: 1200px) {
+    & {
+      display: grid;
+      grid-template-columns: 40% 40%;
+      grid-template-rows: auto auto;
+      justify-content: space-between;
+      row-gap: 8rem;
+    }
+  }
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  @media screen and (min-width: 1200px) {
+    & {
+      align-items: flex-start;
+    }
+  }
+}
+
+.subtitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--fg-tertiary-color);
+}
+
+.feature_content {
+  font-size: 2.8rem;
+  color: var(--fg-color);
+}
+
+.btn {
+  width: 70%;
+  margin-top: 1rem;
 }
