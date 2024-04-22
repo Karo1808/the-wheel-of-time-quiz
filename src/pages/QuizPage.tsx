@@ -6,6 +6,7 @@ import { useStopwatch } from "react-timer-hook";
 import useQuizStore from "../hooks/useQuizStore";
 import { useShallow } from "zustand/react/shallow";
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const QuizPage = () => {
   const { seconds, minutes, pause, reset } = useStopwatch({ autoStart: true });
@@ -42,6 +43,15 @@ const QuizPage = () => {
   useEffect(() => {
     reset();
   }, [currentQuestion, reset]);
+
+  const navigate = useNavigate();
+
+  function handleNext() {
+    nextQuestion();
+    if (numberOfQuestionsAnswered === numberOfQuestions) {
+      navigate("/summary");
+    }
+  }
 
   if (!size.width) return;
   return (
@@ -110,22 +120,22 @@ const QuizPage = () => {
           />
           <ButtonDirection
             disabled={
-              currentQuestion + 1 > numberOfQuestions ||
+              currentQuestion > numberOfQuestions ||
               currentQuestion > numberOfQuestionsAnswered
             }
-            onClick={nextQuestion}
+            onClick={handleNext}
             direction="right"
           />
         </>
       ) : (
         <Button
           state={
-            currentQuestion + 1 > numberOfQuestions ||
+            currentQuestion > numberOfQuestions ||
             currentQuestion > numberOfQuestionsAnswered
               ? "invisible"
               : "next"
           }
-          onClick={nextQuestion}
+          onClick={handleNext}
           className={`${styles.button} ${styles.next}`}
         >
           Next

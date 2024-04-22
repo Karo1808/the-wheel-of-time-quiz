@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
+import { getTimeValue } from "../utils";
 
 interface State {
   currentQuestionNumber: number;
@@ -8,6 +9,8 @@ interface State {
   numberOfQuestions: number;
   numberOfQuestionsAnswered: number;
   questions: Question[];
+  currentTime: number;
+  maximumTime: string;
 }
 
 interface Question {
@@ -36,6 +39,8 @@ const initialState: State = {
   currentScore: 0,
   numberOfQuestions: 3,
   numberOfQuestionsAnswered: 0,
+  maximumTime: "01:00",
+  currentTime: 0,
   questions: [
     {
       questionNumber: 1,
@@ -143,6 +148,10 @@ const useQuizStore = create<State & Actions>()(
                   ? 1
                   : 0;
               state.numberOfQuestionsAnswered++;
+              state.currentTime +=
+                getTimeValue(
+                  state.questions[state.currentQuestionNumber - 1].questionTimer
+                ) || 0;
             });
           },
           nextQuestion: () => {
