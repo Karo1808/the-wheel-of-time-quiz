@@ -11,7 +11,7 @@ import Button from "../components/Button";
 import ButtonDirection from "../components/ButtonDirection";
 
 import styles from "../../styles/quiz.module.css";
-import { formatTime } from "../utils";
+import { formatTime } from "../utils/shared";
 
 const QuizPage = () => {
   const { seconds, minutes, pause, reset } = useStopwatch({ autoStart: true });
@@ -52,9 +52,10 @@ const QuizPage = () => {
   const navigate = useNavigate();
 
   function handleNext() {
-    nextQuestion();
     if (numberOfQuestionsAnswered === numberOfQuestions) {
       navigate("/summary");
+    } else {
+      nextQuestion();
     }
   }
 
@@ -64,7 +65,9 @@ const QuizPage = () => {
     <>
       <header className={styles.header}>
         <span>{`Question ${quizState.questionNumber}`}</span>
-        <span>{quizState.questionTimer || formatTime(minutes, seconds)}</span>
+        <span>
+          {quizState.questionTimer || formatTime(minutes * 60 + seconds)}
+        </span>
       </header>
       <section className={styles.container}>
         <h1 className={styles.question}>{quizState.questionLabel}</h1>
@@ -94,7 +97,7 @@ const QuizPage = () => {
               className={styles.button}
               onClick={() => {
                 pause();
-                setQuestionTimer(formatTime(minutes, seconds));
+                setQuestionTimer(formatTime(minutes * 60 + seconds) as string);
                 answer(ans.answerNumber);
               }}
             >

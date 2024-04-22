@@ -5,7 +5,7 @@ export interface State {
   numberOfQuestionsAnswered: number;
   questions: Question[];
   currentTime: number;
-  maximumTime: string;
+  maximumTime: number;
 }
 
 export interface Question {

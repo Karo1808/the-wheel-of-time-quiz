@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { getTimeValue } from "../utils";
 
 import { Actions, State } from "../types";
 import { initialState } from "../config";
+import { formatTime } from "../utils/shared";
 
 const useQuizStore = create<State & Actions>()(
   devtools(
@@ -34,9 +34,10 @@ const useQuizStore = create<State & Actions>()(
                   : 0;
               state.numberOfQuestionsAnswered++;
               state.currentTime +=
-                getTimeValue(
-                  state.questions[state.currentQuestionNumber - 1].questionTimer
-                ) || 0;
+                (formatTime(
+                  state.questions[state.currentQuestionNumber - 1]
+                    .questionTimer || ""
+                ) as number) || 0;
             });
           },
           nextQuestion: () => {

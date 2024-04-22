@@ -1,11 +1,13 @@
 import { State } from "../types";
 
+export const INACTIVE_COLOR = "#B6AFAA";
+
 export const initialState: State = {
   currentQuestionNumber: 1,
   currentScore: 0,
   numberOfQuestions: 3,
   numberOfQuestionsAnswered: 0,
-  maximumTime: "00:30",
+  maximumTime: 1 * 60,
   currentTime: 0,
   questions: [
     {
