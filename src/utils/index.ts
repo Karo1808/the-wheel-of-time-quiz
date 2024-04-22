@@ -11,6 +11,10 @@ export const getScore = (value: number, maxValue: number) => {
 export const getTime = (time: number) => {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
+  return formatTime(minutes, seconds);
+};
+
+export const formatTime = (minutes: number, seconds: number) => {
   return `${minutes.toString().padStart(2, "0")}:${seconds
     .toString()
     .padStart(2, "0")}`;

@@ -1,16 +1,21 @@
+import { useEffect } from "react";
+
 import { useWindowSize } from "@uidotdev/usehooks";
-import styles from "../../styles/quiz.module.css";
+import { useStopwatch } from "react-timer-hook";
+import { useShallow } from "zustand/react/shallow";
+import { useNavigate } from "react-router";
+
+import useQuizStore from "../hooks/useQuizStore";
+
 import Button from "../components/Button";
 import ButtonDirection from "../components/ButtonDirection";
-import { useStopwatch } from "react-timer-hook";
-import useQuizStore from "../hooks/useQuizStore";
-import { useShallow } from "zustand/react/shallow";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
+
+import styles from "../../styles/quiz.module.css";
+import { formatTime } from "../utils";
 
 const QuizPage = () => {
   const { seconds, minutes, pause, reset } = useStopwatch({ autoStart: true });
-  const size = useWindowSize();
+  const windowSize = useWindowSize();
 
   const quizState = useQuizStore(
     useShallow((state) => state.questions[state.currentQuestionNumber - 1])
@@ -53,17 +58,13 @@ const QuizPage = () => {
     }
   }
 
-  if (!size.width) return;
+  if (!windowSize.width) return;
+
   return (
     <>
       <header className={styles.header}>
         <span>{`Question ${quizState.questionNumber}`}</span>
-        <span>
-          {quizState.questionTimer ||
-            `${minutes.toString().padStart(2, "0")}:${seconds
-              .toString()
-              .padStart(2, "0")}`}
-        </span>
+        <span>{quizState.questionTimer || formatTime(minutes, seconds)}</span>
       </header>
       <section className={styles.container}>
         <h1 className={styles.question}>{quizState.questionLabel}</h1>
@@ -93,11 +94,7 @@ const QuizPage = () => {
               className={styles.button}
               onClick={() => {
                 pause();
-                setQuestionTimer(
-                  `${minutes.toString().padStart(2, "0")}:${seconds
-                    .toString()
-                    .padStart(2, "0")}`
-                );
+                setQuestionTimer(formatTime(minutes, seconds));
                 answer(ans.answerNumber);
               }}
             >
@@ -106,13 +103,13 @@ const QuizPage = () => {
           );
         })}
       </section>
-      {size?.width > 700 ? (
+      {windowSize?.width > 700 ? (
         <>
           <progress
             className={styles.progress}
             value={currentScore}
             max={numberOfQuestions}
-          ></progress>
+          />
           <ButtonDirection
             disabled={currentQuestion - 1 < 1}
             onClick={previousQuestion}
