@@ -1,4 +1,6 @@
-export const formatTime = (time: string | number) => {
+import { TimeFormat } from "../types";
+
+export const formatTime = (time: TimeFormat) => {
   if (typeof time === "string") {
     const [minutes, seconds] = time.split(":");
     return Number(minutes) * 60 + Number(seconds);

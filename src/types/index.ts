@@ -1,3 +1,7 @@
+type digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+
+export type TimeFormat = number | `${digit}${digit}:${digit}${digit}`;
+
 export interface State {
   currentQuestionNumber: number;
   currentScore: number;
