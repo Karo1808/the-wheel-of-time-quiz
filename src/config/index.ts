@@ -1,7 +1,5 @@
 import { State } from "../types";
 
-export const INACTIVE_COLOR = "#B6AFAA";
-
 export const initialState: State = {
   currentQuestionNumber: 1,
   currentScore: 0,

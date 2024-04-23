@@ -1,6 +1,5 @@
 import { Cell, Label, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { createData } from "../utils/graph";
-import { INACTIVE_COLOR } from "../config";
 
 interface Props {
   value: number;
@@ -9,6 +8,7 @@ interface Props {
   color: string;
   label: string;
 }
+const INACTIVE_COLOR = "#B6AFAA";
 
 const ResultsGraph = ({ value, type: type, maxValue, color, label }: Props) => {
   const data = createData({ value, maxValue, type });
