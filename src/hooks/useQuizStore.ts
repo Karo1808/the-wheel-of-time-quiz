@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-import { Actions, State } from "../types";
+import { Actions, State, TimeFormat } from "../types";
 import { initialState } from "../config";
 import { formatTime } from "../utils/shared";
 
@@ -12,7 +12,7 @@ const useQuizStore = create<State & Actions>()(
       persist(
         (set) => ({
           ...initialState,
-          setQuestionTimer: (time: string) => {
+          setQuestionTimer: (time: TimeFormat) => {
             set((state) => {
               state.questions[state.currentQuestionNumber - 1].questionTimer =
                 time;
@@ -36,7 +36,7 @@ const useQuizStore = create<State & Actions>()(
               state.currentTime +=
                 (formatTime(
                   state.questions[state.currentQuestionNumber - 1]
-                    .questionTimer || ""
+                    .questionTimer || "00:00"
                 ) as number) || 0;
             });
           },

@@ -17,7 +17,7 @@ export interface Question {
   questionLabel: string;
   questionAnsweredIndex: null | 1 | 2 | 3 | 4;
   questionCorrectIndex: 1 | 2 | 3 | 4;
-  questionTimer: null | string;
+  questionTimer: null | TimeFormat;
   answers: Answer[];
 }
 
@@ -30,5 +30,5 @@ export interface Actions {
   answer: (number: 1 | 2 | 3 | 4) => void;
   nextQuestion: () => void;
   previousQuestion: () => void;
-  setQuestionTimer: (time: string) => void;
+  setQuestionTimer: (time: TimeFormat) => void;
 }

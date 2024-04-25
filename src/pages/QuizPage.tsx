@@ -1,55 +1,28 @@
-import { useEffect } from "react";
-
-import { useWindowSize } from "@uidotdev/usehooks";
-import { useStopwatch } from "react-timer-hook";
-import { useShallow } from "zustand/react/shallow";
-import { useNavigate } from "react-router";
-
-import useQuizStore from "../hooks/useQuizStore";
-
 import Button from "../components/Button";
 import ButtonDirection from "../components/ButtonDirection";
 
 import styles from "../styles/quiz.module.css";
 import { formatTime } from "../utils/shared";
+import useQuiz from "../hooks/useQuiz";
+import { TimeFormat } from "../types";
 
 const QuizPage = () => {
-  const { seconds, minutes, pause, reset } = useStopwatch({ autoStart: true });
-  const windowSize = useWindowSize();
-
-  const quizState = useQuizStore(
-    useShallow((state) => state.questions[state.currentQuestionNumber - 1])
-  );
-
-  const setQuestionTimer = useQuizStore(
-    useShallow((state) => state.setQuestionTimer)
-  );
-
-  const answer = useQuizStore(useShallow((state) => state.answer));
-
-  const nextQuestion = useQuizStore(useShallow((state) => state.nextQuestion));
-  const previousQuestion = useQuizStore(
-    useShallow((state) => state.previousQuestion)
-  );
-
-  const currentQuestion = useQuizStore(
-    useShallow((state) => state.currentQuestionNumber)
-  );
-  const currentScore = useQuizStore(useShallow((state) => state.currentScore));
-
-  const numberOfQuestions = useQuizStore(
-    useShallow((state) => state.numberOfQuestions)
-  );
-
-  const numberOfQuestionsAnswered = useQuizStore(
-    useShallow((state) => state.numberOfQuestionsAnswered)
-  );
-
-  useEffect(() => {
-    reset();
-  }, [currentQuestion, reset]);
-
-  const navigate = useNavigate();
+  const { quizState, quizActions, navigate, windowSize, stopwatch } = useQuiz();
+  const { minutes, seconds, pause } = stopwatch;
+  const {
+    numberOfQuestionsAnswered,
+    numberOfQuestions,
+    questionTimer,
+    questionNumber,
+    questionLabel,
+    questionAnsweredIndex,
+    questionCorrectIndex,
+    answers,
+    currentScore,
+    currentQuestion,
+  } = quizState;
+  const { nextQuestion, previousQuestion, answer, setQuestionTimer } =
+    quizActions;
 
   function handleNext() {
     if (numberOfQuestionsAnswered === numberOfQuestions) {
@@ -64,13 +37,11 @@ const QuizPage = () => {
   return (
     <>
       <header className={styles.header}>
-        <span>{`Question ${quizState.questionNumber}`}</span>
-        <span>
-          {quizState.questionTimer || formatTime(minutes * 60 + seconds)}
-        </span>
+        <span>{`Question ${questionNumber}`}</span>
+        <span>{questionTimer || formatTime(minutes * 60 + seconds)}</span>
       </header>
       <section className={styles.container}>
-        <h1 className={styles.question}>{quizState.questionLabel}</h1>
+        <h1 className={styles.question}>{questionLabel}</h1>
         <img
           src="./wheel.png"
           alt="wheel of time logo"
@@ -78,12 +49,12 @@ const QuizPage = () => {
         />
       </section>
       <section className={styles.answers}>
-        {quizState.answers.map((ans) => {
+        {answers.map((ans) => {
           let state: "correct" | "incorrect" | "disabled" | "none" = "none";
-          if (quizState.questionAnsweredIndex) {
-            if (quizState.questionCorrectIndex === ans.answerNumber) {
+          if (questionAnsweredIndex) {
+            if (questionCorrectIndex === ans.answerNumber) {
               state = "correct";
-            } else if (quizState.questionAnsweredIndex === ans.answerNumber) {
+            } else if (questionAnsweredIndex === ans.answerNumber) {
               state = "incorrect";
             } else {
               state = "disabled";
@@ -97,7 +68,9 @@ const QuizPage = () => {
               className={styles.button}
               onClick={() => {
                 pause();
-                setQuestionTimer(formatTime(minutes * 60 + seconds) as string);
+                setQuestionTimer(
+                  formatTime(minutes * 60 + seconds) as TimeFormat
+                );
                 answer(ans.answerNumber);
               }}
             >
