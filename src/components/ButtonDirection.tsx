@@ -1,5 +1,5 @@
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import styles from "../../styles/buttonDirection.module.css";
+import styles from "../styles/buttonDirection.module.css";
 
 interface Props {
   direction: "left" | "right";

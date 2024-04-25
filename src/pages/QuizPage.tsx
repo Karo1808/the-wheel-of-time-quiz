@@ -10,7 +10,7 @@ import useQuizStore from "../hooks/useQuizStore";
 import Button from "../components/Button";
 import ButtonDirection from "../components/ButtonDirection";
 
-import styles from "../../styles/quiz.module.css";
+import styles from "../styles/quiz.module.css";
 import { formatTime } from "../utils/shared";
 
 const QuizPage = () => {
