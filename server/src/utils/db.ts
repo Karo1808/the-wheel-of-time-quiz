@@ -1,27 +1,26 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import log from "./logger";
 
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI;
 
-console.log(MONGO_URI);
-
 mongoose.connect(MONGO_URI);
 
 mongoose.connection.on("connected", () => {
-  console.log("Mongo has connected successfully");
+  log.info("Mongo has connected successfully");
 });
 
 mongoose.connection.on("reconnected", () => {
-  console.log("Mongo has reconnected");
+  log.info("Mongo has reconnected");
 });
 
 mongoose.connection.on("error", (error) => {
-  console.log("Mongo connection has an error", error);
+  log.error("Mongo connection has an error", error);
   mongoose.disconnect();
 });
 
 mongoose.connection.on("disconnected", () => {
-  console.log("Mongo connection is disconnected");
+  log.info("Mongo connection is disconnected");
 });
