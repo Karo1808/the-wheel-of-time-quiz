@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-const payload = {
+const createQuizPayload = {
   body: z
     .object({
       quizName: z.string({ required_error: "Quiz name is required" }).min(8, {
@@ -68,8 +68,48 @@ const payload = {
     .strict(),
 };
 
+const getQuestionsParams = {
+  params: z.object({
+    quizId: z.string({ required_error: "Quiz id is required" }),
+  }),
+};
+
+const verifyAnswerParams = {
+  params: z.object({
+    quizId: z.string({ required_error: "Quiz id is required" }),
+    questionNumber: z
+      .string({
+        required_error: "Question number is required",
+        invalid_type_error: "Question number must be a string",
+      })
+      .regex(/^(1|2|3|4)$/, {
+        message: "Question number must be less than or equal to 4",
+      }),
+    answerNumber: z
+      .string({
+        required_error: "Answer number is required",
+        invalid_type_error: "Answer number must be a string",
+      })
+      .regex(/^(1|2|3|4)$/, {
+        message: "Answer number must be less than or equal to 4",
+      }),
+  }),
+};
+
 export const createQuizSchema = z.object({
-  ...payload,
+  ...createQuizPayload,
+});
+
+export const getQuestionsSchema = z.object({
+  ...getQuestionsParams,
+});
+
+export const verifyAnswerSchema = z.object({
+  ...verifyAnswerParams,
 });
 
 export type CreateQuizSchema = z.TypeOf<typeof createQuizSchema>;
+
+export type GetQuestionsSchema = z.TypeOf<typeof getQuestionsSchema>;
+
+export type VerifyAnswerSchema = z.TypeOf<typeof verifyAnswerSchema>;
