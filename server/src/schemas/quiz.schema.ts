@@ -37,15 +37,10 @@ const createQuizPayload = {
             .min(10, {
               message: "Question label must be at least 10 characters",
             }),
-          questionCorrectIndex: z
-            .number({
-              required_error: "Question correct index is required",
-              invalid_type_error: "Question correct index must be a number",
-            })
-            .positive({ message: "Question correct index must be positive" })
-            .max(4, {
-              message: "Question correct index must be less than or equal to 4",
-            }),
+          questionAnswer: z.string({
+            required_error: "Question answer  is required",
+            invalid_type_error: "Question correct index must be a string",
+          }),
           answers: z.array(
             z.object({
               answerNumber: z
@@ -85,14 +80,10 @@ const verifyAnswerParams = {
       .regex(/^(1|2|3|4)$/, {
         message: "Question number must be less than or equal to 4",
       }),
-    answerNumber: z
-      .string({
-        required_error: "Answer number is required",
-        invalid_type_error: "Answer number must be a string",
-      })
-      .regex(/^(1|2|3|4)$/, {
-        message: "Answer number must be less than or equal to 4",
-      }),
+    answer: z.string({
+      required_error: "Answer is required",
+      invalid_type_error: "Answer number must be a string",
+    }),
   }),
 };
 

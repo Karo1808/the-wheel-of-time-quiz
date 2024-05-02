@@ -7,7 +7,7 @@ export interface QuizInput {
   questions: {
     questionNumber: 1 | 2 | 3 | 4;
     questionLabel: string;
-    questionCorrectIndex: 1 | 2 | 3 | 4;
+    questionAnswer: string;
     answers: {
       answerNumber: 1 | 2 | 3 | 4;
       answerLabel: string;
@@ -48,8 +48,8 @@ const quizSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        questionCorrectIndex: {
-          type: Number,
+        questionAnswer: {
+          type: String,
           required: true,
         },
         answers: [

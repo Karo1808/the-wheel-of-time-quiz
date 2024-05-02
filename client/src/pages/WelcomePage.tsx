@@ -39,7 +39,7 @@ const WelcomePage = () => {
           <Button
             className={styles.btn}
             state="next"
-            onClick={() => navigate("/quiz")}
+            onClick={() => navigate("/quizzes")}
           >
             Continue
           </Button>

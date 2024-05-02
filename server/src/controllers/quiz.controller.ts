@@ -52,7 +52,7 @@ export async function verifyAnswerHandler(
   const result = await verifyAnswer({
     quizId: req.params.quizId,
     questionNumber: +req.params.questionNumber,
-    answerNumber: +req.params.answerNumber,
+    answer: req.params.answer,
   });
 
   if (!result) {

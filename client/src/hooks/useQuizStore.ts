@@ -18,26 +18,32 @@ const useQuizStore = create<State & Actions>()(
                 time;
             });
           },
-          answer: (number: 1 | 2 | 3 | 4) => {
+          setAnswer({
+            correctAnswer,
+            answer,
+            isCorrect,
+          }: {
+            answer?: string;
+            correctAnswer?: string;
+            isCorrect?: boolean;
+          }) {
             set((state) => {
-              const answeredIndex =
-                state.questions[state.currentQuestionNumber - 1]
-                  .questionAnsweredIndex;
-              state.questions[
-                state.currentQuestionNumber - 1
-              ].questionAnsweredIndex =
-                answeredIndex === null ? number : answeredIndex;
-              state.currentScore +=
-                state.questions[state.currentQuestionNumber - 1]
-                  .questionCorrectIndex === number
-                  ? 1
-                  : 0;
+              const currentQuestion =
+                state.questions[state.currentQuestionNumber - 1];
+
+              currentQuestion.correctAnswer = correctAnswer;
+
+              currentQuestion.isCorrect = isCorrect;
+
+              currentQuestion.answer = answer;
+
               state.numberOfQuestionsAnswered++;
-              state.currentTime +=
-                (formatTime(
-                  state.questions[state.currentQuestionNumber - 1]
-                    .questionTimer || "00:00"
-                ) as number) || 0;
+
+              state.currentScore += isCorrect ? 1 : 0;
+
+              state.currentTime = formatTime(
+                currentQuestion.questionTimer || "00:00"
+              ) as number;
             });
           },
           nextQuestion: () => {

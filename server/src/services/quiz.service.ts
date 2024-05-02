@@ -1,7 +1,6 @@
 import mongoose, { FilterQuery, QueryOptions } from "mongoose";
 import QuizModel, { QuizDocument, QuizInput } from "../models/quiz.model";
 import log from "../utils/logger";
-import { shuffleArray } from "../utils/shuffleArray";
 
 export async function createQuiz(quiz: QuizInput): Promise<QuizDocument> {
   try {
@@ -18,7 +17,6 @@ export async function getQuizzes(): Promise<QuizDocument[]> {
     const result = await QuizModel.find(
       {},
       {
-        _id: 0,
         __v: 0,
         createdAt: 0,
         updatedAt: 0,
@@ -46,16 +44,10 @@ export async function getQuestions({
         __v: 0,
         createdAt: 0,
         updatedAt: 0,
-        "questions.questionCorrectIndex": 0,
+        "questions.questionAnswer": 0,
         "questions.answers._id": 0,
       }
     );
-
-    result.questions = shuffleArray(result.questions);
-
-    result.questions.forEach((question) => {
-      question.answers = shuffleArray(question.answers);
-    });
 
     return result;
   } catch (error) {
@@ -67,11 +59,11 @@ export async function getQuestions({
 export async function verifyAnswer({
   quizId,
   questionNumber,
-  answerNumber,
+  answer,
 }: {
   quizId: string;
   questionNumber: number;
-  answerNumber: number;
+  answer: string;
 }): Promise<{
   isCorrect: boolean;
   correctAnswer: string;
@@ -79,15 +71,15 @@ export async function verifyAnswer({
 }> {
   try {
     const {
-      questions: [{ questionCorrectIndex, answers }],
+      questions: [{ questionAnswer }],
     } = await QuizModel.findOne(
       { _id: quizId },
       { questions: { $elemMatch: { questionNumber: +questionNumber } } }
     );
 
-    const isCorrect = questionCorrectIndex === answerNumber;
-    const correctAnswer = answers[questionCorrectIndex - 1].answerLabel;
-    const receivedAnswer = answers[answerNumber - 1].answerLabel;
+    const isCorrect = questionAnswer === answer;
+    const correctAnswer = questionAnswer;
+    const receivedAnswer = answer;
 
     return { isCorrect, correctAnswer, receivedAnswer };
   } catch (error) {

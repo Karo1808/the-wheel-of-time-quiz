@@ -7,29 +7,40 @@ import useQuiz from "../hooks/useQuiz";
 import { TimeFormat } from "../types";
 
 const QuizPage = () => {
-  const { quizState, quizActions, navigate, windowSize, stopwatch } = useQuiz();
-  const { minutes, seconds, pause } = stopwatch;
   const {
-    numberOfQuestionsAnswered,
-    numberOfQuestions,
-    questionTimer,
-    questionNumber,
-    questionLabel,
-    questionAnsweredIndex,
-    questionCorrectIndex,
-    answers,
-    currentScore,
-    currentQuestion,
-  } = quizState;
-  const { nextQuestion, previousQuestion, answer, setQuestionTimer } =
-    quizActions;
+    windowSize,
+    navigate,
+    quizActions,
+    quizQuery,
+    quizState,
+    stopwatch,
+    verifyQuery,
+  } = useQuiz();
 
   function handleNext() {
-    if (numberOfQuestionsAnswered === numberOfQuestions) {
+    if (
+      quizState.numberOfQuestionsAnswered ===
+        quizQuery.quiz?.numberOfQuestions &&
+      quizState.currentQuestion === quizQuery.quiz?.numberOfQuestions
+    ) {
       navigate("/summary");
     } else {
-      nextQuestion();
+      quizActions.nextQuestion();
     }
+  }
+
+  function handleAnswer(answer: string) {
+    console.log("Clicked");
+    stopwatch.pause();
+    quizActions.setQuestionTimer(
+      formatTime(stopwatch.minutes * 60 + stopwatch.seconds) as TimeFormat
+    );
+
+    quizActions.setAnswer({
+      answer,
+      correctAnswer: verifyQuery.verificationResult?.correctAnswer,
+      isCorrect: verifyQuery.verificationResult?.isCorrect,
+    });
   }
 
   if (!windowSize.width) return;
@@ -37,64 +48,69 @@ const QuizPage = () => {
   return (
     <>
       <header className={styles.header}>
-        <span>{`Question ${questionNumber}`}</span>
-        <span>{questionTimer || formatTime(minutes * 60 + seconds)}</span>
+        <span>{`Question ${quizState.currentQuestion}`}</span>
+        <span>
+          {quizState.questionTimer ||
+            formatTime(stopwatch.minutes * 60 + stopwatch.seconds)}
+        </span>
       </header>
       <section className={styles.container}>
-        <h1 className={styles.question}>{questionLabel}</h1>
+        <h1 className={styles.question}>
+          {
+            quizQuery.quiz?.questions[quizState.currentQuestion - 1]
+              .questionLabel
+          }
+        </h1>
         <img
-          src="./wheel.png"
+          src="../wheel.png"
           alt="wheel of time logo"
           className={styles.logo}
         />
       </section>
       <section className={styles.answers}>
-        {answers.map((ans) => {
-          let state: "correct" | "incorrect" | "disabled" | "none" = "none";
-          if (questionAnsweredIndex) {
-            if (questionCorrectIndex === ans.answerNumber) {
-              state = "correct";
-            } else if (questionAnsweredIndex === ans.answerNumber) {
-              state = "incorrect";
-            } else {
-              state = "disabled";
+        {quizQuery.quiz?.questions[quizState.currentQuestion - 1].answers.map(
+          (ans) => {
+            let state: "correct" | "incorrect" | "disabled" | "none" = "none";
+            if (quizState.answer) {
+              if (quizState.correctAnswer === ans.answerLabel) {
+                state = "correct";
+              } else if (quizState.answer === ans.answerLabel) {
+                state = "incorrect";
+              } else {
+                state = "disabled";
+              }
             }
-          }
 
-          return (
-            <Button
-              key={ans.answerNumber}
-              state={state}
-              className={styles.button}
-              onClick={() => {
-                pause();
-                setQuestionTimer(
-                  formatTime(minutes * 60 + seconds) as TimeFormat
-                );
-                answer(ans.answerNumber);
-              }}
-            >
-              {ans.answerLabel}
-            </Button>
-          );
-        })}
+            return (
+              <Button
+                key={ans.answerNumber}
+                state={state}
+                className={styles.button}
+                onClick={() => handleAnswer(ans.answerLabel)}
+              >
+                {ans.answerLabel}
+              </Button>
+            );
+          }
+        )}
       </section>
       {windowSize?.width > 700 ? (
         <>
           <progress
             className={styles.progress}
-            value={currentScore}
-            max={numberOfQuestions}
+            value={quizState.currentScore}
+            max={quizQuery.quiz?.numberOfQuestions}
           />
           <ButtonDirection
-            disabled={currentQuestion - 1 < 1}
-            onClick={previousQuestion}
+            disabled={quizState.currentQuestion - 1 < 1}
+            onClick={quizActions.previousQuestion}
             direction="left"
           />
           <ButtonDirection
             disabled={
-              currentQuestion > numberOfQuestions ||
-              currentQuestion > numberOfQuestionsAnswered
+              quizState.currentQuestion >
+                (quizQuery.quiz?.numberOfQuestions || 0) ||
+              quizState.currentQuestion > quizState.numberOfQuestionsAnswered
             }
             onClick={handleNext}
             direction="right"
@@ -103,8 +119,9 @@ const QuizPage = () => {
       ) : (
         <Button
           state={
-            currentQuestion > numberOfQuestions ||
-            currentQuestion > numberOfQuestionsAnswered
+            quizState.currentQuestion >
+              (quizQuery.quiz?.numberOfQuestions || 0) ||
+            quizState.currentQuestion > quizState.numberOfQuestionsAnswered
               ? "invisible"
               : "next"
           }
