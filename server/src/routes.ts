@@ -30,7 +30,7 @@ function routes(app: Express) {
   );
 
   app.get(
-    "/api/quiz/:quizId/:questionNumber/:answer/verify",
+    "/api/quiz/:quizId/:questionId/:answer/verify",
     validateRequest(verifyAnswerSchema),
     verifyAnswerHandler
   );

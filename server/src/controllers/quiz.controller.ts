@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+
 import {
   CreateQuizSchema,
   GetQuestionsSchema,
@@ -10,6 +11,7 @@ import {
   getQuizzes,
   verifyAnswer,
 } from "../services/quiz.service";
+import log from "../utils/logger";
 
 export async function createQuizHandler(
   req: Request<{}, {}, CreateQuizSchema["body"]>,
@@ -49,9 +51,17 @@ export async function verifyAnswerHandler(
   req: Request<VerifyAnswerSchema["params"]>,
   res: Response
 ) {
+  if (
+    req.params.answer === "undefined" ||
+    req.params.questionId === "undefined" ||
+    req.params.quizId === "undefined"
+  ) {
+    return res.status(404).send("Resource not found");
+  }
+
   const result = await verifyAnswer({
     quizId: req.params.quizId,
-    questionNumber: +req.params.questionNumber,
+    questionId: req.params.questionId,
     answer: req.params.answer,
   });
 

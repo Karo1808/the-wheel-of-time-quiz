@@ -8,6 +8,8 @@ export interface State {
   numberOfQuestionsAnswered: number;
   questions: Question[];
   currentTime: number;
+  randomSeed?: number;
+  currentQuestionId?: string;
 }
 
 export interface Question {
@@ -29,5 +31,7 @@ export interface Actions {
   }) => void;
   nextQuestion: () => void;
   previousQuestion: () => void;
+  setSeed: (seed: number) => void;
   setQuestionTimer: (time: TimeFormat) => void;
+  setCurrentQuestionId: (id?: string) => void;
 }

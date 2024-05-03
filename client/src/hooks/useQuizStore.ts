@@ -18,6 +18,16 @@ const useQuizStore = create<State & Actions>()(
                 time;
             });
           },
+          setCurrentQuestionId: (id: string) => {
+            set((state) => {
+              state.currentQuestionId = id;
+            });
+          },
+          setSeed: (seed: number) => {
+            set((state) => {
+              state.randomSeed = seed;
+            });
+          },
           setAnswer({
             correctAnswer,
             answer,

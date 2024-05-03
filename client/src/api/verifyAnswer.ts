@@ -15,7 +15,7 @@ const verifyQuestionSchema = z.object({
 
 interface Params {
   quizId: string;
-  questionNumber?: string;
+  questionId?: string;
   answer?: string;
 }
 
@@ -23,11 +23,11 @@ export type VerifyAnswerResponse = z.infer<typeof verifyQuestionSchema>;
 
 export const verifyAnswer = async ({
   quizId,
-  questionNumber,
+  questionId,
   answer,
 }: Params): Promise<VerifyAnswerResponse> => {
   const result = await instance.get(
-    `/quiz/${quizId}/${questionNumber}/${answer}/verify`
+    `/quiz/${quizId}/${questionId}/${answer}/verify`
   );
   return verifyQuestionSchema.parse(result.data);
 };

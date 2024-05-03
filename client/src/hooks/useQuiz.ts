@@ -1,7 +1,3 @@
-import { useEffect } from "react";
-
-import { useWindowSize } from "@uidotdev/usehooks";
-import { useStopwatch } from "react-timer-hook";
 import { useShallow } from "zustand/react/shallow";
 import { useNavigate } from "react-router";
 
@@ -10,9 +6,6 @@ import useQuizQuery from "./useQuizQuery";
 import useVerifyAnswerQuery from "./useVerifyAnswerQuery";
 
 const useQuiz = () => {
-  const { seconds, minutes, pause, reset } = useStopwatch({ autoStart: true });
-  const windowSize = useWindowSize();
-
   const quizState = useQuizStore(
     useShallow((state) => state.questions[state.currentQuestionNumber - 1])
   );
@@ -22,6 +15,9 @@ const useQuiz = () => {
   );
 
   const setAnswer = useQuizStore(useShallow((state) => state.setAnswer));
+  const setCurrentQuestionId = useQuizStore(
+    useShallow((state) => state.setCurrentQuestionId)
+  );
 
   const nextQuestion = useQuizStore(useShallow((state) => state.nextQuestion));
   const previousQuestion = useQuizStore(
@@ -37,13 +33,15 @@ const useQuiz = () => {
     useShallow((state) => state.numberOfQuestionsAnswered)
   );
 
-  useEffect(() => {
-    reset();
-  }, [currentQuestion, reset]);
+  // useEffect(() => {
+  //   reset();
+  // }, [reset]);
 
   const navigate = useNavigate();
 
   const { quiz, isLoading: isLoadingQuiz, error: quizError } = useQuizQuery();
+
+  setCurrentQuestionId(quiz?.quizData.questions[currentQuestion - 1]._id);
 
   const {
     verificationResult,
@@ -52,12 +50,6 @@ const useQuiz = () => {
   } = useVerifyAnswerQuery();
 
   return {
-    stopwatch: {
-      seconds,
-      minutes,
-      pause,
-      reset,
-    },
     quizState: {
       ...quizState,
       currentScore,
@@ -71,7 +63,7 @@ const useQuiz = () => {
       previousQuestion,
     },
     quizQuery: {
-      quiz,
+      quiz: quiz?.quizData,
       isLoadingQuiz,
       quizError,
     },
@@ -81,7 +73,6 @@ const useQuiz = () => {
       errorVerify,
     },
 
-    windowSize,
     navigate,
   };
 };

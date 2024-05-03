@@ -72,17 +72,11 @@ const getQuestionsParams = {
 const verifyAnswerParams = {
   params: z.object({
     quizId: z.string({ required_error: "Quiz id is required" }),
-    questionNumber: z
-      .string({
-        required_error: "Question number is required",
-        invalid_type_error: "Question number must be a string",
-      })
-      .regex(/^(1|2|3|4)$/, {
-        message: "Question number must be less than or equal to 4",
-      }),
+    questionId: z.string({
+      required_error: "Question id is required",
+    }),
     answer: z.string({
       required_error: "Answer is required",
-      invalid_type_error: "Answer number must be a string",
     }),
   }),
 };

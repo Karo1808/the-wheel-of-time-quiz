@@ -7,6 +7,10 @@ import useQuizStore from "./useQuizStore";
 const useVerifyAnswerQuery = () => {
   const { quizId } = useParams<{ quizId?: string }>();
 
+  const currentQuestionId = useQuizStore(
+    useShallow((state) => state.currentQuestionId)
+  );
+
   const questionNumber = useQuizStore(
     useShallow((state) => state.currentQuestionNumber)
   );
@@ -22,15 +26,17 @@ const useVerifyAnswerQuery = () => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["quiz", quizId, questionNumber, answer],
+    queryKey: ["quiz", quizId, currentQuestionId, answer],
     queryFn: () =>
       verifyAnswer({
         quizId: quizId!,
-        questionNumber: questionNumber.toString(),
+        questionId: currentQuestionId,
         answer,
       }),
     enabled: !isQuestionAnswered,
   });
+
+  console.log(currentQuestionId);
 
   return { verificationResult, isLoading, error };
 };

@@ -11,6 +11,7 @@ const useQuizzesQuery = () => {
     queryFn: getQuizzes,
     placeholderData: keepPreviousData,
   });
+  console.log("Quizzes Query was called");
 
   return { quizzes, isLoading, error };
 };

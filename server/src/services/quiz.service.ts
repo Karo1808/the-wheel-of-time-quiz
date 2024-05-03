@@ -58,11 +58,11 @@ export async function getQuestions({
 
 export async function verifyAnswer({
   quizId,
-  questionNumber,
+  questionId,
   answer,
 }: {
   quizId: string;
-  questionNumber: number;
+  questionId: string;
   answer: string;
 }): Promise<{
   isCorrect: boolean;
@@ -70,11 +70,12 @@ export async function verifyAnswer({
   receivedAnswer: string;
 }> {
   try {
+    log.info(questionId);
     const {
       questions: [{ questionAnswer }],
     } = await QuizModel.findOne(
-      { _id: quizId },
-      { questions: { $elemMatch: { questionNumber: +questionNumber } } }
+      { _id: quizId, "questions._id": questionId },
+      { "questions.$": 1 } // Correct projection to only include the matching question
     );
 
     const isCorrect = questionAnswer === answer;
