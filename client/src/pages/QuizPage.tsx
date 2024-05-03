@@ -1,5 +1,3 @@
-import Button from "../components/Button";
-
 import styles from "../styles/quiz.module.css";
 import useQuiz from "../hooks/useQuiz";
 import QuizFooter from "../components/QuizFooter";

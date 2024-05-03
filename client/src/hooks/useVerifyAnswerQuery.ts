@@ -33,10 +33,10 @@ const useVerifyAnswerQuery = () => {
         questionId: currentQuestionId,
         answer,
       }),
-    enabled: !isQuestionAnswered,
+    enabled: isQuestionAnswered,
   });
 
-  console.log(currentQuestionId);
+  console.log("Verify Answer Query was called");
 
   return { verificationResult, isLoading, error };
 };

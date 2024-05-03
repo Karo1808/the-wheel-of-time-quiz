@@ -15,9 +15,6 @@ const useQuiz = () => {
   );
 
   const setAnswer = useQuizStore(useShallow((state) => state.setAnswer));
-  const setCurrentQuestionId = useQuizStore(
-    useShallow((state) => state.setCurrentQuestionId)
-  );
 
   const nextQuestion = useQuizStore(useShallow((state) => state.nextQuestion));
   const previousQuestion = useQuizStore(
@@ -41,7 +38,9 @@ const useQuiz = () => {
 
   const { quiz, isLoading: isLoadingQuiz, error: quizError } = useQuizQuery();
 
-  setCurrentQuestionId(quiz?.quizData.questions[currentQuestion - 1]._id);
+  const setSeed = useQuizStore(useShallow((state) => state.setSeed));
+
+  setSeed(quiz?.seed);
 
   const {
     verificationResult,

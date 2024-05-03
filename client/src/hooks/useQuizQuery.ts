@@ -31,11 +31,11 @@ const useQuizQuery = () => {
         );
         question.answers = randomAnswers;
       });
+      console.log("Called quizquery", seed, randomSeed);
       return { quizData: data, seed };
     },
   });
 
-  console.log("Called quizquery");
   return { quiz, isLoading, error };
 };
 

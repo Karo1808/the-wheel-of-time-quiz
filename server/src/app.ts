@@ -9,7 +9,7 @@ import errorHandler from "./middlewares/errorHandler";
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5174" }));
+app.use(cors({ origin: "http://localhost:5173" }));
 
 app.use(express.json());
 

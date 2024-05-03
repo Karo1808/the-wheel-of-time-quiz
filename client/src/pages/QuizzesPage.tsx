@@ -2,10 +2,9 @@ import { useNavigate } from "react-router";
 import useQuizzesQuery from "../hooks/useQuizzesQuery";
 
 const QuizzesPage = () => {
-  const { quizzes, error } = useQuizzesQuery();
+  const { quizzes } = useQuizzesQuery();
   const navigate = useNavigate();
 
-  console.error(error);
   const handleGoToQuiz = ({ quizId }: { quizId: string }) => {
     navigate(`/quiz/${quizId}`);
   };

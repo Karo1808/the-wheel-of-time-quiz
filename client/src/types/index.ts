@@ -31,7 +31,7 @@ export interface Actions {
   }) => void;
   nextQuestion: () => void;
   previousQuestion: () => void;
-  setSeed: (seed: number) => void;
+  setSeed: (seed?: number) => void;
   setQuestionTimer: (time: TimeFormat) => void;
   setCurrentQuestionId: (id?: string) => void;
 }
