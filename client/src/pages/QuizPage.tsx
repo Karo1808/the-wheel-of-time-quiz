@@ -4,10 +4,19 @@ import QuizFooter from "../components/QuizFooter";
 import QuizAnswer from "../components/QuizAnswer";
 import useQuizStore from "../hooks/useQuizStore";
 import { useShallow } from "zustand/react/shallow";
+import QuizHeader from "../components/QuizHeader";
+import { formatTime } from "../utils/shared";
+import { TimeFormat } from "../types";
 
 const QuizPage = () => {
-  const { navigate, quizActions, quizQuery, quizState, verifyQuery } =
-    useQuiz();
+  const {
+    navigate,
+    quizActions,
+    quizQuery,
+    quizState,
+    verifyQuery,
+    stopwatch,
+  } = useQuiz();
 
   const increaseScore = useQuizStore(
     useShallow((state) => state.increaseScore)
@@ -20,6 +29,7 @@ const QuizPage = () => {
       quizState.currentQuestion === quizQuery.quiz?.numberOfQuestions
     ) {
       navigate("/summary");
+      stopwatch.reset();
     } else {
       quizActions.nextQuestion();
     }
@@ -27,13 +37,14 @@ const QuizPage = () => {
 
   function handlePrevious() {
     quizActions.previousQuestion();
+    stopwatch.reset();
   }
 
   function handleAnswer(answer: string) {
-    // quizActions.setQuestionTimer(
-    //   formatTime(minutes * 60 + seconds) as TimeFormat
-    // );
-
+    stopwatch.pause();
+    quizActions.setQuestionTimer(
+      formatTime(stopwatch.minutes * 60 + stopwatch.seconds) as TimeFormat
+    );
     quizActions.setAnswer({
       answer,
     });
@@ -42,12 +53,12 @@ const QuizPage = () => {
 
   return (
     <>
-      <header className={styles.header}>
-        <span>{`Question ${quizState.currentQuestion}`}</span>
-        <span>
-          {/* {quizState.questionTimer || formatTime(minutes * 60 + seconds)} */}
-        </span>
-      </header>
+      <QuizHeader
+        currentQuestion={quizState.currentQuestion}
+        questionTimer={quizState.questionTimer}
+        minutes={stopwatch.minutes}
+        seconds={stopwatch.seconds}
+      />
       <section className={styles.container}>
         <h1 className={styles.question}>
           {

@@ -5,6 +5,7 @@ import useQuizStore from "../hooks/useQuizStore";
 import useQuizQuery from "./useQuizQuery";
 import useVerifyAnswerQuery from "./useVerifyAnswerQuery";
 import { useEffect } from "react";
+import { useStopwatch } from "react-timer-hook";
 
 const useQuiz = () => {
   const quizState = useQuizStore(
@@ -86,6 +87,10 @@ const useQuiz = () => {
     setCurrentQuestionId(quiz?.quizData?.questions[currentQuestion - 1]?._id);
   }, [currentQuestion, setCurrentQuestionId, quiz?.quizData?.questions]);
 
+  const { minutes, seconds, pause, reset } = useStopwatch({
+    autoStart: true,
+  });
+
   return {
     quizState: {
       ...quizState,
@@ -109,7 +114,12 @@ const useQuiz = () => {
       isLoadingVerify,
       errorVerify,
     },
-
+    stopwatch: {
+      minutes,
+      seconds,
+      pause,
+      reset,
+    },
     navigate,
   };
 };
