@@ -2,12 +2,14 @@ import { Request, Response } from "express";
 
 import {
   CreateQuizSchema,
+  GetQuestionsRandomSchema,
   GetQuestionsSchema,
   VerifyAnswerSchema,
 } from "schemas/quiz.schema";
 import {
   createQuiz,
   getQuestions,
+  getQuestionsRandom,
   getQuizzes,
   verifyAnswer,
 } from "../services/quiz.service";
@@ -38,6 +40,22 @@ export async function getQuestionsHandler(
 ) {
   const result = await getQuestions({
     quizId: req.params.quizId,
+  });
+
+  if (!result) {
+    return res.status(404).send("Resource not found");
+  }
+
+  return res.status(200).send(result);
+}
+
+export async function getQuestionsRandomHandler(
+  req: Request<GetQuestionsRandomSchema["params"]>,
+  res: Response
+) {
+  const result = await getQuestionsRandom({
+    quizId: req.params.quizId,
+    seed: +req.params.seed,
   });
 
   if (!result) {

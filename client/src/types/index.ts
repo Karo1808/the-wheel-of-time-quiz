@@ -14,24 +14,17 @@ export interface State {
 
 export interface Question {
   questionTimer: null | TimeFormat;
-  correctAnswer?: string;
   answer?: string;
-  isCorrect?: boolean;
+  isQuestionAnswered: boolean;
 }
 
 export interface Actions {
-  setAnswer: ({
-    correctAnswer,
-    isCorrect,
-    answer,
-  }: {
-    correctAnswer?: string;
-    isCorrect?: boolean;
-    answer?: string;
-  }) => void;
+  setAnswer: ({ answer }: { answer?: string }) => void;
   nextQuestion: () => void;
   previousQuestion: () => void;
   setSeed: (seed?: number) => void;
   setQuestionTimer: (time: TimeFormat) => void;
   setCurrentQuestionId: (id?: string) => void;
+  increaseScore: () => void;
+  setIsQuestionAnswered: () => void;
 }

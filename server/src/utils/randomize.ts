@@ -17,7 +17,7 @@ export function shuffleArray<T>(
   seed?: number
 ): { newArray: T[]; seed: number } {
   // Generate a seed if not provided
-  if (seed === undefined) {
+  if (!seed) {
     seed = Math.floor(Math.random() * 1000000000);
   }
 

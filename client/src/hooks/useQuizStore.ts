@@ -28,28 +28,13 @@ const useQuizStore = create<State & Actions>()(
               state.randomSeed = seed;
             });
           },
-          setAnswer({
-            correctAnswer,
-            answer,
-            isCorrect,
-          }: {
-            answer?: string;
-            correctAnswer?: string;
-            isCorrect?: boolean;
-          }) {
+          setAnswer({ answer }: { answer?: string }) {
             set((state) => {
               const currentQuestion =
                 state.questions[state.currentQuestionNumber - 1];
 
-              currentQuestion.correctAnswer = correctAnswer;
-
-              currentQuestion.isCorrect = isCorrect;
-
               currentQuestion.answer = answer;
-
               state.numberOfQuestionsAnswered++;
-
-              state.currentScore += isCorrect ? 1 : 0;
 
               state.currentTime = formatTime(
                 currentQuestion.questionTimer || "00:00"
@@ -64,6 +49,18 @@ const useQuizStore = create<State & Actions>()(
           previousQuestion: () => {
             set((state) => {
               state.currentQuestionNumber--;
+            });
+          },
+          increaseScore: () => {
+            set((state) => {
+              state.currentScore++;
+            });
+          },
+          setIsQuestionAnswered: () => {
+            set((state) => {
+              state.questions[
+                state.currentQuestionNumber - 1
+              ].isQuestionAnswered = true;
             });
           },
         }),

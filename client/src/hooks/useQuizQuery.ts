@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import { getQuiz } from "../api/getQuiz";
-import { shuffleArray } from "../utils/randomize";
 import useQuizStore from "./useQuizStore";
 import { useShallow } from "zustand/react/shallow";
 
@@ -15,25 +14,9 @@ const useQuizQuery = () => {
     error,
   } = useQuery({
     queryKey: ["quiz", quizId],
-    queryFn: () => getQuiz({ quizId: quizId! }),
+    queryFn: () => getQuiz({ quizId: quizId!, seed: randomSeed?.toString() }),
     enabled: !!quizId,
     staleTime: Infinity,
-    select: (data) => {
-      const { newArray: randomQuestions, seed } = shuffleArray(
-        data.questions,
-        randomSeed
-      );
-      data.questions = randomQuestions;
-      data.questions.forEach((question) => {
-        const { newArray: randomAnswers } = shuffleArray(
-          question.answers,
-          seed
-        );
-        question.answers = randomAnswers;
-      });
-      console.log("Called quizquery", seed, randomSeed);
-      return { quizData: data, seed };
-    },
   });
 
   return { quiz, isLoading, error };

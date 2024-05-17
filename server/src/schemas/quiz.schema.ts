@@ -69,6 +69,13 @@ const getQuestionsParams = {
   }),
 };
 
+const getQuestionsRandomParams = {
+  params: z.object({
+    quizId: z.string({ required_error: "Quiz id is required" }),
+    seed: z.string().optional(),
+  }),
+};
+
 const verifyAnswerParams = {
   params: z.object({
     quizId: z.string({ required_error: "Quiz id is required" }),
@@ -89,6 +96,10 @@ export const getQuestionsSchema = z.object({
   ...getQuestionsParams,
 });
 
+export const getQuestionsRandomSchema = z.object({
+  ...getQuestionsRandomParams,
+});
+
 export const verifyAnswerSchema = z.object({
   ...verifyAnswerParams,
 });
@@ -98,3 +109,7 @@ export type CreateQuizSchema = z.TypeOf<typeof createQuizSchema>;
 export type GetQuestionsSchema = z.TypeOf<typeof getQuestionsSchema>;
 
 export type VerifyAnswerSchema = z.TypeOf<typeof verifyAnswerSchema>;
+
+export type GetQuestionsRandomSchema = z.TypeOf<
+  typeof getQuestionsRandomSchema
+>;

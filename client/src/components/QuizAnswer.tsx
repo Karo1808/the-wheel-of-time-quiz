@@ -6,6 +6,7 @@ interface Props {
   answerLabel: string;
   answer?: string;
   answerNumber: number;
+  isCorrect?: boolean;
   handleAnswer: (answer: string) => void;
 }
 
@@ -14,10 +15,12 @@ const QuizAnswer = ({
   answerLabel,
   answer,
   answerNumber,
+  isCorrect,
   handleAnswer,
 }: Props) => {
   let state: "correct" | "incorrect" | "disabled" | "none" = "none";
-  if (answer) {
+
+  if (answer && correctAnswer) {
     if (correctAnswer === answerLabel) {
       state = "correct";
     } else if (answer === answerLabel) {
@@ -26,6 +29,7 @@ const QuizAnswer = ({
       state = "disabled";
     }
   }
+
   return (
     <Button
       key={answerNumber}

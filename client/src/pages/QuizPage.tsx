@@ -2,10 +2,16 @@ import styles from "../styles/quiz.module.css";
 import useQuiz from "../hooks/useQuiz";
 import QuizFooter from "../components/QuizFooter";
 import QuizAnswer from "../components/QuizAnswer";
+import useQuizStore from "../hooks/useQuizStore";
+import { useShallow } from "zustand/react/shallow";
 
 const QuizPage = () => {
   const { navigate, quizActions, quizQuery, quizState, verifyQuery } =
     useQuiz();
+
+  const increaseScore = useQuizStore(
+    useShallow((state) => state.increaseScore)
+  );
 
   function handleNext() {
     if (
@@ -24,16 +30,14 @@ const QuizPage = () => {
   }
 
   function handleAnswer(answer: string) {
-    console.log("Clicked");
     // quizActions.setQuestionTimer(
     //   formatTime(minutes * 60 + seconds) as TimeFormat
     // );
 
     quizActions.setAnswer({
       answer,
-      correctAnswer: verifyQuery.verificationResult?.correctAnswer,
-      isCorrect: verifyQuery.verificationResult?.isCorrect,
     });
+    if (verifyQuery.verificationResult?.isCorrect) increaseScore();
   }
 
   return (
@@ -65,7 +69,8 @@ const QuizPage = () => {
               answer={quizState.answer}
               answerLabel={ans.answerLabel}
               answerNumber={ans.answerNumber}
-              correctAnswer={quizState?.correctAnswer}
+              correctAnswer={verifyQuery.verificationResult?.correctAnswer}
+              isCorrect={verifyQuery.verificationResult?.isCorrect}
               handleAnswer={handleAnswer}
               key={ans.answerNumber}
             />

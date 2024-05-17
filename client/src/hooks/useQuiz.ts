@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import useQuizStore from "../hooks/useQuizStore";
 import useQuizQuery from "./useQuizQuery";
 import useVerifyAnswerQuery from "./useVerifyAnswerQuery";
+import { useEffect } from "react";
 
 const useQuiz = () => {
   const quizState = useQuizStore(
@@ -30,23 +31,60 @@ const useQuiz = () => {
     useShallow((state) => state.numberOfQuestionsAnswered)
   );
 
-  // useEffect(() => {
-  //   reset();
-  // }, [reset]);
-
   const navigate = useNavigate();
 
   const { quiz, isLoading: isLoadingQuiz, error: quizError } = useQuizQuery();
 
   const setSeed = useQuizStore(useShallow((state) => state.setSeed));
 
-  setSeed(quiz?.seed);
+  const setCurrentQuestionId = useQuizStore(
+    useShallow((state) => state.setCurrentQuestionId)
+  );
+
+  const seed = useQuizStore(useShallow((state) => state.randomSeed));
+
+  useEffect(() => {
+    if (!seed) {
+      setSeed(quiz?.seed);
+    }
+  }, [quiz?.seed, setSeed, seed]);
+
+  const increaseScore = useQuizStore(
+    useShallow((state) => state.increaseScore)
+  );
+
+  const setIsQuestionAnswered = useQuizStore(
+    useShallow((state) => state.setIsQuestionAnswered)
+  );
+
+  const isQuestionAnswered = useQuizStore(
+    useShallow(
+      (state) =>
+        state.questions[state.currentQuestionNumber - 1].isQuestionAnswered
+    )
+  );
 
   const {
     verificationResult,
     isLoading: isLoadingVerify,
     error: errorVerify,
   } = useVerifyAnswerQuery();
+
+  useEffect(() => {
+    if (verificationResult?.isCorrect && !isQuestionAnswered) {
+      increaseScore();
+      setIsQuestionAnswered();
+    }
+  }, [
+    verificationResult?.isCorrect,
+    increaseScore,
+    setIsQuestionAnswered,
+    isQuestionAnswered,
+  ]);
+
+  useEffect(() => {
+    setCurrentQuestionId(quiz?.quizData?.questions[currentQuestion - 1]?._id);
+  }, [currentQuestion, setCurrentQuestionId, quiz?.quizData?.questions]);
 
   return {
     quizState: {

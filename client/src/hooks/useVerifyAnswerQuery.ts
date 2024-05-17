@@ -36,7 +36,6 @@ const useVerifyAnswerQuery = () => {
     enabled: isQuestionAnswered,
   });
 
-  console.log("Verify Answer Query was called");
 
   return { verificationResult, isLoading, error };
 };

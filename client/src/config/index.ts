@@ -9,21 +9,18 @@ export const initialState: State = {
   randomSeed: undefined,
   questions: [
     {
-      correctAnswer: undefined,
       answer: undefined,
-      isCorrect: undefined,
+      isQuestionAnswered: false,
       questionTimer: null,
     },
     {
-      correctAnswer: undefined,
+      isQuestionAnswered: false,
       answer: undefined,
-      isCorrect: undefined,
       questionTimer: null,
     },
     {
-      correctAnswer: undefined,
       answer: undefined,
-      isCorrect: undefined,
+      isQuestionAnswered: false,
       questionTimer: null,
     },
   ],

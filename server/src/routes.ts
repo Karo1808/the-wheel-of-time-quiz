@@ -1,12 +1,14 @@
 import {
   createQuizHandler,
   getQuestionsHandler,
+  getQuestionsRandomHandler,
   getQuizzesHandler,
   verifyAnswerHandler,
 } from "./controllers/quiz.controller";
 import { Express, NextFunction, Request, Response } from "express";
 import {
   createQuizSchema,
+  getQuestionsRandomSchema,
   getQuestionsSchema,
   verifyAnswerSchema,
 } from "./schemas/quiz.schema";
@@ -27,6 +29,12 @@ function routes(app: Express) {
     "/api/quiz/:quizId",
     validateRequest(getQuestionsSchema),
     getQuestionsHandler
+  );
+
+  app.get(
+    "/api/quiz/:quizId/random/:seed?",
+    validateRequest(getQuestionsRandomSchema),
+    getQuestionsRandomHandler
   );
 
   app.get(
