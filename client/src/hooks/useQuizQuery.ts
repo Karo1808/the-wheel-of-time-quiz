@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import { getQuiz } from "../api/getQuiz";
 import useQuizStore from "./useQuizStore";
@@ -12,10 +12,9 @@ const useQuizQuery = () => {
     data: quiz,
     isLoading,
     error,
-  } = useQuery({
+  } = useSuspenseQuery({
     queryKey: ["quiz", quizId],
     queryFn: () => getQuiz({ quizId: quizId!, seed: randomSeed?.toString() }),
-    enabled: !!quizId,
     staleTime: Infinity,
   });
 

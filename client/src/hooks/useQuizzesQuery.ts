@@ -1,4 +1,4 @@
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { getQuizzes } from "../api/getQuizzes";
 
 const useQuizzesQuery = () => {
@@ -6,10 +6,9 @@ const useQuizzesQuery = () => {
     data: quizzes,
     isLoading,
     error,
-  } = useQuery({
+  } = useSuspenseQuery({
     queryKey: ["quizzes"],
     queryFn: getQuizzes,
-    placeholderData: keepPreviousData,
   });
 
   return { quizzes, isLoading, error };
