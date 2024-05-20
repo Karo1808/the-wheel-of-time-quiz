@@ -10,7 +10,7 @@ const useQuizQuery = () => {
 
   const {
     data: quiz,
-    isLoading,
+    refetch,
     error,
   } = useSuspenseQuery({
     queryKey: ["quiz", quizId],
@@ -18,7 +18,7 @@ const useQuizQuery = () => {
     staleTime: Infinity,
   });
 
-  return { quiz, isLoading, error };
+  return { quiz, error, refetch };
 };
 
 export default useQuizQuery;

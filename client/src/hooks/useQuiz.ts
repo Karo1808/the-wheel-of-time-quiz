@@ -34,7 +34,7 @@ const useQuiz = () => {
 
   const navigate = useNavigate();
 
-  const { quiz, isLoading: isLoadingQuiz, error: quizError } = useQuizQuery();
+  const { quiz, error: quizError, refetch: quizRefetch } = useQuizQuery();
 
   const setSeed = useQuizStore(useShallow((state) => state.setSeed));
 
@@ -106,8 +106,8 @@ const useQuiz = () => {
     },
     quizQuery: {
       quiz: quiz?.quizData,
-      isLoadingQuiz,
       quizError,
+      quizRefetch,
     },
     verifyQuery: {
       verificationResult,

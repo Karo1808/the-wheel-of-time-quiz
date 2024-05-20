@@ -51,6 +51,17 @@ const QuizPage = () => {
     if (verifyQuery.verificationResult?.isCorrect) increaseScore();
   }
 
+  if (quizQuery.quizError) {
+    console.error(quizQuery.quizError);
+    // TODO Implement error for quiz
+    return (
+      <>
+        <p>{quizQuery.quizError.message}</p>
+        <button onClick={() => quizQuery.quizRefetch}>Try Again!</button>
+      </>
+    );
+  }
+
   return (
     <>
       <QuizHeader
@@ -82,6 +93,7 @@ const QuizPage = () => {
               answerNumber={ans.answerNumber}
               correctAnswer={verifyQuery.verificationResult?.correctAnswer}
               isCorrect={verifyQuery.verificationResult?.isCorrect}
+              isError={verifyQuery.errorVerify}
               handleAnswer={handleAnswer}
               key={ans.answerNumber}
             />

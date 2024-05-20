@@ -7,16 +7,19 @@ interface Props {
   answer?: string;
   answerNumber: number;
   isCorrect?: boolean;
+  isError?: boolean;
   handleAnswer: (answer: string) => void;
 }
+
+// TODO: Add error handling
 
 const QuizAnswer = ({
   correctAnswer,
   answerLabel,
   answer,
   answerNumber,
-  isCorrect,
   handleAnswer,
+  isError,
 }: Props) => {
   let state: "correct" | "incorrect" | "disabled" | "none" = "none";
 
