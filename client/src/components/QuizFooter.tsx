@@ -3,6 +3,7 @@ import Button from "./Button";
 import ButtonDirection from "./ButtonDirection";
 
 import styles from "../styles/quiz.module.css";
+import useQuizNavigation from "../hooks/useQuizNavigation";
 
 interface Props {
   currentQuestion: number;
@@ -22,6 +23,11 @@ const QuizFooter = ({
   handlePrevious,
 }: Props) => {
   const windowSize = useWindowSize();
+
+  useQuizNavigation({
+    handleNextQuestion: handleNext,
+    handlePreviousQuestion: handlePrevious,
+  });
 
   // Ensure there is a window size to work with
   if (!windowSize?.width) return null;

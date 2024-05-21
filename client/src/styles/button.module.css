@@ -9,7 +9,7 @@
   outline: none;
 
   &:focus {
-    filter: brightness(0.95);
+    filter: brightness(0.9);
   }
 
   &:disabled {

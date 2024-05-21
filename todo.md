@@ -6,7 +6,7 @@
 - [x] - shuffle based on zustand state order or random
 - [x] - add loading and error handling
 - [x] - design an error page
-- [ ] - add keyboard navigation
+- [x] - add keyboard navigation
 - [ ] - Create a timeline component
 - [ ] - Create a quizzes page
 

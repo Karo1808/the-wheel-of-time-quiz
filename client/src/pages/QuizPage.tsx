@@ -26,20 +26,29 @@ const QuizPage = () => {
 
   function handleNext() {
     if (
-      quizState.numberOfQuestionsAnswered ===
-        quizQuery.quiz?.numberOfQuestions &&
-      quizState.currentQuestion === quizQuery.quiz?.numberOfQuestions
+      !(
+        quizState.currentQuestion > quizQuery.quiz.numberOfQuestions ||
+        quizState.currentQuestion > quizState.numberOfQuestionsAnswered
+      )
     ) {
-      navigate("/summary");
-      stopwatch.reset();
-    } else {
-      quizActions.nextQuestion();
+      if (
+        quizState.numberOfQuestionsAnswered ===
+          quizQuery.quiz?.numberOfQuestions &&
+        quizState.currentQuestion === quizQuery.quiz?.numberOfQuestions
+      ) {
+        navigate("/summary");
+        stopwatch.reset();
+      } else {
+        quizActions.nextQuestion();
+      }
     }
   }
 
   function handlePrevious() {
-    quizActions.previousQuestion();
-    stopwatch.reset();
+    if (!(quizState.currentQuestion - 1 < 1)) {
+      quizActions.previousQuestion();
+      stopwatch.reset();
+    }
   }
 
   function handleAnswer(answer: string) {
