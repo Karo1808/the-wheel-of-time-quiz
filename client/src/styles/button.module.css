@@ -8,6 +8,10 @@
   border: none;
   outline: none;
 
+  &:focus {
+    filter: brightness(0.95);
+  }
+
   &:disabled {
     cursor: not-allowed;
   }

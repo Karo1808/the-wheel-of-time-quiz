@@ -77,6 +77,10 @@ export async function getQuestionsRandom({
       }
     );
 
+    if (!result) {
+      return null;
+    }
+
     const { newArray: randomQuestions, seed: randomSeed } = shuffleArray(
       result?.questions,
       seed

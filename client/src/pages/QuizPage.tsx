@@ -7,7 +7,7 @@ import { useShallow } from "zustand/react/shallow";
 import QuizHeader from "../components/QuizHeader";
 import { formatTime } from "../utils/shared";
 import { TimeFormat } from "../types";
-
+import useButtonKeysNavigation from "../hooks/useButtonNavigation";
 const QuizPage = () => {
   const {
     navigate,
@@ -17,6 +17,8 @@ const QuizPage = () => {
     verifyQuery,
     stopwatch,
   } = useQuiz();
+
+  const { handleKeyDown, buttonRefs } = useButtonKeysNavigation();
 
   const increaseScore = useQuizStore(
     useShallow((state) => state.increaseScore)
@@ -75,7 +77,7 @@ const QuizPage = () => {
 
       <section className={styles.answers}>
         {quizQuery.quiz?.questions[quizState.currentQuestion - 1].answers.map(
-          (ans) => (
+          (ans, index) => (
             <QuizAnswer
               answer={quizState.answer}
               answerLabel={ans.answerLabel}
@@ -85,6 +87,9 @@ const QuizPage = () => {
               isError={verifyQuery.errorVerify ? true : false}
               handleAnswer={handleAnswer}
               key={ans.answerNumber}
+              index={index}
+              buttonRefs={buttonRefs}
+              handleKeyDown={handleKeyDown}
             />
           )
         )}

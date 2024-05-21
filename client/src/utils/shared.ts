@@ -11,3 +11,9 @@ export const formatTime = (time: TimeFormat) => {
     .toString()
     .padStart(2, "0")}`;
 };
+
+export const indexToRowsAndCols = (index: number) => {
+  const rows = index === 0 || index === 1 ? 0 : 1;
+  const cols = index === 0 || index === 2 ? 0 : 1;
+  return { rows, cols };
+};

@@ -1,3 +1,4 @@
+import React from "react";
 import Button from "./Button";
 import styles from "../styles/quiz.module.css";
 import toast from "react-hot-toast";
@@ -9,10 +10,15 @@ interface Props {
   answerNumber: number;
   isCorrect?: boolean;
   isError?: boolean;
+  index: number;
   handleAnswer: (answer: string) => void;
+  buttonRefs: React.RefObject<(HTMLButtonElement | null)[][]>;
+  handleKeyDown: (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    row: number,
+    col: number
+  ) => void;
 }
-
-// TODO: Add error handling
 
 const QuizAnswer = ({
   correctAnswer,
@@ -20,6 +26,9 @@ const QuizAnswer = ({
   answer,
   handleAnswer,
   isError,
+  index,
+  buttonRefs,
+  handleKeyDown,
 }: Props) => {
   let state: "correct" | "incorrect" | "disabled" | "none" = "none";
 
@@ -42,6 +51,9 @@ const QuizAnswer = ({
       state={state}
       className={styles.button}
       onClick={() => handleAnswer(answerLabel)}
+      index={index}
+      buttonRefs={buttonRefs}
+      handleKeyDown={handleKeyDown}
     >
       {answerLabel}
     </Button>
