@@ -3,8 +3,10 @@
 #### Client
 
 - [x] - Integrate with server
-- [ ] - shuffle based on zustand state order or random
+- [x] - shuffle based on zustand state order or random
 - [ ] - add loading and error handling
+- [ ] - design an error page
+- [ ] - add keyboard navigation
 - [ ] - Create a timeline component
 - [ ] - Create a quizzes page
 

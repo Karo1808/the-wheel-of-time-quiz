@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import * as z from "zod";
 
 const createQuizPayload = {
@@ -65,23 +66,37 @@ const createQuizPayload = {
 
 const getQuestionsParams = {
   params: z.object({
-    quizId: z.string({ required_error: "Quiz id is required" }),
+    quizId: z
+      .string({ required_error: "Quiz id is required" })
+      .refine((val) => {
+        return mongoose.Types.ObjectId.isValid(val);
+      }),
   }),
 };
 
 const getQuestionsRandomParams = {
   params: z.object({
-    quizId: z.string({ required_error: "Quiz id is required" }),
+    quizId: z
+      .string({ required_error: "Quiz id is required" })
+      .refine((val) => {
+        return mongoose.Types.ObjectId.isValid(val);
+      }),
     seed: z.string().optional(),
   }),
 };
 
 const verifyAnswerParams = {
   params: z.object({
-    quizId: z.string({ required_error: "Quiz id is required" }),
-    questionId: z.string({
-      required_error: "Question id is required",
-    }),
+    quizId: z
+      .string({ required_error: "Quiz id is required" })
+      .refine((val) => {
+        return mongoose.Types.ObjectId.isValid(val);
+      }),
+    questionId: z
+      .string({ required_error: "Question id is required" })
+      .refine((val) => {
+        return mongoose.Types.ObjectId.isValid(val);
+      }),
     answer: z.string({
       required_error: "Answer is required",
     }),

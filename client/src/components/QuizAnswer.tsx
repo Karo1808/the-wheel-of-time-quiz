@@ -17,7 +17,6 @@ const QuizAnswer = ({
   correctAnswer,
   answerLabel,
   answer,
-  answerNumber,
   handleAnswer,
   isError,
 }: Props) => {
@@ -35,7 +34,6 @@ const QuizAnswer = ({
 
   return (
     <Button
-      key={answerNumber}
       state={state}
       className={styles.button}
       onClick={() => handleAnswer(answerLabel)}

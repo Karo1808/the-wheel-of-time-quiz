@@ -9,7 +9,9 @@ interface Props {
     | "disabled"
     | "next"
     | "disabled"
-    | "invisible";
+    | "invisible"
+    | "not_found"
+    | "error";
   className?: string;
   onClick?: () => void;
 }

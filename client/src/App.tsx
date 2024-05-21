@@ -4,6 +4,7 @@ import { lazy } from "react";
 import Loading from "./pages/loading/Loading";
 import SuspenseLayout from "./pages/loading/SuspenseLayout";
 import QuizPageSkeleton from "./pages/loading/QuizPageSkeleton";
+import Page404 from "./pages/404";
 
 const QuizPage = lazy(() => import("./pages/QuizPage"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
@@ -23,6 +24,7 @@ const App = () => {
           </Route>
           <Route path="/skeleton" element={<QuizPageSkeleton />}></Route>
         </Route>
+        <Route path="*" element={<Page404 />}></Route>
       </Routes>
     </>
   );
