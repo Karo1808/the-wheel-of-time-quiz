@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ErrorBoundary } from "react-error-boundary";
 import Error from "./pages/Error.tsx";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,16 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <App />
         </ErrorBoundary>
       </BrowserRouter>
+      <Toaster
+        toastOptions={{
+          style: {
+            background: "#261911",
+            border: "1px solid #f5f1ed",
+            color: "#f5f1ed",
+            padding: "1rem",
+          },
+        }}
+      />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>
