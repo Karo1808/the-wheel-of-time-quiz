@@ -1,8 +1,14 @@
 import { useRef } from "react";
 
-const useButtonKeysNavigation = () => {
-  const rows = 2;
-  const cols = 2;
+interface UseButtonKeysNavigationProps {
+  rows: number;
+  cols: number;
+}
+
+const useButtonKeysNavigation = ({
+  rows,
+  cols,
+}: UseButtonKeysNavigationProps) => {
   const buttonRefs = useRef<(HTMLButtonElement | null)[][]>(
     Array.from({ length: rows }, () => Array(cols).fill(null))
   );
@@ -39,7 +45,9 @@ const useButtonKeysNavigation = () => {
   };
 
   const focusButton = (row: number, col: number) => {
-    buttonRefs.current[row][col]?.focus();
+    if (buttonRefs.current[row] && buttonRefs.current[row][col]) {
+      buttonRefs.current[row][col]?.focus();
+    }
   };
 
   return { buttonRefs, handleKeyDown };

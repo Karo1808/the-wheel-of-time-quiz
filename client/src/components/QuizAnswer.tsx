@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "./Button";
 import styles from "../styles/quiz.module.css";
 import toast from "react-hot-toast";
@@ -30,21 +30,22 @@ const QuizAnswer = ({
   buttonRefs,
   handleKeyDown,
 }: Props) => {
-  let state: "correct" | "incorrect" | "disabled" | "none" = "none";
-
-  if (answer && correctAnswer) {
-    if (correctAnswer === answerLabel) {
-      state = "correct";
-    } else if (answer === answerLabel) {
-      state = "incorrect";
-    } else {
-      state = "disabled";
+  const getState = () => {
+    if (answer && correctAnswer) {
+      if (correctAnswer === answerLabel) return "correct";
+      if (answer === answerLabel) return "incorrect";
+      return "disabled";
     }
-  }
+    return "none";
+  };
 
-  if (isError) {
-    toast.error("Something went wrong. Please try again.");
-  }
+  const state = getState();
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("Something went wrong. Please try again.");
+    }
+  }, [isError]);
 
   return (
     <Button

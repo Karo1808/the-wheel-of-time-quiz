@@ -8,6 +8,7 @@ import QuizHeader from "../components/QuizHeader";
 import { formatTime } from "../utils/shared";
 import { TimeFormat } from "../types";
 import useButtonKeysNavigation from "../hooks/useButtonNavigation";
+import { useWindowSize } from "@uidotdev/usehooks";
 const QuizPage = () => {
   const {
     navigate,
@@ -18,10 +19,14 @@ const QuizPage = () => {
     stopwatch,
   } = useQuiz();
 
-  const { handleKeyDown, buttonRefs } = useButtonKeysNavigation();
-
   const increaseScore = useQuizStore(
     useShallow((state) => state.increaseScore)
+  );
+
+  const windowSize = useWindowSize();
+
+  const { handleKeyDown, buttonRefs } = useButtonKeysNavigation(
+    windowSize?.width || 0 > 1200 ? { rows: 2, cols: 2 } : { rows: 4, cols: 1 }
   );
 
   function handleNext() {

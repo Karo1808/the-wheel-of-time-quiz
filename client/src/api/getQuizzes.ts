@@ -24,6 +24,5 @@ export type GetQuizzesResponse = z.infer<typeof getQuizzesSchema>;
 
 export const getQuizzes = async (): Promise<GetQuizzesResponse> => {
   const result = await instance.get("/quizzes");
-  console.log(result);
   return getQuizzesSchema.parse(result.data);
 };

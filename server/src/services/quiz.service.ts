@@ -1,4 +1,3 @@
-import mongoose, { FilterQuery, QueryOptions } from "mongoose";
 import QuizModel, { QuizDocument, QuizInput } from "../models/quiz.model";
 import log from "../utils/logger";
 import { shuffleArray } from "../utils/randomize";
@@ -8,8 +7,8 @@ export async function createQuiz(quiz: QuizInput): Promise<QuizDocument> {
     const result = await QuizModel.create(quiz);
     return result;
   } catch (error: any) {
-    console.error(error.message);
-    throw error;
+    log.error(`Error creating quiz: ${error.message}`);
+    throw new Error("Error creating quiz");
   }
 }
 
@@ -26,9 +25,9 @@ export async function getQuizzes(): Promise<QuizDocument[]> {
       {}
     );
     return result;
-  } catch (error) {
-    log.error(error);
-    throw error;
+  } catch (error: any) {
+    log.error(`Error fetching quizzes: ${error.message}`);
+    throw new Error("Error fetching quizzes");
   }
 }
 
@@ -50,10 +49,14 @@ export async function getQuestions({
       }
     );
 
+    if (!result) {
+      throw new Error("Quiz not found");
+    }
+
     return result;
-  } catch (error) {
-    log.error(error);
-    throw error;
+  } catch (error: any) {
+    log.error(`Error fetching questions for quiz ${quizId}: ${error.message}`);
+    throw new Error("Error fetching questions");
   }
 }
 
@@ -63,7 +66,7 @@ export async function getQuestionsRandom({
 }: {
   quizId: string;
   seed?: number;
-}): Promise<{ quizData: QuizDocument; seed: number }> {
+}): Promise<{ quizData: QuizDocument; seed: number } | null> {
   try {
     const result = await QuizModel.findOne(
       { _id: quizId },
@@ -78,7 +81,7 @@ export async function getQuestionsRandom({
     );
 
     if (!result) {
-      return null;
+      throw new Error("Quiz not found");
     }
 
     const { newArray: randomQuestions, seed: randomSeed } = shuffleArray(
@@ -95,9 +98,11 @@ export async function getQuestionsRandom({
       question.answers = randomAnswers;
     });
     return { quizData: result, seed: randomSeed };
-  } catch (error) {
-    log.error(error);
-    throw error;
+  } catch (error: any) {
+    log.error(
+      `Error fetching random questions for quiz ${quizId}: ${error.message}`
+    );
+    throw new Error("Error fetching random questions");
   }
 }
 
@@ -122,13 +127,19 @@ export async function verifyAnswer({
       { "questions.$": 1 } // Correct projection to only include the matching question
     );
 
+    if (!questionAnswer) {
+      throw new Error("Question not found");
+    }
+
     const isCorrect = questionAnswer === answer;
     const correctAnswer = questionAnswer;
     const receivedAnswer = answer;
 
     return { isCorrect, correctAnswer, receivedAnswer };
-  } catch (error) {
-    log.error(error);
-    throw error;
+  } catch (error: any) {
+    log.error(
+      `Error verifying answer for quiz ${quizId}, question ${questionId}: ${error.message}`
+    );
+    throw new Error("Error verifying answer");
   }
 }
