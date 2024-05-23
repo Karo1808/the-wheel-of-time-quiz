@@ -28,10 +28,7 @@ const createQuizPayload = {
               required_error: "Question number is required",
               invalid_type_error: "Question number must be a number",
             })
-            .positive({ message: "Question number must be positive" })
-            .max(4, {
-              message: "Question number must be less than or equal to 4",
-            }),
+            .positive({ message: "Question number must be positive" }),
 
           questionLabel: z
             .string({ required_error: "Question label is required" })
