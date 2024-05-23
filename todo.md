@@ -8,7 +8,8 @@
 - [x] - Design an error page
 - [x] - Add keyboard navigation
 - [x] - Fix keyboard navigation on focus
-- [ ] - Persist time on active question
+- [x] - Persist time on active question when switiching questions
+- [ ] - Persist time on refresh
 - [ ] - Create a timeline component
 - [ ] - expand store to store multiple quizzes
 - [ ] - Create a quizzes page
