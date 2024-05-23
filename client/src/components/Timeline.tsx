@@ -1,20 +1,55 @@
-import styles from "../styles/timeline.module.css";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import styles from "../styles/timeline.module.css";
+
+const COLOR_CORRECT = "#3f704d";
+const COLOR_WRONG = "#9d2933";
 
 const Timeline = () => {
   return (
-    <div className={styles.container}>
-      <div className={styles.bar}>
-        <IoIosCheckmarkCircle size={40} color="green" className={styles.icon} />
-        <IoIosCheckmarkCircle size={40} color="green" className={styles.icon} />
-        <IoIosCheckmarkCircle size={40} color="green" className={styles.icon} />
-        <IoIosCheckmarkCircle size={40} color="green" className={styles.icon} />
-        <IoIosCheckmarkCircle size={40} color="green" className={styles.icon} />
-        <IoIosCheckmarkCircle size={40} color="green" className={styles.icon} />
-        <IoIosCheckmarkCircle size={40} color="green" className={styles.icon} />
-        <IoIosCheckmarkCircle size={40} color="green" className={styles.icon} />
-        <IoIosCheckmarkCircle size={40} color="green" className={styles.icon} />
+    <div className={styles.timeline}>
+      <div className={styles.icon_container}>
+        <IoIosCheckmarkCircle
+          className={styles.icon}
+          size={35}
+          color={COLOR_CORRECT}
+        />
+        <IoIosCheckmarkCircle
+          className={styles.icon}
+          size={35}
+          color={COLOR_CORRECT}
+        />
+        <IoIosCheckmarkCircle
+          className={styles.icon}
+          size={35}
+          color={COLOR_CORRECT}
+        />
+        <IoIosCheckmarkCircle
+          className={styles.icon}
+          size={35}
+          color={COLOR_CORRECT}
+        />
+        <IoIosCheckmarkCircle
+          className={styles.icon}
+          size={35}
+          color={COLOR_CORRECT}
+        />
+        <IoIosCheckmarkCircle
+          className={styles.icon}
+          size={35}
+          color={COLOR_CORRECT}
+        />
+        <IoIosCheckmarkCircle
+          className={styles.icon}
+          size={35}
+          color={COLOR_CORRECT}
+        />
+        <IoIosCheckmarkCircle
+          className={styles.icon}
+          size={35}
+          color={COLOR_CORRECT}
+        />
       </div>
+      <div className={styles.bar} />
     </div>
   );
 };

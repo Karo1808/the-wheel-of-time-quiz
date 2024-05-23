@@ -8,6 +8,7 @@
   --gray-color: #867d77;
   --red-color: #9d2933;
   --green-color: #3f704d;
+  --gray-color-secondary: #b6afaa;
 }
 * {
   padding: 0;
@@ -18,6 +19,7 @@
 html {
   font-size: 62.5%;
   overflow-x: hidden;
+
   font-family: "Nunito Sans", sans-serif;
   scroll-behavior: smooth;
 }

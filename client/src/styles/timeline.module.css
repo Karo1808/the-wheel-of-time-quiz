@@ -1,24 +1,28 @@
-.container {
+.timeline {
   width: 100%;
-  align-items: center;
+  height: 50px;
+  overflow-x: auto;
 }
 
-.bar {
-  background-color: var(--gray-color);
-  height: 20px;
-  overflow-x: auto;
-  border-radius: 20px;
-  height: 100pxs;
-  width: 100%;
+.icon_container {
   white-space: nowrap;
-  overflow-y: visible;
+  z-index: 200;
+  margin-left: 6rem;
 }
 
 .icon {
+  z-index: 200;
+  position: relative;
+  margin-right: 20rem;
   border-radius: 100%;
-  width: 20%;
-  top: 0;
+  background-color: var(--primary-color);
+}
+
+.bar {
+  background-color: var(--gray-color-secondary);
+  overflow-x: auto;
+  border-radius: 10px;
+  position: relative;
   height: 10px;
-  overflow-y: visible;
-  height: 40px;
+  transform: translate(0, -25px);
 }

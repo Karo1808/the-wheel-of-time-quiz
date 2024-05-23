@@ -41,7 +41,7 @@ const QuizPage = () => {
           quizQuery.quiz?.numberOfQuestions &&
         quizState.currentQuestion === quizQuery.quiz?.numberOfQuestions
       ) {
-        navigate("/summary");
+        navigate("summary");
         stopwatch.reset();
       } else {
         quizActions.nextQuestion();
