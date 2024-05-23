@@ -4,8 +4,9 @@ import { useNavigate } from "react-router";
 import useQuizStore from "../hooks/useQuizStore";
 import useQuizQuery from "./useQuizQuery";
 import useVerifyAnswerQuery from "./useVerifyAnswerQuery";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useStopwatch } from "react-timer-hook";
+import { formatTime } from "../utils/shared";
 
 const useQuiz = () => {
   const quizState = useQuizStore(
@@ -93,10 +94,9 @@ const useQuiz = () => {
     setCurrentQuestionId(quiz?.quizData?.questions[currentQuestion - 1]?._id);
   }, [currentQuestion, setCurrentQuestionId, quiz?.quizData?.questions]);
 
-  const { minutes, seconds, pause, reset } = useStopwatch({
+  const { minutes, seconds, pause, reset, start } = useStopwatch({
     autoStart: true,
   });
-
   return {
     quizState: {
       ...quizState,
@@ -126,6 +126,7 @@ const useQuiz = () => {
       seconds,
       pause,
       reset,
+      start,
     },
     navigate,
   };

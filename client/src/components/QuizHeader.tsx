@@ -7,6 +7,7 @@ interface Props {
   minutes: number;
   seconds: number;
   questionTimer: TimeFormat | null;
+  answer?: string;
 }
 
 const QuizHeader = ({
@@ -14,11 +15,16 @@ const QuizHeader = ({
   minutes,
   seconds,
   questionTimer,
+  answer,
 }: Props) => {
   return (
     <header className={styles.header}>
       <span>{`Question ${currentQuestion}`}</span>
-      <span>{questionTimer || formatTime(minutes * 60 + seconds)}</span>
+      <span>
+        {questionTimer && answer
+          ? questionTimer
+          : formatTime(minutes * 60 + seconds)}
+      </span>
     </header>
   );
 };

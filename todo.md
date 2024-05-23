@@ -3,12 +3,12 @@
 #### Client
 
 - [x] - Integrate with server
-- [x] - shuffle based on zustand state order or random
-- [x] - add loading and error handling
-- [x] - design an error page
-- [x] - add keyboard navigation
-- [x] - fix keyboard navigation on focus
-- [ ] - persist time on active question
+- [x] - Shuffle based on zustand state order or random
+- [x] - Add loading and error handling
+- [x] - Design an error page
+- [x] - Add keyboard navigation
+- [x] - Fix keyboard navigation on focus
+- [ ] - Persist time on active question
 - [ ] - Create a timeline component
 - [ ] - expand store to store multiple quizzes
 - [ ] - Create a quizzes page
