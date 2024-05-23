@@ -4,9 +4,8 @@ import { useNavigate } from "react-router";
 import useQuizStore from "../hooks/useQuizStore";
 import useQuizQuery from "./useQuizQuery";
 import useVerifyAnswerQuery from "./useVerifyAnswerQuery";
-import { useEffect, useState } from "react";
 import { useStopwatch } from "react-timer-hook";
-import { formatTime } from "../utils/shared";
+import { useEffect } from "react";
 
 const useQuiz = () => {
   const quizState = useQuizStore(
