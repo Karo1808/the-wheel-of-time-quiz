@@ -12,16 +12,19 @@ export const initialState: State = {
       answer: undefined,
       isQuestionAnswered: false,
       questionTimer: null,
+      isAnswerCorrect: false,
     },
     {
       isQuestionAnswered: false,
       answer: undefined,
       questionTimer: null,
+      isAnswerCorrect: false,
     },
     {
       answer: undefined,
       isQuestionAnswered: false,
       questionTimer: null,
+      isAnswerCorrect: false,
     },
   ],
 };

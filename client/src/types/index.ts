@@ -16,6 +16,7 @@ export interface Question {
   questionTimer: null | TimeFormat;
   answer?: string;
   isQuestionAnswered: boolean;
+  isAnswerCorrect: boolean;
 }
 
 export interface Actions {
@@ -27,4 +28,5 @@ export interface Actions {
   setCurrentQuestionId: (id?: string) => void;
   increaseScore: () => void;
   setIsQuestionAnswered: () => void;
+  setIsAnswerCorrect: () => void;
 }

@@ -2,8 +2,6 @@ import styles from "../styles/quiz.module.css";
 import useQuiz from "../hooks/useQuiz";
 import QuizFooter from "../components/QuizFooter";
 import QuizAnswer from "../components/QuizAnswer";
-import useQuizStore from "../hooks/useQuizStore";
-import { useShallow } from "zustand/react/shallow";
 import QuizHeader from "../components/QuizHeader";
 import { formatTime } from "../utils/shared";
 import { TimeFormat } from "../types";
@@ -18,10 +16,6 @@ const QuizPage = () => {
     verifyQuery,
     stopwatch,
   } = useQuiz();
-
-  const increaseScore = useQuizStore(
-    useShallow((state) => state.increaseScore)
-  );
 
   const windowSize = useWindowSize();
 
@@ -64,7 +58,6 @@ const QuizPage = () => {
     quizActions.setAnswer({
       answer,
     });
-    if (verifyQuery.verificationResult?.isCorrect) increaseScore();
   }
 
   return (

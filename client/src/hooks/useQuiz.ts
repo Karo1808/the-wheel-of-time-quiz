@@ -42,6 +42,10 @@ const useQuiz = () => {
     useShallow((state) => state.setCurrentQuestionId)
   );
 
+  const setIsAnswerCorrect = useQuizStore(
+    useShallow((state) => state.setIsAnswerCorrect)
+  );
+
   const seed = useQuizStore(useShallow((state) => state.randomSeed));
 
   useEffect(() => {
@@ -75,12 +79,14 @@ const useQuiz = () => {
     if (verificationResult?.isCorrect && !isQuestionAnswered) {
       increaseScore();
       setIsQuestionAnswered();
+      setIsAnswerCorrect();
     }
   }, [
     verificationResult?.isCorrect,
     increaseScore,
     setIsQuestionAnswered,
     isQuestionAnswered,
+    setIsAnswerCorrect,
   ]);
 
   useEffect(() => {
@@ -103,6 +109,7 @@ const useQuiz = () => {
       setAnswer,
       nextQuestion,
       previousQuestion,
+      setIsAnswerCorrect,
     },
     quizQuery: {
       quiz: quiz?.quizData,

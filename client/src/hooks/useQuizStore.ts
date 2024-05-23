@@ -63,6 +63,12 @@ const useQuizStore = create<State & Actions>()(
               ].isQuestionAnswered = true;
             });
           },
+          setIsAnswerCorrect: () => {
+            set((state) => {
+              state.questions[state.currentQuestionNumber - 1].isAnswerCorrect =
+                true;
+            });
+          },
         }),
         {
           name: "quiz",
