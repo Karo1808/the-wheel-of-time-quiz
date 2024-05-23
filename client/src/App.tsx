@@ -5,7 +5,6 @@ import Loading from "./pages/loading/Loading";
 import SuspenseLayout from "./pages/loading/SuspenseLayout";
 import QuizPageSkeleton from "./pages/loading/QuizPageSkeleton";
 import Page404 from "./pages/404";
-import Timeline from "./components/Timeline";
 
 const QuizPage = lazy(() => import("./pages/QuizPage"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
@@ -21,7 +20,7 @@ const App = () => {
             <Route path="/" element={<WelcomePage />} />
             <Route path="/quizzes" element={<QuizzesPage />} />
             <Route path="/quiz/:quizId/summary" element={<SummaryPage />} />
-            <Route path="/timeline" element={<Timeline />} />
+            <Route path="/timeline" element={<SummaryPage />} />
           </Route>
           <Route element={<SuspenseLayout fallback={<QuizPageSkeleton />} />}>
             <Route path="/quiz/:quizId" element={<QuizPage />} />
