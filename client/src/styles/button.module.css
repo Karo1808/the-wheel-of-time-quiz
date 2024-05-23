@@ -1,0 +1,71 @@
+.button {
+  border-radius: 1rem;
+  letter-spacing: 1px;
+  padding: 2rem 0;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: all 500ms ease;
+  border: none;
+  outline: none;
+
+  &:focus {
+    filter: brightness(0.9);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.correct {
+  background-color: var(--green-color);
+  color: var(--primary-color);
+  border: 1px solid var(--green-color);
+}
+
+.incorrect {
+  background-color: var(--red-color);
+  color: var(--primary-color);
+  border: 1px solid var(--red-color);
+}
+
+.none {
+  background-color: var(--primary-color);
+  color: var(--fg-color);
+  border: 1px solid var(--fg-color);
+  transition: all 500ms ease;
+
+  &:hover {
+    background-color: var(--gray-color);
+    color: var(--primary-color);
+    border: 1px solid var(--gray-color);
+  }
+}
+
+.next {
+  background-color: var(--gray-color);
+  color: var(--primary-color);
+  border: 1px solid var(--gray-color);
+}
+
+.disabled {
+  background-color: var(--primary-color);
+  color: var(--fg-color);
+  filter: brightness(0.8);
+}
+
+.invisible {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.not_found {
+  background-color: var(--fg-color);
+  color: var(--primary-color);
+  padding: 2rem 3rem;
+}
+
+.error {
+  color: var(--primary-color);
+  background-color: var(--red-color);
+}
