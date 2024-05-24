@@ -9,7 +9,7 @@
 - [x] - Add keyboard navigation
 - [x] - Fix keyboard navigation on focus
 - [x] - Persist time on active question when switiching questions
-- [ ] - Persist time on refresh
+- [x] - Persist time on refresh
 - [ ] - Create a timeline component
 - [ ] - expand store to store multiple quizzes
 - [ ] - Create a quizzes page

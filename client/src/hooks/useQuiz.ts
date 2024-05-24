@@ -6,6 +6,8 @@ import useQuizQuery from "./useQuizQuery";
 import useVerifyAnswerQuery from "./useVerifyAnswerQuery";
 import { useStopwatch } from "react-timer-hook";
 import { useEffect } from "react";
+import { formatTime } from "../utils/shared";
+import { TimeFormat } from "../types";
 
 const useQuiz = () => {
   const quizState = useQuizStore(
@@ -93,9 +95,26 @@ const useQuiz = () => {
     setCurrentQuestionId(quiz?.quizData?.questions[currentQuestion - 1]?._id);
   }, [currentQuestion, setCurrentQuestionId, quiz?.quizData?.questions]);
 
+const stopwatchOffset = new Date();
+ stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + (formatTime(quizState.questionTimer || "00:00") as number));
+
   const { minutes, seconds, pause, reset, start } = useStopwatch({
     autoStart: true,
+    offsetTimestamp: stopwatchOffset,
   });
+
+    useEffect(() => {
+    const handleBeforeUnload = () => {
+      setQuestionTimer(formatTime(minutes * 60 + seconds) as TimeFormat);
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [ setQuestionTimer , minutes, seconds]);
+
   return {
     quizState: {
       ...quizState,
