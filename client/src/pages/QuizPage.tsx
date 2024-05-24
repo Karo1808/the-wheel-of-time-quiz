@@ -71,8 +71,6 @@ const QuizPage = () => {
       <QuizHeader
         currentQuestion={quizState.currentQuestion}
         questionTimer={quizState.questionTimer}
-        minutes={stopwatch.minutes}
-        seconds={stopwatch.seconds}
         answer={quizState.answer}
       />
       <section className={styles.container}>
