@@ -7,12 +7,12 @@ import useQuizStore from "./useQuizStore";
 const useVerifyAnswerQuery = () => {
   const { quizId } = useParams<{ quizId?: string }>();
 
-  const currentQuizName = useQuizStore(
-    useShallow((state) => state.currentQuiz)
+  const currentQuizId = useQuizStore(
+    useShallow((state) => state.currentQuizId)
   );
 
   const currentQuiz = useQuizStore(
-    useShallow((state) => state.quizzes[currentQuizName])
+    useShallow((state) => state.quizzes[currentQuizId])
   );
 
   const currentQuestionId = useQuizStore(

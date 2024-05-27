@@ -1,10 +1,10 @@
 import { State } from "../types";
 
 export const initialState: State = {
-  currentQuiz: "",
+  currentQuizId: "",
   quizzes: {
     "": {
-      quizName: "",
+      quizId: "",
       currentQuestionNumber: 1,
       currentScore: 0,
       numberOfQuestionsAnswered: 0,

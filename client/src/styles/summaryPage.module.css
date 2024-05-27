@@ -1,0 +1,53 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 20rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: var(--fg-color);
+}
+
+.button {
+  outline: none;
+  background-color: transparent;
+  font-size: 3rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 3.6rem;
+  font-weight: bold;
+  margin-top: 3rem;
+  @media screen and (min-width: 700px) {
+    margin-top: -5rem;
+  }
+}
+
+.graphs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 0;
+  @media screen and (min-width: 1200px) {
+    flex-direction: row;
+    margin-bottom: 20rem;
+    gap: 15%;
+  }
+}
+
+.footer {
+  margin-bottom: -5rem;
+  position: relative;
+  overflow-x: auto;
+  width: 100%;
+}

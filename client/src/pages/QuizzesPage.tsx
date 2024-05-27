@@ -10,18 +10,14 @@ const QuizzesPage = () => {
 
   const handleGoToQuiz = ({
     quizId,
-    quizName,
     numberOfQuestions,
   }: {
     quizId: string;
-    quizName: string;
     numberOfQuestions: number;
   }) => {
-    setCurrentQuiz(quizName, stateQuizzes[quizName] === undefined);
+    setCurrentQuiz(quizId, stateQuizzes[quizId] === undefined);
 
-    if (
-      stateQuizzes[quizName].numberOfQuestionsAnswered === numberOfQuestions
-    ) {
+    if (stateQuizzes[quizId].numberOfQuestionsAnswered === numberOfQuestions) {
       navigate(`/quiz/${quizId}/summary`);
       return;
     }
@@ -35,7 +31,6 @@ const QuizzesPage = () => {
           onClick={() =>
             handleGoToQuiz({
               quizId: quiz._id,
-              quizName: quiz.quizName,
               numberOfQuestions: quiz.numberOfQuestions,
             })
           }

@@ -35,3 +35,7 @@ const calculateValue = (
   }
   return Math.round((value / maxValue) * 100);
 };
+
+// Check if the value is greater than the desired value and return the style
+export const statisticStyle = (value: number, desiredValue: number) =>
+  value > desiredValue ? "better" : "worse";

@@ -8,6 +8,7 @@
   white-space: nowrap;
   z-index: 200;
   margin-left: 6rem;
+  margin: 0 auto;
 }
 
 .icon {
@@ -18,11 +19,19 @@
   background-color: var(--primary-color);
 }
 
+.icon:last-child {
+  margin-right: 0;
+}
+
+.icon:first-child {
+  margin-left: 10rem;
+}
+
 .bar {
   background-color: var(--gray-color-secondary);
   overflow-x: auto;
   border-radius: 10px;
   position: relative;
   height: 10px;
-  transform: translate(0, -25px);
+  transform: translate(0, -23px);
 }

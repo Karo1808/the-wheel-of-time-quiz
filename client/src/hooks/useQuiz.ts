@@ -11,7 +11,7 @@ import { TimeFormat } from "../types";
 
 const useQuiz = () => {
   const currentQuizName = useQuizStore(
-    useShallow((state) => state.currentQuiz)
+    useShallow((state) => state.currentQuizId)
   );
   const currentQuiz = useQuizStore(
     useShallow((state) => state.quizzes[currentQuizName])

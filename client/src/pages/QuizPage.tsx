@@ -64,6 +64,7 @@ const QuizPage = () => {
     stopwatch.reset();
     quizActions.setAnswer({
       answer,
+      numberOfQuestions: quizQuery.quiz?.numberOfQuestions,
     });
   }
 

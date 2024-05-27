@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  font-size: 2.4rem;
+  gap: 1rem;
+}
+
+.stat {
+  display: flex;
+  color: var(--fg-color);
+  width: 20rem;
+  justify-content: space-between;
+  font-size: 1.8rem;
+}
+
+.better {
+  color: var(--green-color);
+  font-weight: 700;
+}
+
+.worse {
+  color: var(--red-color);
+  font-weight: 700;
+}

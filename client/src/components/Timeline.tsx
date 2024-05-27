@@ -14,7 +14,7 @@ const Timeline = ({ questions }: Props) => {
   const [barWidth, setBarWidth] = useState<number>(0);
   const questionLength = questions.length + 1;
   useEffect(() => {
-    setBarWidth(200 * questionLength + 170);
+    setBarWidth(200 * questionLength);
   }, [setBarWidth, questionLength, barWidth]);
 
   return (
@@ -22,18 +22,18 @@ const Timeline = ({ questions }: Props) => {
       <div className={styles.icon_container}>
         {questions.map((question, index) =>
           question.isAnswerCorrect ? (
-            <IoIosCloseCircle
-              className={styles.icon}
-              size={35}
-              color={COLOR_WRONG}
-              key={index}
-            />
-          ) : (
             <IoIosCheckmarkCircle
               className={styles.icon}
-              size={35}
+              size={30}
               key={index}
               color={COLOR_CORRECT}
+            />
+          ) : (
+            <IoIosCloseCircle
+              className={styles.icon}
+              size={30}
+              color={COLOR_WRONG}
+              key={index}
             />
           )
         )}

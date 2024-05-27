@@ -12,81 +12,102 @@ const useQuizStore = create<State & Actions>()(
       persist(
         (set) => ({
           ...initialState,
-          setCurrentQuiz: (quizName: string, initial = false) => {
+          setCurrentQuiz: (quizId: string, initial = false) => {
             set((state) => {
-              state.currentQuiz = quizName;
+              state.currentQuizId = quizId;
               if (initial) {
-                state.quizzes[quizName] = initialState.quizzes[""];
+                state.quizzes[quizId] = initialState.quizzes[""];
+                state.quizzes[quizId].currentQuestionId = quizId;
               }
+            });
+          },
+          resetQuiz: () => {
+            set((state) => {
+              state.quizzes[state.currentQuizId] = initialState.quizzes[""];
+              state.currentQuizId = "";
             });
           },
           setQuestionTimer: (time: TimeFormat) => {
             set((state) => {
-              const currentQuiz = state.quizzes[state.currentQuiz];
-              currentQuiz.questions[
-                currentQuiz.currentQuestionNumber - 1
+              const currentQuizId = state.quizzes[state.currentQuizId];
+              currentQuizId.questions[
+                currentQuizId.currentQuestionNumber - 1
               ].questionTimer = time;
             });
           },
           setCurrentQuestionId: (id?: string) => {
             set((state) => {
-              const currentQuiz = state.quizzes[state.currentQuiz];
-              currentQuiz.currentQuestionId = id;
+              const currentQuizId = state.quizzes[state.currentQuizId];
+              currentQuizId.currentQuestionId = id;
             });
           },
           setSeed: (seed?: number) => {
             set((state) => {
-              const currentQuiz = state.quizzes[state.currentQuiz];
-              currentQuiz.randomSeed = seed;
+              const currentQuizId = state.quizzes[state.currentQuizId];
+              currentQuizId.randomSeed = seed;
             });
           },
-          setAnswer({ answer }: { answer?: string }) {
+          setAnswer({
+            answer,
+            numberOfQuestions,
+          }: {
+            answer?: string;
+            numerOfQuestions?: number;
+          }) {
             set((state) => {
-              const currentQuiz = state.quizzes[state.currentQuiz];
+              const currentQuizId = state.quizzes[state.currentQuizId];
               const currentQuestion =
-                currentQuiz.questions[currentQuiz.currentQuestionNumber - 1];
+                currentQuizId.questions[
+                  currentQuizId.currentQuestionNumber - 1
+                ];
 
               currentQuestion.answer = answer;
-              currentQuiz.numberOfQuestionsAnswered++;
+              currentQuizId.numberOfQuestionsAnswered++;
 
-              currentQuiz.questions.push(initialState.quizzes[""].questions[0]);
+              if (
+                numberOfQuestions !== currentQuizId.numberOfQuestionsAnswered
+              ) {
+                currentQuizId.questions.push(
+                  initialState.quizzes[""].questions[0]
+                );
+              }
 
-              currentQuiz.currentTime = formatTime(
+              currentQuizId.currentTime = formatTime(
                 currentQuestion.questionTimer || "00:00"
               ) as number;
             });
           },
           nextQuestion: () => {
             set((state) => {
-              const currentQuiz = state.quizzes[state.currentQuiz];
-              currentQuiz.currentQuestionNumber++;
+              const currentQuizId = state.quizzes[state.currentQuizId];
+              currentQuizId.currentQuestionNumber++;
             });
           },
           previousQuestion: () => {
             set((state) => {
-              const currentQuiz = state.quizzes[state.currentQuiz];
-              currentQuiz.currentQuestionNumber--;
+              const currentQuizId = state.quizzes[state.currentQuizId];
+              currentQuizId.currentQuestionNumber--;
             });
           },
           increaseScore: () => {
             set((state) => {
-              const currentQuiz = state.quizzes[state.currentQuiz];
-              currentQuiz.currentScore++;
+              const currentQuizId = state.quizzes[state.currentQuizId];
+              currentQuizId.currentScore++;
             });
           },
           setIsQuestionAnswered: () => {
             set((state) => {
-              const currentQuiz = state.quizzes[state.currentQuiz];
-              currentQuiz.questions[
-                currentQuiz.currentQuestionNumber - 1
+              const currentQuizId = state.quizzes[state.currentQuizId];
+              currentQuizId.questions[
+                currentQuizId.currentQuestionNumber - 1
               ].isQuestionAnswered = true;
             });
           },
           setIsAnswerCorrect: () => {
             set((state) => {
-              const currentQuiz = state.quizzes[state.currentQuiz];
-              currentQuiz.questions[
-                currentQuiz.currentQuestionNumber - 1
+              const currentQuizId = state.quizzes[state.currentQuizId];
+              currentQuizId.questions[
+                currentQuizId.currentQuestionNumber - 1
               ].isAnswerCorrect = true;
             });
           },
