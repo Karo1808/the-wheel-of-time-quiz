@@ -3,16 +3,16 @@
 #### Client
 
 - [x] - Integrate with server
-- [x] - Shuffle based on zustand state order or random
+- [x] - Shuffle based on seed or random
 - [x] - Add loading and error handling
 - [x] - Design an error page
 - [x] - Add keyboard navigation
 - [x] - Fix keyboard navigation on focus
-- [x] - Persist time on active question when switiching questions
+- [x] - Persist time on active question when switching questions
 - [x] - Persist time on refresh
 - [x] - Create a timeline component
 - [x] - expand store to store multiple quizzes
-- [ ] - create summary page
+- [x] - create summary page
 - [ ] - modal/drawer window component
 - [ ] - Create a quizzes page
 - [ ] - add an route to create a quiz (admin only)
