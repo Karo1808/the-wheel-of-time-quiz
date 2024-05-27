@@ -36,18 +36,23 @@ const QuizPage = () => {
         quizState.currentQuestion === quizQuery.quiz?.numberOfQuestions
       ) {
         navigate("summary");
-        stopwatch.reset();
       } else {
         quizActions.nextQuestion();
+        stopwatch.start();
       }
     }
   }
 
   function handlePrevious() {
+    if (!quizState.answer) {
+      quizActions.setQuestionTimer(
+        formatTime(stopwatch.minutes * 60 + stopwatch.seconds) as TimeFormat
+      );
+    }
     if (!(quizState.currentQuestion - 1 < 1)) {
       quizActions.previousQuestion();
-      stopwatch.reset();
     }
+    stopwatch.pause();
   }
 
   function handleAnswer(answer: string) {
@@ -55,6 +60,8 @@ const QuizPage = () => {
     quizActions.setQuestionTimer(
       formatTime(stopwatch.minutes * 60 + stopwatch.seconds) as TimeFormat
     );
+
+    stopwatch.reset();
     quizActions.setAnswer({
       answer,
     });
@@ -67,6 +74,7 @@ const QuizPage = () => {
         questionTimer={quizState.questionTimer}
         minutes={stopwatch.minutes}
         seconds={stopwatch.seconds}
+        answer={quizState.answer}
       />
       <section className={styles.container}>
         <h1 className={styles.question}>
