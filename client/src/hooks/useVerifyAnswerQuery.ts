@@ -7,16 +7,24 @@ import useQuizStore from "./useQuizStore";
 const useVerifyAnswerQuery = () => {
   const { quizId } = useParams<{ quizId?: string }>();
 
+  const currentQuizName = useQuizStore(
+    useShallow((state) => state.currentQuiz)
+  );
+
+  const currentQuiz = useQuizStore(
+    useShallow((state) => state.quizzes[currentQuizName])
+  );
+
   const currentQuestionId = useQuizStore(
-    useShallow((state) => state.currentQuestionId)
+    useShallow(() => currentQuiz.currentQuestionId)
   );
 
   const questionNumber = useQuizStore(
-    useShallow((state) => state.currentQuestionNumber)
+    useShallow(() => currentQuiz.currentQuestionNumber)
   );
 
   const answer = useQuizStore(
-    useShallow((state) => state.questions[questionNumber - 1].answer)
+    useShallow(() => currentQuiz.questions[questionNumber - 1].answer)
   );
 
   const isQuestionAnswered = answer ? true : false;
@@ -35,7 +43,6 @@ const useVerifyAnswerQuery = () => {
       }),
     enabled: isQuestionAnswered,
   });
-
 
   return { verificationResult, isLoading, error };
 };

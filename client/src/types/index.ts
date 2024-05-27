@@ -2,7 +2,15 @@ type digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export type TimeFormat = number | `${digit}${digit}:${digit}${digit}`;
 
+type QuizName = string;
+
 export interface State {
+  currentQuiz: QuizName;
+  quizzes: { [quizName: QuizName]: Quiz };
+}
+
+export interface Quiz {
+  quizName: string;
   currentQuestionNumber: number;
   currentScore: number;
   numberOfQuestionsAnswered: number;
@@ -20,6 +28,7 @@ export interface Question {
 }
 
 export interface Actions {
+  setCurrentQuiz: (quizName: string, initial?: boolean) => void;
   setAnswer: ({ answer }: { answer?: string }) => void;
   nextQuestion: () => void;
   previousQuestion: () => void;

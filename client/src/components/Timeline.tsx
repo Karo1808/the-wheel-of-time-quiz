@@ -20,17 +20,19 @@ const Timeline = ({ questions }: Props) => {
   return (
     <div className={styles.timeline}>
       <div className={styles.icon_container}>
-        {questions.map((question) =>
+        {questions.map((question, index) =>
           question.isAnswerCorrect ? (
             <IoIosCloseCircle
               className={styles.icon}
               size={35}
               color={COLOR_WRONG}
+              key={index}
             />
           ) : (
             <IoIosCheckmarkCircle
               className={styles.icon}
               size={35}
+              key={index}
               color={COLOR_CORRECT}
             />
           )

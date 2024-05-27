@@ -10,8 +10,16 @@ import { formatTime } from "../utils/shared";
 import { TimeFormat } from "../types";
 
 const useQuiz = () => {
+  const currentQuizName = useQuizStore(
+    useShallow((state) => state.currentQuiz)
+  );
+  const currentQuiz = useQuizStore(
+    useShallow((state) => state.quizzes[currentQuizName])
+  );
   const quizState = useQuizStore(
-    useShallow((state) => state.questions[state.currentQuestionNumber - 1])
+    useShallow(
+      () => currentQuiz.questions[currentQuiz.currentQuestionNumber - 1]
+    )
   );
 
   const setQuestionTimer = useQuizStore(
@@ -26,12 +34,12 @@ const useQuiz = () => {
   );
 
   const currentQuestion = useQuizStore(
-    useShallow((state) => state.currentQuestionNumber)
+    useShallow(() => currentQuiz.currentQuestionNumber)
   );
-  const currentScore = useQuizStore(useShallow((state) => state.currentScore));
+  const currentScore = useQuizStore(useShallow(() => currentQuiz.currentScore));
 
   const numberOfQuestionsAnswered = useQuizStore(
-    useShallow((state) => state.numberOfQuestionsAnswered)
+    useShallow(() => currentQuiz.numberOfQuestionsAnswered)
   );
 
   const navigate = useNavigate();
@@ -48,7 +56,7 @@ const useQuiz = () => {
     useShallow((state) => state.setIsAnswerCorrect)
   );
 
-  const seed = useQuizStore(useShallow((state) => state.randomSeed));
+  const seed = useQuizStore(useShallow(() => currentQuiz.randomSeed));
 
   useEffect(() => {
     if (!seed) {
@@ -66,8 +74,9 @@ const useQuiz = () => {
 
   const isQuestionAnswered = useQuizStore(
     useShallow(
-      (state) =>
-        state.questions[state.currentQuestionNumber - 1].isQuestionAnswered
+      () =>
+        currentQuiz.questions[currentQuiz.currentQuestionNumber - 1]
+          .isQuestionAnswered
     )
   );
 

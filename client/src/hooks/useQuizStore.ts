@@ -12,61 +12,82 @@ const useQuizStore = create<State & Actions>()(
       persist(
         (set) => ({
           ...initialState,
+          setCurrentQuiz: (quizName: string, initial = false) => {
+            set((state) => {
+              state.currentQuiz = quizName;
+              if (initial) {
+                state.quizzes[quizName] = initialState.quizzes[""];
+              }
+            });
+          },
           setQuestionTimer: (time: TimeFormat) => {
             set((state) => {
-              state.questions[state.currentQuestionNumber - 1].questionTimer =
-                time;
+              const currentQuiz = state.quizzes[state.currentQuiz];
+              currentQuiz.questions[
+                currentQuiz.currentQuestionNumber - 1
+              ].questionTimer = time;
             });
           },
           setCurrentQuestionId: (id?: string) => {
             set((state) => {
-              state.currentQuestionId = id;
+              const currentQuiz = state.quizzes[state.currentQuiz];
+              currentQuiz.currentQuestionId = id;
             });
           },
           setSeed: (seed?: number) => {
             set((state) => {
-              state.randomSeed = seed;
+              const currentQuiz = state.quizzes[state.currentQuiz];
+              currentQuiz.randomSeed = seed;
             });
           },
           setAnswer({ answer }: { answer?: string }) {
             set((state) => {
+              const currentQuiz = state.quizzes[state.currentQuiz];
               const currentQuestion =
-                state.questions[state.currentQuestionNumber - 1];
+                currentQuiz.questions[currentQuiz.currentQuestionNumber - 1];
 
               currentQuestion.answer = answer;
-              state.numberOfQuestionsAnswered++;
+              currentQuiz.numberOfQuestionsAnswered++;
 
-              state.currentTime = formatTime(
+              currentQuiz.questions.push(initialState.quizzes[""].questions[0]);
+
+              currentQuiz.currentTime = formatTime(
                 currentQuestion.questionTimer || "00:00"
               ) as number;
             });
           },
           nextQuestion: () => {
             set((state) => {
-              state.currentQuestionNumber++;
+              const currentQuiz = state.quizzes[state.currentQuiz];
+              currentQuiz.currentQuestionNumber++;
             });
           },
           previousQuestion: () => {
             set((state) => {
-              state.currentQuestionNumber--;
+              const currentQuiz = state.quizzes[state.currentQuiz];
+              currentQuiz.currentQuestionNumber--;
             });
           },
           increaseScore: () => {
             set((state) => {
-              state.currentScore++;
+              const currentQuiz = state.quizzes[state.currentQuiz];
+              currentQuiz.currentScore++;
             });
           },
           setIsQuestionAnswered: () => {
             set((state) => {
-              state.questions[
-                state.currentQuestionNumber - 1
+              const currentQuiz = state.quizzes[state.currentQuiz];
+              currentQuiz.questions[
+                currentQuiz.currentQuestionNumber - 1
               ].isQuestionAnswered = true;
             });
           },
           setIsAnswerCorrect: () => {
             set((state) => {
-              state.questions[state.currentQuestionNumber - 1].isAnswerCorrect =
-                true;
+              const currentQuiz = state.quizzes[state.currentQuiz];
+              currentQuiz.questions[
+                currentQuiz.currentQuestionNumber - 1
+              ].isAnswerCorrect = true;
             });
           },
         }),
