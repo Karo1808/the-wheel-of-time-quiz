@@ -11,15 +11,21 @@ const QuizzesPage = () => {
   const handleGoToQuiz = ({
     quizId,
     quizName,
+    numberOfQuestions,
   }: {
     quizId: string;
     quizName: string;
+    numberOfQuestions: number;
   }) => {
-    if (stateQuizzes[quizName] === undefined) {
-      setCurrentQuiz(quizName, true);
-    } else {
-      setCurrentQuiz(quizName);
+    setCurrentQuiz(quizName, stateQuizzes[quizName] === undefined);
+
+    if (
+      stateQuizzes[quizName].numberOfQuestionsAnswered === numberOfQuestions
+    ) {
+      navigate(`/quiz/${quizId}/summary`);
+      return;
     }
+
     navigate(`/quiz/${quizId}`);
   };
   return (
@@ -27,7 +33,11 @@ const QuizzesPage = () => {
       {quizzes?.map((quiz) => (
         <div
           onClick={() =>
-            handleGoToQuiz({ quizId: quiz._id, quizName: quiz.quizName })
+            handleGoToQuiz({
+              quizId: quiz._id,
+              quizName: quiz.quizName,
+              numberOfQuestions: quiz.numberOfQuestions,
+            })
           }
           key={quiz.quizName}
         >

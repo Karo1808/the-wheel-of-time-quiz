@@ -114,6 +114,7 @@ const useQuiz = () => {
     autoStart: true,
     offsetTimestamp: stopwatchOffset,
   });
+
   useEffect(() => {
     const handleBeforeUnload = () => {
       setQuestionTimer(formatTime(minutes * 60 + seconds) as TimeFormat);

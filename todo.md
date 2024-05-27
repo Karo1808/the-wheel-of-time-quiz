@@ -12,7 +12,7 @@
 - [x] - Persist time on refresh
 - [x] - Create a timeline component
 - [ ] - expand store to store multiple quizzes
-- [ ] - modal/drawerJ window component
+- [ ] - modal/drawer window component
 - [ ] - Create a quizzes page
 - [ ] - add an route to create a quiz (admin only)
 - [ ] - make some quizzes, meaning questions and answers
