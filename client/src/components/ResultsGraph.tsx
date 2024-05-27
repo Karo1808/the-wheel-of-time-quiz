@@ -8,6 +8,7 @@ interface Props {
   color: string;
   label: string;
 }
+
 const INACTIVE_COLOR = "#B6AFAA";
 
 const ResultsGraph = ({ value, type: type, maxValue, color, label }: Props) => {
