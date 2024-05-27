@@ -11,7 +11,8 @@
 - [x] - Persist time on active question when switiching questions
 - [x] - Persist time on refresh
 - [x] - Create a timeline component
-- [ ] - expand store to store multiple quizzes
+- [x] - expand store to store multiple quizzes
+- [ ] - create summary page
 - [ ] - modal/drawer window component
 - [ ] - Create a quizzes page
 - [ ] - add an route to create a quiz (admin only)
