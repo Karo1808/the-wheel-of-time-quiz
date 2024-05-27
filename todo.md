@@ -10,8 +10,9 @@
 - [x] - Fix keyboard navigation on focus
 - [x] - Persist time on active question when switiching questions
 - [x] - Persist time on refresh
-- [ ] - Create a timeline component
+- [x] - Create a timeline component
 - [ ] - expand store to store multiple quizzes
+- [ ] - modal/drawerJ window component
 - [ ] - Create a quizzes page
 - [ ] - add an route to create a quiz (admin only)
 - [ ] - make some quizzes, meaning questions and answers

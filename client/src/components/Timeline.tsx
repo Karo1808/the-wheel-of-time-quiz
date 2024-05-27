@@ -1,4 +1,4 @@
-import { IoIosCheckmarkCircle } from "react-icons/io";
+import { IoIosCheckmarkCircle, IoIosCloseCircle } from "react-icons/io";
 import styles from "../styles/timeline.module.css";
 import { Question } from "../types";
 import { useEffect, useState } from "react";
@@ -15,21 +15,26 @@ const Timeline = ({ questions }: Props) => {
   const questionLength = questions.length + 1;
   useEffect(() => {
     setBarWidth(200 * questionLength + 170);
-    console.log(barWidth);
   }, [setBarWidth, questionLength, barWidth]);
 
   return (
     <div className={styles.timeline}>
       <div className={styles.icon_container}>
-        {questions.map((question) => (
-          <>
+        {questions.map((question) =>
+          question.isAnswerCorrect ? (
+            <IoIosCloseCircle
+              className={styles.icon}
+              size={35}
+              color={COLOR_WRONG}
+            />
+          ) : (
             <IoIosCheckmarkCircle
               className={styles.icon}
               size={35}
-              color={question.isAnswerCorrect ? COLOR_CORRECT : COLOR_WRONG}
+              color={COLOR_CORRECT}
             />
-          </>
-        ))}
+          )
+        )}
       </div>
       <div style={{ width: `${barWidth}px` }} className={styles.bar} />
     </div>

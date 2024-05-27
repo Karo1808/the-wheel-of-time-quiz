@@ -9,6 +9,7 @@ import Page404 from "./pages/404";
 const QuizPage = lazy(() => import("./pages/QuizPage"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
 const QuizzesPage = lazy(() => import("./pages/QuizzesPage"));
+const SummaryPage = lazy(() => import("./pages/SummaryPage"));
 
 const App = () => {
   return (
