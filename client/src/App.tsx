@@ -10,6 +10,7 @@ const QuizPage = lazy(() => import("./pages/QuizPage"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
 const QuizzesPage = lazy(() => import("./pages/QuizzesPage"));
 const SummaryPage = lazy(() => import("./pages/SummaryPage"));
+const DialogTest = lazy(() => import("./pages/DialogTest"));
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="/quizzes" element={<QuizzesPage />} />
             <Route path="/quiz/:quizId/summary" element={<SummaryPage />} />
             <Route path="/timeline" element={<SummaryPage />} />
+            <Route path="/dialog" element={<DialogTest />} />
           </Route>
           <Route element={<SuspenseLayout fallback={<QuizPageSkeleton />} />}>
             <Route path="/quiz/:quizId" element={<QuizPage />} />
