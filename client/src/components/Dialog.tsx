@@ -1,4 +1,6 @@
 import { forwardRef } from "react";
+import styles from "../styles/dialog.module.css";
+import { IoIosClose } from "react-icons/io";
 
 interface Props {
   children: React.ReactNode;
@@ -14,9 +16,11 @@ const Dialog = forwardRef<HTMLDialogElement, Props>(
     };
 
     return (
-      <dialog ref={ref} onClick={handleDialogOpen}>
+      <dialog ref={ref} onClick={handleDialogOpen} className={styles.dialog}>
         {children}
-        <button onClick={toggleDialog}>Close</button>
+        <button className={styles.button} onClick={toggleDialog}>
+          <IoIosClose className={styles.icon} />
+        </button>
       </dialog>
     );
   }

@@ -1,0 +1,27 @@
+.dialog {
+  background-color: var(--primary-color);
+  border: none;
+  outline: none;
+  margin: auto auto;
+  border-radius: 1rem;
+  align-content: center;
+  position: relative;
+  padding: 5rem 2rem;
+  position: relative;
+  background-color: var(--primary-color);
+}
+
+.button {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+  background-color: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 3.5rem;
+  color: var(--fg-color);
+}
