@@ -25,6 +25,7 @@ export interface Question {
   answer?: string;
   isQuestionAnswered: boolean;
   isAnswerCorrect: boolean;
+  correctAnswer?: string;
 }
 
 export interface Actions {
@@ -45,4 +46,5 @@ export interface Actions {
   increaseScore: () => void;
   setIsQuestionAnswered: () => void;
   setIsAnswerCorrect: () => void;
+  setCorrectAnswer: (answer?: string) => void;
 }

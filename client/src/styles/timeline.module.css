@@ -35,3 +35,16 @@
   height: 10px;
   transform: translate(0, -23px);
 }
+
+.button {
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+
+  &:hover {
+    outline: none;
+    border: none;
+  }
+}

@@ -5,10 +5,11 @@ import { IoIosClose } from "react-icons/io";
 interface Props {
   children: React.ReactNode;
   toggleDialog: () => void;
+  isOverlayOpen: boolean;
 }
 
 const Dialog = forwardRef<HTMLDialogElement, Props>(
-  ({ children, toggleDialog }, ref) => {
+  ({ children, toggleDialog, isOverlayOpen }, ref) => {
     const handleDialogOpen = (e: React.MouseEvent) => {
       if (e.currentTarget === e.target) {
         toggleDialog();
@@ -16,12 +17,18 @@ const Dialog = forwardRef<HTMLDialogElement, Props>(
     };
 
     return (
-      <dialog ref={ref} onClick={handleDialogOpen} className={styles.dialog}>
-        {children}
-        <button className={styles.button} onClick={toggleDialog}>
-          <IoIosClose className={styles.icon} />
-        </button>
-      </dialog>
+      <>
+        <div
+          className={styles.overlay}
+          style={{ display: isOverlayOpen ? "block" : "none" }}
+        />
+        <dialog ref={ref} onClick={handleDialogOpen} className={styles.dialog}>
+          {children}
+          <button className={styles.button} onClick={toggleDialog}>
+            <IoIosClose className={styles.icon} />
+          </button>
+        </dialog>
+      </>
     );
   }
 );

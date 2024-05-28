@@ -1,3 +1,15 @@
+.overlay {
+  position: fixed; /* Positioning relative to the viewport */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  backdrop-filter: blur(5px); /* Apply a blur effect */
+  z-index: 1000; /* High z-index to be on top of other content */
+  display: none; /* Hidden by default */
+}
+
 .dialog {
   background-color: var(--primary-color);
   border: none;

@@ -52,7 +52,7 @@ const useQuizStore = create<State & Actions>()(
             numberOfQuestions,
           }: {
             answer?: string;
-            numerOfQuestions?: number;
+            numberOfQuestions?: number;
           }) {
             set((state) => {
               const currentQuizId = state.quizzes[state.currentQuizId];
@@ -109,6 +109,14 @@ const useQuizStore = create<State & Actions>()(
               currentQuizId.questions[
                 currentQuizId.currentQuestionNumber - 1
               ].isAnswerCorrect = true;
+            });
+          },
+          setCorrectAnswer: (answer?: string) => {
+            set((state) => {
+              const currentQuizId = state.quizzes[state.currentQuizId];
+              currentQuizId.questions[
+                currentQuizId.currentQuestionNumber - 1
+              ].correctAnswer = answer || "";
             });
           },
         }),

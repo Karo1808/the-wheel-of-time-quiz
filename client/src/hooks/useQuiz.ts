@@ -10,11 +10,11 @@ import { formatTime } from "../utils/shared";
 import { TimeFormat } from "../types";
 
 const useQuiz = () => {
-  const currentQuizName = useQuizStore(
+  const currentQuizId = useQuizStore(
     useShallow((state) => state.currentQuizId)
   );
   const currentQuiz = useQuizStore(
-    useShallow((state) => state.quizzes[currentQuizName])
+    useShallow((state) => state.quizzes[currentQuizId])
   );
   const quizState = useQuizStore(
     useShallow(
@@ -31,6 +31,9 @@ const useQuiz = () => {
   const nextQuestion = useQuizStore(useShallow((state) => state.nextQuestion));
   const previousQuestion = useQuizStore(
     useShallow((state) => state.previousQuestion)
+  );
+  const setCorrectAnswer = useQuizStore(
+    useShallow((state) => state.setCorrectAnswer)
   );
 
   const currentQuestion = useQuizStore(
@@ -91,6 +94,7 @@ const useQuiz = () => {
       increaseScore();
       setIsQuestionAnswered();
       setIsAnswerCorrect();
+      setCorrectAnswer(verificationResult?.correctAnswer);
     }
   }, [
     verificationResult?.isCorrect,
@@ -98,6 +102,8 @@ const useQuiz = () => {
     setIsQuestionAnswered,
     isQuestionAnswered,
     setIsAnswerCorrect,
+    setCorrectAnswer,
+    verificationResult?.correctAnswer,
   ]);
 
   useEffect(() => {
