@@ -1,9 +1,8 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Dialog from "../components/Dialog";
+import SummaryDialogContent from "../components/SummaryDialogContent";
 
 const DialogTest = () => {
-  const [dialogContent, setDialogContent] = useState<React.ReactNode>(null);
-
   const dialogRef = useRef<HTMLDialogElement>(null);
   const toggleDialog = () => {
     if (!dialogRef.current) return;
@@ -15,14 +14,13 @@ const DialogTest = () => {
     <div>
       <button
         onClick={() => {
-          setDialogContent(<div>test</div>);
           toggleDialog();
         }}
       >
         Open
       </button>
       <Dialog toggleDialog={toggleDialog} ref={dialogRef}>
-        {dialogContent}
+        {<SummaryDialogContent />}
       </Dialog>
     </div>
   );
