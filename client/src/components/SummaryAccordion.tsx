@@ -41,8 +41,6 @@ const SummaryAccordion = ({
 
   const isAccordionOpen = index === openedIndex;
 
-  console.log(`${index}: ${correctAnswer}, ${question}`);
-
   return (
     <figure onClick={toggleAccordion} className={styles.container}>
       <div className={styles.top}>

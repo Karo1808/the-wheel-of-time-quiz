@@ -62,10 +62,10 @@ const useQuiz = () => {
   const seed = useQuizStore(useShallow(() => currentQuiz.randomSeed));
 
   useEffect(() => {
-    if (!seed) {
+    if (!seed && currentQuizId) {
       setSeed(quiz?.seed);
     }
-  }, [quiz?.seed, setSeed, seed]);
+  }, [quiz?.seed, setSeed, seed, currentQuizId]);
 
   const increaseScore = useQuizStore(
     useShallow((state) => state.increaseScore)

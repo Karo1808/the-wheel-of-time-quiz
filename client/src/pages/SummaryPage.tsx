@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 import { IoIosRefresh } from "react-icons/io";
 import { IoHomeOutline } from "react-icons/io5";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { useQueryClient } from "@tanstack/react-query";
 
 const SummaryPage = () => {
   const currentQuizId = useQuizStore(
@@ -19,18 +20,30 @@ const SummaryPage = () => {
   );
   const resetQuiz = useQuizStore(useShallow((state) => state.resetQuiz));
   const questions = useQuizStore(useShallow(() => currentQuiz.questions));
+  const setCurrentQuiz = useQuizStore(
+    useShallow((state) => state.setCurrentQuiz)
+  );
 
   const navigate = useNavigate();
 
   const { width } = useWindowSize();
 
+  const queryClient = useQueryClient();
+
   const handleHome = () => {
     resetQuiz();
+    setCurrentQuiz("", true);
+    queryClient.invalidateQueries({
+      queryKey: ["quiz", currentQuizId, undefined],
+    });
     navigate("/quizzes");
   };
 
   const handleReset = () => {
     resetQuiz();
+    queryClient.invalidateQueries({
+      queryKey: ["quiz", currentQuizId, undefined],
+    });
     navigate(`/quiz/${currentQuizId}`);
   };
 

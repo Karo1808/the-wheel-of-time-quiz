@@ -24,7 +24,6 @@ const useQuizStore = create<State & Actions>()(
           resetQuiz: () => {
             set((state) => {
               state.quizzes[state.currentQuizId] = initialState.quizzes[""];
-              state.currentQuizId = "";
             });
           },
           setQuestionTimer: (time: TimeFormat) => {

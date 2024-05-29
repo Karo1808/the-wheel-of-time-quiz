@@ -6,16 +6,21 @@ import { useShallow } from "zustand/react/shallow";
 
 const useQuizQuery = () => {
   const { quizId } = useParams<{ quizId?: string }>();
-  const randomSeed = useQuizStore(useShallow((state) => state.randomSeed));
+  const currentQuizId = useQuizStore(
+    useShallow((state) => state.currentQuizId)
+  );
+  const currentQuiz = useQuizStore(
+    useShallow((state) => state.quizzes[currentQuizId])
+  );
+  const randomSeed = useQuizStore(useShallow(() => currentQuiz.randomSeed));
 
   const {
     data: quiz,
     refetch,
     error,
   } = useSuspenseQuery({
-    queryKey: ["quiz", quizId],
+    queryKey: ["quiz", quizId, randomSeed],
     queryFn: () => getQuiz({ quizId: quizId!, seed: randomSeed?.toString() }),
-    staleTime: Infinity,
   });
 
   return { quiz, error, refetch };
