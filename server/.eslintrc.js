@@ -9,5 +9,9 @@ module.exports = {
     ecmaVersion: "es2016",
     sourceType: "module",
   },
+  plugins: ["eslint-plugin-react-compiler"],
+  rules: {
+    "react-compiler/react-compiler": "error",
+  },
   plugins: ["@typescript-eslint"],
 };
