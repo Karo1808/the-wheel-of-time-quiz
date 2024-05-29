@@ -92,8 +92,10 @@ const useQuiz = () => {
   useEffect(() => {
     if (verificationResult?.isCorrect && !isQuestionAnswered) {
       increaseScore();
-      setIsQuestionAnswered();
       setIsAnswerCorrect();
+    }
+    if (verificationResult?.isCorrect !== undefined) {
+      setIsQuestionAnswered();
       setCorrectAnswer(verificationResult?.correctAnswer);
     }
   }, [

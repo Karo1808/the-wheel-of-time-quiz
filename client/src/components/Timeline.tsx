@@ -54,12 +54,12 @@ const Timeline = ({ questions }: Props) => {
           <button
             className={styles.button}
             onClick={() => handleTimeLineClick(index)}
+            key={index}
           >
             {question.isAnswerCorrect ? (
               <IoIosCheckmarkCircle
                 className={styles.icon}
                 size={30}
-                key={index}
                 color={COLOR_CORRECT}
               />
             ) : (
@@ -67,7 +67,6 @@ const Timeline = ({ questions }: Props) => {
                 className={styles.icon}
                 size={30}
                 color={COLOR_WRONG}
-                key={index}
               />
             )}
           </button>
