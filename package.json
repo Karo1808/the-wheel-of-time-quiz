@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@million/lint": "^1.0.0-rc.13",
     "concurrently": "^8.2.2"
   }
 }
