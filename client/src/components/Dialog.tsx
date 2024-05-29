@@ -1,4 +1,3 @@
-// src/components/Dialog.js
 import { forwardRef } from "react";
 import styles from "../styles/dialog.module.css";
 import { IoIosClose } from "react-icons/io";

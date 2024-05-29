@@ -22,7 +22,7 @@ const Timeline = ({ questions }: Props) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    setBarWidth(200 * questionLength);
+    setBarWidth(170 * questionLength);
   }, [setBarWidth, questionLength, barWidth]);
 
   useEffect(() => {
@@ -47,6 +47,7 @@ const Timeline = ({ questions }: Props) => {
     toggleDialog();
     setIndex(index);
   }
+
   return (
     <div className={styles.timeline}>
       <div className={styles.icon_container}>

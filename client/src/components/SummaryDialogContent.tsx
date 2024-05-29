@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../styles/summaryDialogContent.module.css";
 import SummaryAccordion from "./SummaryAccordion";
 import useQuizQuery from "../hooks/useQuizQuery";
@@ -12,6 +12,7 @@ interface Props {
 const SummaryDialogContent = ({ index }: Props) => {
   const [openedIndex, setOpenedIndex] = useState<number | undefined>();
   const { quiz } = useQuizQuery();
+  const accordionRefs = useRef<HTMLDivElement[]>([]);
 
   const currentQuizId = useQuizStore(
     useShallow((state) => state.currentQuizId)
@@ -22,6 +23,11 @@ const SummaryDialogContent = ({ index }: Props) => {
 
   useEffect(() => {
     setOpenedIndex(index);
+    if (index !== undefined && accordionRefs.current[index]) {
+      accordionRefs.current[index].scrollIntoView({
+        block: "center",
+      });
+    }
   }, [index]);
 
   return (
@@ -36,6 +42,9 @@ const SummaryDialogContent = ({ index }: Props) => {
           userAnswer={currentQuiz.questions[index].answer || ""}
           correctAnswer={currentQuiz.questions[index].correctAnswer || ""}
           key={index}
+          ref={(element: HTMLDivElement) =>
+            (accordionRefs.current[index] = element)
+          }
           index={index}
           answers={question.answers
             .filter((answer) => answer.answerLabel)
