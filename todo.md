@@ -13,9 +13,7 @@
 - [x] - Create a timeline component
 - [x] - expand store to store multiple quizzes
 - [x] - create summary page
-- [x] - modal window component
-- [ ] - scroll into view
-- [ ] - drawer component
+- [ ] - modal/drawer window component
 - [ ] - Create a quizzes page
 - [ ] - add an route to create a quiz (admin only)
 - [ ] - make some quizzes, meaning questions and answers
