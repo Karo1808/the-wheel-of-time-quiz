@@ -17,8 +17,12 @@ const useQuizStore = create<State & Actions>()(
               state.currentQuizId = quizId;
               if (initial) {
                 state.quizzes[quizId] = initialState.quizzes[""];
-                state.quizzes[quizId].currentQuestionId = quizId;
               }
+            });
+          },
+          setCurrentQuizId: (quizId: string) => {
+            set((state) => {
+              state.currentQuizId = quizId;
             });
           },
           resetQuiz: () => {

@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router";
 import useQuizzesQuery from "../hooks/useQuizzesQuery";
 import useQuizStore from "../hooks/useQuizStore";
+import { useEffect } from "react";
 
 const QuizzesPage = () => {
   const { quizzes } = useQuizzesQuery();
   const navigate = useNavigate();
   const setCurrentQuiz = useQuizStore((state) => state.setCurrentQuiz);
+  const setCurrentQuizId = useQuizStore((state) => state.setCurrentQuizId);
   const stateQuizzes = useQuizStore((state) => state.quizzes);
 
   const handleGoToQuiz = ({
@@ -15,8 +17,7 @@ const QuizzesPage = () => {
     quizId: string;
     numberOfQuestions: number;
   }) => {
-    setCurrentQuiz(quizId, stateQuizzes[quizId] === undefined);
-
+    setCurrentQuizId(quizId);
     if (stateQuizzes[quizId].numberOfQuestionsAnswered === numberOfQuestions) {
       navigate(`/quiz/${quizId}/summary`);
       return;
@@ -24,6 +25,15 @@ const QuizzesPage = () => {
 
     navigate(`/quiz/${quizId}`);
   };
+
+  useEffect(() => {
+    if (quizzes) {
+      quizzes.forEach((quiz) => {
+        setCurrentQuiz(quiz._id, stateQuizzes[quiz._id] === undefined);
+      });
+    }
+  }, [setCurrentQuiz, quizzes, stateQuizzes]);
+
   return (
     <main>
       {quizzes?.map((quiz) => (

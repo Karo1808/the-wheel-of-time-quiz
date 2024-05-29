@@ -47,4 +47,5 @@ export interface Actions {
   setIsQuestionAnswered: () => void;
   setIsAnswerCorrect: () => void;
   setCorrectAnswer: (answer?: string) => void;
+  setCurrentQuizId: (id: string) => void;
 }

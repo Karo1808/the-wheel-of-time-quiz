@@ -23,6 +23,9 @@ const SummaryPage = () => {
   const setCurrentQuiz = useQuizStore(
     useShallow((state) => state.setCurrentQuiz)
   );
+  const setCurrentQuizId = useQuizStore(
+    useShallow((state) => state.setCurrentQuizId)
+  );
 
   const navigate = useNavigate();
 
@@ -33,6 +36,7 @@ const SummaryPage = () => {
   const handleHome = () => {
     resetQuiz();
     setCurrentQuiz("", true);
+    setCurrentQuizId("");
     queryClient.invalidateQueries({
       queryKey: ["quiz", currentQuizId, undefined],
     });
