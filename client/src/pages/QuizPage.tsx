@@ -7,6 +7,8 @@ import { formatTime } from "../utils/shared";
 import { TimeFormat } from "../types";
 import useButtonKeysNavigation from "../hooks/useButtonNavigation";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { useCallback } from "react";
+
 const QuizPage = () => {
   const {
     navigate,
@@ -23,7 +25,7 @@ const QuizPage = () => {
     windowSize?.width || 0 > 1200 ? { rows: 2, cols: 2 } : { rows: 4, cols: 1 }
   );
 
-  function handleNext() {
+  const handleNext = useCallback(() => {
     if (
       !(
         quizState.currentQuestion > quizQuery.quiz.numberOfQuestions ||
@@ -41,9 +43,9 @@ const QuizPage = () => {
       quizActions.nextQuestion();
       stopwatch.start();
     }
-  }
+  }, [navigate, quizActions, quizQuery, quizState, stopwatch]);
 
-  function handlePrevious() {
+  const handlePrevious = useCallback(() => {
     if (!quizState.answer) {
       quizActions.setQuestionTimer(
         formatTime(stopwatch.minutes * 60 + stopwatch.seconds) as TimeFormat
@@ -53,20 +55,23 @@ const QuizPage = () => {
       quizActions.previousQuestion();
     }
     stopwatch.pause();
-  }
+  }, [quizActions, quizState, stopwatch]);
 
-  function handleAnswer(answer: string) {
-    stopwatch.pause();
-    quizActions.setQuestionTimer(
-      formatTime(stopwatch.minutes * 60 + stopwatch.seconds) as TimeFormat
-    );
+  const handleAnswer = useCallback(
+    (answer: string) => {
+      stopwatch.pause();
+      quizActions.setQuestionTimer(
+        formatTime(stopwatch.minutes * 60 + stopwatch.seconds) as TimeFormat
+      );
 
-    stopwatch.reset();
-    quizActions.setAnswer({
-      answer,
-      numberOfQuestions: quizQuery.quiz?.numberOfQuestions,
-    });
-  }
+      stopwatch.reset();
+      quizActions.setAnswer({
+        answer,
+        numberOfQuestions: quizQuery.quiz?.numberOfQuestions,
+      });
+    },
+    [quizActions, quizQuery, stopwatch]
+  );
 
   return (
     <>

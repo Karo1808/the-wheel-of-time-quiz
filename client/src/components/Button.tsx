@@ -22,6 +22,8 @@ interface Props {
     row: number,
     col: number
   ) => void;
+  handleAnswer?: (answer: string) => void;
+  answerLabel?: string;
 }
 
 const Button = ({
@@ -32,20 +34,37 @@ const Button = ({
   index,
   buttonRefs,
   handleKeyDown,
+  handleAnswer,
+  answerLabel,
 }: Props) => {
   const { cols, rows } = indexToRowsAndCols(index || 0);
 
+  const handleClick = () => {
+    if (handleAnswer && answerLabel) {
+      handleAnswer(answerLabel);
+    }
+    if (onClick) {
+      onClick();
+    }
+  };
+
+  const handleKeyDownInternal = (
+    event: React.KeyboardEvent<HTMLButtonElement>
+  ) => {
+    if (handleKeyDown) {
+      handleKeyDown(event, rows, cols);
+    }
+  };
+
   return (
     <button
-      onKeyDown={
-        handleKeyDown ? (event) => handleKeyDown(event, rows, cols) : undefined
-      }
+      onKeyDown={handleKeyDownInternal}
       ref={(el) => {
         if (buttonRefs && buttonRefs.current) {
           buttonRefs.current[rows][cols] = el;
         }
       }}
-      onClick={onClick}
+      onClick={handleClick}
       className={`${styles[state]} ${styles.button} ${className}`}
       disabled={
         state === "disabled" || state === "correct" || state === "incorrect"

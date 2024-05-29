@@ -54,7 +54,7 @@ const QuizAnswer = ({
       onClick={() => handleAnswer(answerLabel)}
       index={index}
       buttonRefs={buttonRefs}
-      handleKeyDown={handleKeyDown}
+      handleKeyDown={(event) => handleKeyDown(event, index, 0)}
     >
       {answerLabel}
     </Button>
