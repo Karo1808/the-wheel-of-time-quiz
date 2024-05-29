@@ -1,3 +1,4 @@
+// src/components/Dialog.js
 import { forwardRef } from "react";
 import styles from "../styles/dialog.module.css";
 import { IoIosClose } from "react-icons/io";
@@ -19,14 +20,21 @@ const Dialog = forwardRef<HTMLDialogElement, Props>(
     return (
       <>
         <div
-          className={styles.overlay}
-          style={{ display: isOverlayOpen ? "block" : "none" }}
+          className={`${styles.overlay} ${
+            isOverlayOpen ? styles.overlayOpen : ""
+          }`}
         />
-        <dialog ref={ref} onClick={handleDialogOpen} className={styles.dialog}>
-          {children}
+        <dialog
+          ref={ref}
+          onClick={handleDialogOpen}
+          className={`${styles.dialog} ${
+            isOverlayOpen ? styles.dialogOpen : ""
+          }`}
+        >
           <button className={styles.button} onClick={toggleDialog}>
             <IoIosClose className={styles.icon} />
           </button>
+          {children}
         </dialog>
       </>
     );

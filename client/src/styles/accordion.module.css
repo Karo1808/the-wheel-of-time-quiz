@@ -64,7 +64,9 @@
 .answers {
   font-size: 2rem;
   color: var(--fg-color);
-  transition: max-height 400ms ease-out;
+  transition: max-height 300ms ease;
+  transition: all 500ms ease;
+  opacity: 0;
   max-height: 0;
   overflow: hidden;
   padding: 0 6rem;
@@ -83,8 +85,9 @@
 }
 
 .open {
-  transition: max-height 400ms ease-in;
+  transition: all 500ms ease;
   max-height: 16rem;
+  opacity: 1;
 }
 
 .correct {

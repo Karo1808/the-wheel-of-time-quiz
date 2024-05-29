@@ -67,10 +67,7 @@ const SummaryPage = () => {
             )}%`}
           />
         </section>
-        <footer
-          className={styles.footer}
-          style={{ display: width < 1200 ? "none" : "block" }}
-        >
+        <footer className={styles.footer}>
           <Timeline questions={questions} />
         </footer>
       </main>

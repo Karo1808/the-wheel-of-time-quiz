@@ -39,6 +39,7 @@ const Timeline = ({ questions }: Props) => {
     dialogRef.current.hasAttribute("open")
       ? dialogRef.current.close()
       : dialogRef.current.showModal();
+
     setIsOverlayOpen(!isOVerlayOpen);
   };
 
