@@ -16,6 +16,7 @@
 - [x] - modal window component
 - [x] - scroll into view on timeline click
 - [x] - drawer component
+- [x] - improve accordion animation by moving up the content
 - [ ] - design quizzes page
 - [ ] - Create a quizzes page
 - [ ] - add an route to create a quiz (admin only)
