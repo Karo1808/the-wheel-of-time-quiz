@@ -73,7 +73,15 @@ const SummaryAccordion = forwardRef<HTMLDivElement, Props>(
             />
           </button>
         </div>
-        <ol className={`${styles.answers} ${isAccordionOpen && styles.open}`}>
+        <ol
+          className={`${styles.answers} `}
+          style={{
+            maxHeight: isAccordionOpen ? 300 : 0,
+            transition: isAccordionOpen
+              ? "max-height 600ms ease"
+              : "max-height 500ms ease",
+          }}
+        >
           {answers.map((answer, index) => (
             <li
               key={index}
