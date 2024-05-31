@@ -4,8 +4,6 @@ import { Question } from "../types";
 import { useEffect, useRef, useState } from "react";
 import Dialog from "./Dialog";
 import SummaryDialogContent from "./SummaryDialogContent";
-import { useWindowSize } from "@uidotdev/usehooks";
-import Drawer from "./Drawer";
 
 const COLOR_CORRECT = "#3f704d";
 const COLOR_WRONG = "#9d2933";
@@ -18,7 +16,6 @@ const Timeline = ({ questions }: Props) => {
   const [barWidth, setBarWidth] = useState<number>(0);
   const [index, setIndex] = useState<number | undefined>();
   const [isOVerlayOpen, setIsOverlayOpen] = useState<boolean>(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const questionLength = questions.length + 1;
 
@@ -49,13 +46,7 @@ const Timeline = ({ questions }: Props) => {
   function handleTimeLineClick(index: number) {
     toggleDialog();
     setIndex(index);
-    setIsDrawerOpen(true);
   }
-
-  // TODO: remove later
-  const { width } = useWindowSize();
-
-  if (!width) return;
 
   return (
     <div className={styles.timeline}>
@@ -83,19 +74,13 @@ const Timeline = ({ questions }: Props) => {
         ))}
       </div>
       <div style={{ width: `${barWidth}px` }} className={styles.bar} />
-      {width > 1200 ? (
-        <Dialog
-          toggleDialog={toggleDialog}
-          ref={dialogRef}
-          isOverlayOpen={isOVerlayOpen}
-        >
-          {<SummaryDialogContent index={index} />}
-        </Dialog>
-      ) : (
-        <Drawer open={isDrawerOpen} setOpen={setIsDrawerOpen}>
-          <SummaryDialogContent index={index} />
-        </Drawer>
-      )}
+      <Dialog
+        toggleDialog={toggleDialog}
+        ref={dialogRef}
+        isOverlayOpen={isOVerlayOpen}
+      >
+        {<SummaryDialogContent index={index} />}
+      </Dialog>
     </div>
   );
 };

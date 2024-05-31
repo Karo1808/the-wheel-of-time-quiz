@@ -10,6 +10,10 @@ import { IoIosRefresh } from "react-icons/io";
 import { IoHomeOutline } from "react-icons/io5";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { useQueryClient } from "@tanstack/react-query";
+import Button from "../components/Button";
+import { useState } from "react";
+import Drawer from "../components/Drawer";
+import SummaryDialogContent from "../components/SummaryDialogContent";
 
 const SummaryPage = () => {
   const currentQuizId = useQuizStore(
@@ -33,6 +37,8 @@ const SummaryPage = () => {
 
   const queryClient = useQueryClient();
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+
   const handleHome = () => {
     resetQuiz();
     setCurrentQuiz("", true);
@@ -49,6 +55,10 @@ const SummaryPage = () => {
       queryKey: ["quiz", currentQuizId, undefined],
     });
     navigate(`/quiz/${currentQuizId}`);
+  };
+
+  const handleOpenDrawer = () => {
+    setIsDrawerOpen(true);
   };
 
   if (!width) return;
@@ -85,7 +95,24 @@ const SummaryPage = () => {
           />
         </section>
         <footer className={styles.footer}>
-          <Timeline questions={questions} />
+          {width > 1200 ? (
+            <Timeline questions={questions} />
+          ) : (
+            <>
+              <Button
+                className={styles.details_button}
+                onClick={handleOpenDrawer}
+                state="next"
+              >
+                See details
+              </Button>
+              {isDrawerOpen && (
+                <Drawer open={isDrawerOpen} setOpen={setIsDrawerOpen}>
+                  <SummaryDialogContent />
+                </Drawer>
+              )}
+            </>
+          )}
         </footer>
       </main>
     </>
