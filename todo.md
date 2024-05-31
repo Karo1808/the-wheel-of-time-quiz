@@ -15,10 +15,13 @@
 - [x] - create summary page
 - [x] - modal window component
 - [x] - scroll into view on timeline click
-- [ ] - drawer component
+- [x] - drawer component
+- [ ] - design quizzes page
 - [ ] - Create a quizzes page
 - [ ] - add an route to create a quiz (admin only)
 - [ ] - make some quizzes, meaning questions and answers
+  <!-- !NEXT STAGE -->
+- [ ] - support user authentication
 
 #### Sever
 
@@ -28,6 +31,8 @@
 - [x] - Add logging to the current api
 - [ ] - Improve create quiz endpoint (less payload more server calculations)
 - [ ] - Add tests to the current api
-- [ ] - Add user authentication and authorization
-- [ ] - Add rate limiting and pagination to quizzes endpoint
+- [ ] - Add pagination to the quizzes endpoint
+- [ ] - Add rate limiting
 - [ ] - Add api docs
+  <!-- !NEXT STAGE -->
+- [ ] - Add user authentication and authorization
