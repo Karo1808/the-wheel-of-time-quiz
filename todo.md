@@ -16,7 +16,6 @@
 - [x] - modal window component
 - [x] - scroll into view on timeline click
 - [x] - drawer component
-- [ ] - add a lot of animations
 - [ ] - design quizzes page
 - [ ] - Create a quizzes page
 - [ ] - add an route to create a quiz (admin only)
