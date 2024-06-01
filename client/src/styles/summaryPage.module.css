@@ -50,4 +50,13 @@
   position: relative;
   overflow-x: auto;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: inherit;
+}
+
+.details_button {
+  width: 50%;
+  margin-top: 8rem;
+  margin-bottom: 5rem;
 }

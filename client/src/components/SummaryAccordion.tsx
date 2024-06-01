@@ -48,32 +48,36 @@ const SummaryAccordion = forwardRef<HTMLDivElement, Props>(
 
     return (
       <div ref={ref} onClick={toggleAccordion} className={styles.container}>
-        <div className={styles.top}>
-          <div className={styles.left}>
-            {isCorrect ? (
-              <IoIosCheckmarkCircle
-                className={styles.icon}
-                color={COLOR_CORRECT}
-              />
-            ) : (
-              <IoIosCloseCircle className={styles.icon} color={COLOR_WRONG} />
-            )}
-            <div className={styles.text}>
-              <p className={styles.question_number}>
-                Question {questionNumber}
-              </p>
-              <p className={styles.question}>{question}</p>
-            </div>
-          </div>
-          <button className={styles.arrow_button}>
-            <IoIosArrowDown
-              className={`${styles.arrow_icon} ${
-                isAccordionOpen && styles.open_icon
-              }`}
+        <div>
+          {isCorrect ? (
+            <IoIosCheckmarkCircle
+              className={styles.icon}
+              color={COLOR_CORRECT}
             />
-          </button>
+          ) : (
+            <IoIosCloseCircle className={styles.icon} color={COLOR_WRONG} />
+          )}
         </div>
-        <ol className={`${styles.answers} ${isAccordionOpen && styles.open}`}>
+        <div className={styles.text}>
+          <p className={styles.question_number}>Question {questionNumber}</p>
+          <p className={styles.question}>{question}</p>
+        </div>
+        <button className={styles.arrow_button}>
+          <IoIosArrowDown
+            className={`${styles.arrow_icon} ${
+              isAccordionOpen && styles.open_icon
+            }`}
+          />
+        </button>
+        <ol
+          className={`${styles.answers} `}
+          style={{
+            maxHeight: isAccordionOpen ? 300 : 0,
+            transition: isAccordionOpen
+              ? "max-height 600ms ease"
+              : "max-height 500ms ease",
+          }}
+        >
           {answers.map((answer, index) => (
             <li
               key={index}

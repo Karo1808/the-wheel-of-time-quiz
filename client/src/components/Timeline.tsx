@@ -17,9 +17,9 @@ const Timeline = ({ questions }: Props) => {
   const [index, setIndex] = useState<number | undefined>();
   const [isOVerlayOpen, setIsOverlayOpen] = useState<boolean>(false);
 
-  const questionLength = questions.length + 1;
-
   const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const questionLength = questions.length + 1;
 
   useEffect(() => {
     setBarWidth(170 * questionLength);

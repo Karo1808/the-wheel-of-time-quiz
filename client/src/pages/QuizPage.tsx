@@ -7,6 +7,7 @@ import { formatTime } from "../utils/shared";
 import { TimeFormat } from "../types";
 import useButtonKeysNavigation from "../hooks/useButtonNavigation";
 import { useWindowSize } from "@uidotdev/usehooks";
+
 const QuizPage = () => {
   const {
     navigate,

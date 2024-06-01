@@ -1,9 +1,10 @@
 import { useWindowSize } from "@uidotdev/usehooks";
 import Button from "./Button";
 import ButtonDirection from "./ButtonDirection";
-
+import { motion } from "framer-motion";
 import styles from "../styles/quiz.module.css";
 import useQuizNavigation from "../hooks/useQuizNavigation";
+import { calculateScore } from "../utils/graph";
 
 interface Props {
   currentQuestion: number;
@@ -35,11 +36,21 @@ const QuizFooter = ({
   // Return the conditional rendering based on window width
   return windowSize.width > 700 ? (
     <>
-      <progress
-        className={styles.progress}
-        value={currentScore}
-        max={numberOfQuestions}
-      />
+      <div className={styles.progress_bar}>
+        <motion.div
+          className={styles.progress_value}
+          initial={{
+            width: `${calculateScore(currentScore, numberOfQuestions)}%`,
+          }}
+          animate={{
+            width: `${calculateScore(currentScore, numberOfQuestions)}%`,
+          }}
+          transition={{
+            duration: 0.3,
+            ease: "easeOut",
+          }}
+        />
+      </div>
       <ButtonDirection
         disabled={currentQuestion - 1 < 1}
         onClick={handlePrevious}
