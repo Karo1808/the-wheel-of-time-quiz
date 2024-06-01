@@ -32,8 +32,7 @@
   opacity: 0;
   pointer-events: none; /* Prevent interaction when not visible */
   padding: 4rem 4rem;
-  max-height: 80vh;
-  min-width: 60vw;
+  max-height: 70%;
   box-shadow: var(--shadow);
   overflow-y: auto;
   overflow-x: hidden;
