@@ -20,16 +20,21 @@ const App = () => {
         <Route element={<Layout />}>
           <Route element={<SuspenseLayout fallback={<Loading />} />}>
             <Route path="/" element={<WelcomePage />} />
-            <Route path="/quizzes" element={<QuizzesPage />} />
             <Route path="/quiz/:quizId/summary" element={<SummaryPage />} />
             <Route path="/timeline" element={<SummaryPage />} />
             <Route path="/dialog" element={<DialogTest />} />
             <Route path="/test" element={<Test />} />
           </Route>
+
           <Route element={<SuspenseLayout fallback={<QuizPageSkeleton />} />}>
             <Route path="/quiz/:quizId" element={<QuizPage />} />
           </Route>
           <Route path="/skeleton" element={<QuizPageSkeleton />}></Route>
+        </Route>
+        <Route element={<Layout wide />}>
+          <Route element={<SuspenseLayout fallback={<Loading />} />}>
+            <Route path="/quizzes" element={<QuizzesPage />} />
+          </Route>
         </Route>
         <Route path="*" element={<Page404 />}></Route>
       </Routes>

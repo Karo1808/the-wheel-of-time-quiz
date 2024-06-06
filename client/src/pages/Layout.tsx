@@ -2,7 +2,11 @@ import { Outlet } from "react-router";
 import styles from "../styles/layout.module.css";
 import { motion } from "framer-motion";
 
-const Layout = () => {
+interface Props {
+  wide?: boolean;
+}
+
+const Layout = ({ wide = false }: Props) => {
   return (
     <motion.main
       initial={{
@@ -14,7 +18,7 @@ const Layout = () => {
       transition={{
         duration: 0.5,
       }}
-      className={styles.page}
+      className={`${styles.page} ${wide && styles.wide}`}
     >
       <Outlet />
     </motion.main>

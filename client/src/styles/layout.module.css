@@ -21,7 +21,7 @@
     }
     @media (min-width: 1200px) {
       & {
-        width: 55vw;
+        max-width: 55vw;
         padding: 8rem 10rem;
         gap: 8rem;
         border: 1px solid #26191130;
@@ -29,6 +29,21 @@
         position: relative;
         border-radius: 1rem;
       }
+    }
+  }
+}
+
+.wide {
+  @media screen and (min-width: 1200px) {
+    & {
+      min-width: 80vw;
+      padding: 5rem 4rem;
+    }
+  }
+
+  @media screen and (min-width: 700px) {
+    & {
+      max-width: 80vw;
     }
   }
 }
