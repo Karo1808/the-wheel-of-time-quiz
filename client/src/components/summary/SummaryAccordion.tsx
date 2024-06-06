@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import styles from "../styles/accordion.module.css";
+import styles from "../../styles/accordion.module.css";
 import {
   IoIosArrowDown,
   IoIosCheckmarkCircle,

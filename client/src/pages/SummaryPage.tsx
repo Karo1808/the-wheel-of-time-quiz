@@ -1,7 +1,7 @@
 import { useShallow } from "zustand/react/shallow";
-import Timeline from "../components/Timeline";
+import Timeline from "../components/summary/Timeline";
 import useQuizStore from "../hooks/useQuizStore";
-import ResultsGraph from "../components/ResultsGraph";
+import ResultsGraph from "../components/summary/ResultsGraph";
 import { calculateScore } from "../utils/graph";
 import { formatTime } from "../utils/shared";
 import styles from "../styles/summaryPage.module.css";
@@ -13,7 +13,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Button from "../components/Button";
 import { useState } from "react";
 import Drawer from "../components/Drawer";
-import SummaryDialogContent from "../components/SummaryDialogContent";
+import SummaryDialogContent from "../components/summary/SummaryDialogContent";
 
 const SummaryPage = () => {
   const currentQuizId = useQuizStore(

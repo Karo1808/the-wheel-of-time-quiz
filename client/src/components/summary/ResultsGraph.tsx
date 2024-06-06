@@ -1,8 +1,8 @@
 import { Cell, Label, Pie, PieChart, ResponsiveContainer } from "recharts";
-import { createData, statisticStyle } from "../utils/graph";
+import { createData, statisticStyle } from "../../utils/graph";
 
-import styles from "../styles/graph.module.css";
-import { formatTime } from "../utils/shared";
+import styles from "../../styles/graph.module.css";
+import { formatTime } from "../../utils/shared";
 
 interface Props {
   value: number;

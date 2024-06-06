@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import Button from "./Button";
-import styles from "../styles/quiz.module.css";
+import Button from "../Button";
+import styles from "../../styles/quiz.module.css";
 import toast from "react-hot-toast";
 
 interface Props {

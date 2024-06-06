@@ -1,8 +1,8 @@
 import { IoIosCheckmarkCircle, IoIosCloseCircle } from "react-icons/io";
-import styles from "../styles/timeline.module.css";
-import { Question } from "../types";
+import styles from "../../styles/timeline.module.css";
+import { Question } from "../../types";
 import { useEffect, useRef, useState } from "react";
-import Dialog from "./Dialog";
+import Dialog from "../Dialog";
 import SummaryDialogContent from "./SummaryDialogContent";
 
 const COLOR_CORRECT = "#3f704d";

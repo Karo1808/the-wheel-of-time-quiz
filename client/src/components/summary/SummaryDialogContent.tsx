@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "../styles/summaryDialogContent.module.css";
+import styles from "../../styles/summaryDialogContent.module.css";
 import SummaryAccordion from "./SummaryAccordion";
-import useQuizQuery from "../hooks/useQuizQuery";
+import useQuizQuery from "../../hooks/useQuizQuery";
 import { useShallow } from "zustand/react/shallow";
-import useQuizStore from "../hooks/useQuizStore";
+import useQuizStore from "../../hooks/useQuizStore";
 
 interface Props {
   index?: number;

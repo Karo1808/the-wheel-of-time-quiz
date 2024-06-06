@@ -1,8 +1,8 @@
 import styles from "../styles/quiz.module.css";
 import useQuiz from "../hooks/useQuiz";
-import QuizFooter from "../components/QuizFooter";
-import QuizAnswer from "../components/QuizAnswer";
-import QuizHeader from "../components/QuizHeader";
+import QuizFooter from "../components/quiz/QuizFooter";
+import QuizAnswer from "../components/quiz/QuizAnswer";
+import QuizHeader from "../components/quiz/QuizHeader";
 import { formatTime } from "../utils/shared";
 import { TimeFormat } from "../types";
 import useButtonKeysNavigation from "../hooks/useButtonNavigation";

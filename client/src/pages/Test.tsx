@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../styles/test.module.css";
 import Drawer from "../components/Drawer";
-import SummaryDialogContent from "../components/SummaryDialogContent";
+import SummaryDialogContent from "../components/summary/SummaryDialogContent";
 
 const Test = () => {
   const [open, setOpen] = useState<boolean>(false);

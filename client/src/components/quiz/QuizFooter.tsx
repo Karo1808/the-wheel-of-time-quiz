@@ -1,10 +1,10 @@
 import { useWindowSize } from "@uidotdev/usehooks";
-import Button from "./Button";
+import Button from "../Button";
 import ButtonDirection from "./ButtonDirection";
 import { motion } from "framer-motion";
-import styles from "../styles/quiz.module.css";
-import useQuizNavigation from "../hooks/useQuizNavigation";
-import { calculateScore } from "../utils/graph";
+import styles from "../../styles/quiz.module.css";
+import useQuizNavigation from "../../hooks/useQuizNavigation";
+import { calculateScore } from "../../utils/graph";
 
 interface Props {
   currentQuestion: number;

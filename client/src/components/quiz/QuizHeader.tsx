@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../styles/quiz.module.css";
-import { TimeFormat } from "../types";
-import { formatTime } from "../utils/shared";
+import styles from "../../styles/quiz.module.css";
+import { TimeFormat } from "../../types/index";
+import { formatTime } from "../../utils/shared";
 
 interface Props {
   currentQuestion: number;

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import Dialog from "../components/Dialog";
-import SummaryDialogContent from "../components/SummaryDialogContent";
+import SummaryDialogContent from "../components/summary/SummaryDialogContent";
 
 const DialogTest = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
