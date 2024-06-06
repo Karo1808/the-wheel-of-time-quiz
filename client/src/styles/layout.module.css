@@ -36,7 +36,7 @@
 .wide {
   @media screen and (min-width: 1200px) {
     & {
-      min-width: 80vw;
+      min-width: 60vw;
       padding: 5rem 4rem;
     }
   }

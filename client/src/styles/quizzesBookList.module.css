@@ -1,0 +1,43 @@
+.list {
+  width: 100%;
+  list-style: none;
+  border: none;
+  border-radius: 10px;
+  padding: 2rem 3rem;
+  height: 100%;
+  overflow-y: auto;
+
+  @media (min-width: 1200px) {
+    border: 0.5px solid var(--gray-color);
+    height: 60vh;
+  }
+}
+
+.item {
+  margin-bottom: 4rem;
+
+  & button {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    width: 100%;
+    gap: 2rem;
+    font-size: 2rem;
+    color: var(--gray-color);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  & button:hover {
+    color: var(--fg-color);
+  }
+}
+
+.item:last-child {
+  margin-bottom: 0;
+}
+
+.active {
+  color: var(--fg-color) !important;
+}

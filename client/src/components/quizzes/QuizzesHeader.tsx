@@ -3,8 +3,13 @@ import { IoIosSearch } from "react-icons/io";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { MdOutlineSortByAlpha } from "react-icons/md";
 import { PiBooks } from "react-icons/pi";
+import Drawer from "../Drawer";
+import { useState } from "react";
+import QuizzesBookList from "./QuizzesBookList";
 
 const QuizzesHeader = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   return (
     <header className={styles.header}>
       <div className={styles.top}>
@@ -28,7 +33,10 @@ const QuizzesHeader = () => {
         </form>
       </div>
       <div className={styles.options}>
-        <button className={`${styles.option} ${styles.option_book}`}>
+        <button
+          onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+          className={styles.option}
+        >
           <PiBooks size={25} />
           <span>Books</span>
         </button>
@@ -41,6 +49,11 @@ const QuizzesHeader = () => {
           <span>Sort</span>
         </button>
       </div>
+      {isDrawerOpen && (
+        <Drawer open={isDrawerOpen} setOpen={setIsDrawerOpen}>
+          <QuizzesBookList />
+        </Drawer>
+      )}
     </header>
   );
 };
