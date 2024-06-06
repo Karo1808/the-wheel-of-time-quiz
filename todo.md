@@ -17,8 +17,10 @@
 - [x] - scroll into view on timeline click
 - [x] - drawer component
 - [x] - design quizzes page desktop
-- [ ] - design quizzes page mobile
-- [ ] - Create a quizzes page
+- [x] - design quizzes page mobile
+- [ ] - Create a static quizzes page layout
+- [ ] - Create a quizzes card component
+- [ ] - add functionality to quizzes page
 - [ ] - add an route to create a quiz (admin only)
 - [ ] - make some quizzes, meaning questions and answers
   <!-- !NEXT STAGE -->
