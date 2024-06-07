@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.direction {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 2.5rem;
+  color: var(--gray-color-secondary);
+  transform: translateY(3px);
+
+  &:hover {
+    color: var(--gray-color);
+  }
+
+  &:disabled {
+    color: var(--gray-color-secondary);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.pageButton {
+  border: none;
+  outline: none;
+  font-size: 2rem;
+  color: var(--gray-color-secondary);
+  background-color: transparent;
+
+  &:hover {
+    color: var(--gray-color);
+  }
+}
+
+.active {
+  color: var(--gray-color-secondary);
+  font-weight: bold;
+}
