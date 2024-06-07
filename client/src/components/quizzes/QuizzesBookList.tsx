@@ -7,11 +7,18 @@ const QuizzesBookList = () => {
 
   return (
     <ul className={styles.list}>
-      {booksList.map((book) => (
-        <li className={styles.item} key={book.title}>
+      {booksList.map((book, index) => (
+        <li
+          className={`${activeBook === book.title && styles.active} ${
+            styles.item
+          }`}
+          key={book.title}
+        >
           <button
+            className={`${styles.btn} ${
+              index === booksList.length - 1 && styles.last
+            }`}
             onClick={() => setActiveBook(book.title)}
-            className={`${activeBook === book.title && styles.active}`}
           >
             {book.icon}
             <span>{book.title}</span>

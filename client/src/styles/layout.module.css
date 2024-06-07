@@ -34,16 +34,20 @@
 }
 
 .wide {
+  gap: 6rem;
+  justify-content: start;
   @media screen and (min-width: 1200px) {
     & {
       min-width: 60vw;
       padding: 5rem 4rem;
+      gap: 4rem;
     }
   }
 
   @media screen and (min-width: 700px) {
     & {
       max-width: 80vw;
+      gap: 4rem;
     }
   }
 }

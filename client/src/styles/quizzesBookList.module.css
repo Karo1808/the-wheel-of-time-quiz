@@ -8,34 +8,38 @@
   overflow-y: auto;
 
   @media (min-width: 1200px) {
-    border: 0.5px solid var(--gray-color);
-    height: 60vh;
+    border: 0.5px solid var(--gray-color-secondary);
+    height: 70vh;
+    width: max-content;
+    flex-shrink: 0;
   }
 }
 
 .item {
-  margin-bottom: 4rem;
+  cursor: pointer;
+  color: var(--gray-color);
 
-  & button {
-    outline: none;
-    border: none;
-    background-color: transparent;
-    display: flex;
-    width: 100%;
-    gap: 2rem;
-    font-size: 2rem;
-    color: var(--gray-color);
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-  }
-
-  & button:hover {
+  &:hover {
     color: var(--fg-color);
   }
 }
 
-.item:last-child {
-  margin-bottom: 0;
+.btn {
+  padding-bottom: 4rem;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  width: max-content;
+  gap: 2rem;
+  color: inherit;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.last {
+  padding-bottom: 0;
 }
 
 .active {

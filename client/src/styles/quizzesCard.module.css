@@ -1,0 +1,147 @@
+.card {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 2rem;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border: 0.5px solid var(--gray-color-secondary);
+  padding-bottom: 3rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 100%;
+  gap: 2.5rem;
+  border-bottom: 0.5px solid var(--gray-color-secondary);
+  padding: 1rem 0rem 3rem 0rem;
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+  color: var(--fg-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    font-weight: 500;
+  }
+}
+
+.profile_picture {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
+  background-color: var(--gray-color);
+}
+
+.tags {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-size: 1.6rem;
+  color: var(--fg-color);
+  font-weight: 300;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+  @media (min-width: 700px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+.misc {
+  display: flex;
+  gap: 3rem;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+
+  @media (min-width: 700px) {
+    width: fit-content;
+  }
+}
+
+.misc_item {
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  gap: 0.5rem;
+  color: var(--gray-color-secondary);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--gray-color);
+  }
+}
+
+.misc_item_number {
+  font-size: 1.4rem;
+  color: var(--fg-color);
+  font-weight: 300;
+}
+
+.misc_item_icon {
+  transform: translateY(0.5px);
+  color: inherit;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 2rem;
+  @media (min-width: 700px) {
+    width: fit-content;
+  }
+}
+
+.cta_button {
+  font-size: 1.5rem;
+  width: 100%;
+  padding: 1rem 1rem;
+
+  @media (min-width: 700px) {
+    font-size: 1.5rem;
+    width: fit-content;
+  }
+}

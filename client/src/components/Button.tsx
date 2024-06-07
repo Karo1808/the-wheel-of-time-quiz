@@ -12,7 +12,8 @@ interface Props {
     | "next"
     | "invisible"
     | "not_found"
-    | "error";
+    | "error"
+    | "green";
   className?: string;
   onClick?: () => void;
   buttonRefs?: React.RefObject<(HTMLButtonElement | null)[][]>;

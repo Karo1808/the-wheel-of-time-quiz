@@ -6,9 +6,13 @@ import { PiBooks } from "react-icons/pi";
 import Drawer from "../Drawer";
 import { useState } from "react";
 import QuizzesBookList from "./QuizzesBookList";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const QuizzesHeader = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { width } = useWindowSize();
+
+  if (!width) return null;
 
   return (
     <header className={styles.header}>
@@ -33,13 +37,16 @@ const QuizzesHeader = () => {
         </form>
       </div>
       <div className={styles.options}>
-        <button
-          onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-          className={styles.option}
-        >
-          <PiBooks size={25} />
-          <span>Books</span>
-        </button>
+        {width < 1200 && (
+          <button
+            onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+            className={styles.option}
+          >
+            <PiBooks size={25} />
+            <span>Books</span>
+          </button>
+        )}
+
         <button className={styles.option}>
           <HiOutlineAdjustmentsHorizontal size={25} />
           <span>Filter</span>
