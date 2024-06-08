@@ -13,7 +13,6 @@ import {
   getQuizzes,
   verifyAnswer,
 } from "../services/quiz.service";
-import log from "../utils/logger";
 
 export async function createQuizHandler(
   req: Request<{}, {}, CreateQuizSchema["body"]>,

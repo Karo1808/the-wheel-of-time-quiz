@@ -3,7 +3,24 @@ import styles from "../../styles/quizzesCard.module.css";
 import Tag from "../Tag";
 import { FaComments } from "react-icons/fa6";
 import Button from "../Button";
-const QuizzesCard = () => {
+
+interface QuizzesCardProps {
+  handleGoToQuiz: ({
+    quizId,
+    numberOfQuestions,
+  }: {
+    quizId: string;
+    numberOfQuestions: number;
+  }) => void;
+  quizId: string;
+  numberOfQuestions: number;
+}
+
+const QuizzesCard = ({
+  handleGoToQuiz,
+  quizId,
+  numberOfQuestions,
+}: QuizzesCardProps) => {
   return (
     <figure className={styles.card}>
       <header className={styles.header}>
@@ -45,7 +62,13 @@ const QuizzesCard = () => {
           <Button className={styles.cta_button} state="none">
             See Details
           </Button>
-          <Button className={styles.cta_button} state="green">
+          <Button
+            onClick={() => {
+              handleGoToQuiz({ quizId, numberOfQuestions });
+            }}
+            className={styles.cta_button}
+            state="green"
+          >
             Play Now
           </Button>
         </div>
