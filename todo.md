@@ -20,7 +20,7 @@
 - [x] - design quizzes page mobile
 - [x] - Create a static quizzes page layout
 - [x] - Create a quizzes card component
-- [ ] - Add a pagination component
+- [x] - Add a pagination component
 - [ ] - Add a dropdown component
 - [ ] - add functionality to quizzes page
 - [ ] - add an route to create a quiz (admin only)

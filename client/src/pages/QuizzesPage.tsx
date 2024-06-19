@@ -60,7 +60,7 @@ const QuizzesPage = () => {
           ))}
         </div>
       </main>
-      <footer>
+      <footer className={styles.footer}>
         <PaginationWrapper
           numberOfPages={10}
           currentPage={currentPage}

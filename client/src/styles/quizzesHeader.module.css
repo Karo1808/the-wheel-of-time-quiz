@@ -71,6 +71,7 @@
   outline: none;
   border: none;
   color: var(--gray-color);
+  background-color: transparent;
   margin-top: 0.2rem;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -90,7 +91,7 @@
   outline: none;
   background-color: transparent;
   color: var(--fg-color);
-  font-size: 2rem;
+  font-size: 1.8rem;
 
   &::placeholder {
     color: var(--gray-color);

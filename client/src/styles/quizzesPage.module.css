@@ -18,3 +18,7 @@
   padding-right: 2rem;
   gap: 2rem;
 }
+
+.footer {
+  position: sticky;
+}

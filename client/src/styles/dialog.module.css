@@ -31,7 +31,7 @@
   transition: transform 0.4s ease, opacity 0.5s ease;
   opacity: 0;
   pointer-events: none; /* Prevent interaction when not visible */
-  padding: 4rem 4rem;
+  padding: 4rem 8rem;
   max-height: 70%;
   box-shadow: var(--shadow);
   overflow-y: auto;
@@ -39,6 +39,7 @@
 }
 
 .dialogOpen {
+  border: 2px solid #26191130;
   transform: translateY(0px);
   opacity: 1;
   pointer-events: auto; /* Allow interaction when visible */
