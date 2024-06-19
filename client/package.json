@@ -19,6 +19,7 @@
     "framer-motion": "^11.2.10",
     "immer": "^10.0.4",
     "ldrs": "^1.0.1",
+    "rc-pagination": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.13",

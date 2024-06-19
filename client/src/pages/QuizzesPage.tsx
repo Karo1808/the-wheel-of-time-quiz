@@ -3,7 +3,7 @@ import QuizzesBookList from "../components/quizzes/QuizzesBookList";
 import QuizzesHeader from "../components/quizzes/QuizzesHeader";
 import styles from "../styles/quizzesPage.module.css";
 import QuizzesCard from "../components/quizzes/QuizzesCard";
-import Pagination from "../components/Pagination";
+import PaginationWrapper from "../components/PaginationWrapper";
 import { useEffect, useState } from "react";
 import useQuizzesQuery from "../hooks/useQuizzesQuery";
 import { useNavigate } from "react-router";
@@ -61,7 +61,7 @@ const QuizzesPage = () => {
         </div>
       </main>
       <footer>
-        <Pagination
+        <PaginationWrapper
           numberOfPages={10}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
