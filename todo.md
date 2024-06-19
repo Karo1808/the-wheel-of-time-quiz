@@ -18,8 +18,10 @@
 - [x] - drawer component
 - [x] - design quizzes page desktop
 - [x] - design quizzes page mobile
-- [ ] - Create a static quizzes page layout
-- [ ] - Create a quizzes card component
+- [x] - Create a static quizzes page layout
+- [x] - Create a quizzes card component
+- [ ] - Add a pagination component
+- [ ] - Add a dropdown component
 - [ ] - add functionality to quizzes page
 - [ ] - add an route to create a quiz (admin only)
 - [ ] - make some quizzes, meaning questions and answers
