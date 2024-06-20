@@ -1,5 +1,6 @@
 import { State } from "../types";
-import { IoEyeSharp } from "react-icons/io5";
+import { IoCalendarClearSharp, IoEyeSharp } from "react-icons/io5";
+import { TiSortAlphabetically } from "react-icons/ti";
 import {
   GiBrightExplosion,
   GiCrossroad,
@@ -13,9 +14,10 @@ import {
   GiLightningStorm,
   GiSwordClash,
 } from "react-icons/gi";
-import { IoIosSnow } from "react-icons/io";
+import { IoIosSnow, IoMdHeart } from "react-icons/io";
 import { FaLeaf } from "react-icons/fa6";
 import { PiBooks } from "react-icons/pi";
+import QuizzesDropdownSortCta from "../components/quizzes/QuizzesDropdownSortCta";
 
 export const initialState: State = {
   currentQuizId: "",
@@ -104,5 +106,28 @@ export const booksList = [
   {
     title: "New Spring",
     icon: <FaLeaf />,
+  },
+];
+
+export const sortList = [
+  {
+    label: "Alphabetically",
+    icon: <TiSortAlphabetically size={25} />,
+    cta: <QuizzesDropdownSortCta label="alphabetically" />,
+  },
+  {
+    label: "Views",
+    icon: <IoEyeSharp />,
+    cta: <QuizzesDropdownSortCta label="views" />,
+  },
+  {
+    label: "Likes",
+    icon: <IoMdHeart />,
+    cta: <QuizzesDropdownSortCta label="likes" />,
+  },
+  {
+    label: "Date",
+    icon: <IoCalendarClearSharp />,
+    cta: <QuizzesDropdownSortCta label="date" />,
   },
 ];

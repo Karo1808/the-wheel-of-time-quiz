@@ -16,7 +16,7 @@
   position: absolute;
   bottom: 0;
   width: 95%;
-  height: 85vh;
+  max-height: 85vh;
   left: 0;
   right: 0;
   margin: 0 auto;

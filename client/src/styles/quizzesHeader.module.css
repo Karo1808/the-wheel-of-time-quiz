@@ -113,6 +113,7 @@
   flex-grow: 1.5;
   justify-self: end;
   margin: 0 1rem;
+  position: relative;
 
   @media (min-width: 1200px) {
     & {
@@ -153,10 +154,28 @@
   }
 }
 
+.option_active {
+  color: var(--fg-color);
+}
+
 .option_book {
   display: flex;
 
   @media (min-width: 1200px) {
     display: none;
   }
+}
+
+.option_sort {
+  display: none;
+
+  @media (min-width: 1200px) {
+    display: flex;
+  }
+}
+
+.quizzes_dropdown {
+  position: absolute;
+  top: 70%;
+  right: -10%;
 }

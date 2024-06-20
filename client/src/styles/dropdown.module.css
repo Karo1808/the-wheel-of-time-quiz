@@ -1,0 +1,19 @@
+.wrapper {
+  padding: 0.5rem;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.dropdown {
+  background-color: var(--primary-color);
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid var(--gray-color);
+  border-radius: 1rem;
+  cursor: auto;
+  color: var(--gray-color);
+}
