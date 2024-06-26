@@ -75,13 +75,21 @@ export async function createQuiz(
   }
 }
 
+interface GetQuizzesResponse {
+  totalItems: number;
+  currentPage: number;
+  totalPages: number;
+  quizzes: QuizDocument[];
+}
+
 export async function getQuizzes({
   page,
   limit,
 }: {
   page: number;
   limit: number;
-}): Promise<QuizDocument[]> {
+}): Promise<GetQuizzesResponse> {
+  const offset = (page - 1) * limit;
   try {
     const result = await QuizModel.find(
       {},
@@ -92,11 +100,21 @@ export async function getQuizzes({
         questions: 0,
       },
       {}
-    );
+    )
+      .skip(offset)
+      .limit(limit)
+      .exec();
 
     if (!result) return;
 
-    return result;
+    const totalItems = await QuizModel.countDocuments({});
+
+    return {
+      totalItems,
+      currentPage: page,
+      totalPages: Math.ceil(totalItems / limit),
+      quizzes: result,
+    };
   } catch (error: any) {
     log.error(`Error fetching quizzes: ${error.message}`);
     throw new Error("Error fetching quizzes");

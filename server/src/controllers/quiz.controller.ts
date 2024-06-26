@@ -45,7 +45,8 @@ export async function getQuizzesHandler(
   const limit = req.params.limit || 10;
 
   const result = await getQuizzes({ page, limit });
-  if (!result.length) {
+
+  if (!result) {
     return res.status(404).send("Quizzes not found");
   }
   return res.status(200).send(result);
