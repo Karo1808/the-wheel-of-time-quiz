@@ -13,8 +13,15 @@ import {
   verifyAnswerSchema,
 } from "./schemas/quiz.schema";
 import validateRequest from "./middlewares/validateRequest";
+import {
+  createTagHandler,
+  deleteTagHandler,
+  getTagsHandler,
+} from "./controllers/tag.controller";
+import { createTagSchema, deleteTagSchema } from "./schemas/tag.schema";
 
 function routes(app: Express) {
+  // ! Quizzes
   app.get(
     "/healthcheck",
     (req: Request, response: Response, next: NextFunction) =>
@@ -41,6 +48,17 @@ function routes(app: Express) {
     "/api/quiz/:quizId/:questionId/:answer/verify",
     validateRequest(verifyAnswerSchema),
     verifyAnswerHandler
+  );
+
+  // ! Tags
+  app.get("/api/tags", getTagsHandler);
+
+  app.post("/api/tag", validateRequest(createTagSchema), createTagHandler);
+
+  app.delete(
+    "/api/tag/:tagName",
+    validateRequest(deleteTagSchema),
+    deleteTagHandler
   );
 }
 
