@@ -30,9 +30,9 @@ const App = () => {
           <Route element={<SuspenseLayout fallback={<QuizPageSkeleton />} />}>
             <Route path="/quiz/:quizId" element={<QuizPage />} />
           </Route>
-          <Route path="/skeleton" element={<QuizzesPageSkeleton />}></Route>
         </Route>
         <Route element={<Layout wide />}>
+          <Route path="/skeleton" element={<QuizzesPageSkeleton />}></Route>
           <Route
             element={<SuspenseLayout fallback={<QuizzesPageSkeleton />} />}
           >
