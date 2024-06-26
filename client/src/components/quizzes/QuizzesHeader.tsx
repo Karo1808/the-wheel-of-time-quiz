@@ -14,6 +14,7 @@ import QuizzesSortList from "./QuizzesSortList";
 
 const QuizzesHeader = () => {
   const [isBookDrawerOpen, setIsBookDrawerOpen] = useState<boolean>(false);
+  const [searchContent, setSearchContent] = useState<string>("");
 
   const [isSortHovered, setIsSortHovered] = useState<boolean>(false);
   const { width } = useWindowSize();
@@ -28,6 +29,10 @@ const QuizzesHeader = () => {
   const handleSortHoverLeave = () => {
     if (width < 1200) return;
     setIsSortHovered(false);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchContent(e.target.value);
   };
 
   return (
@@ -48,6 +53,8 @@ const QuizzesHeader = () => {
           <input
             type="text"
             placeholder="Search"
+            value={searchContent}
+            onChange={handleSearchChange}
             className={styles.search_input}
           />
         </form>
