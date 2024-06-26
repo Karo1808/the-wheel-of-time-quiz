@@ -21,7 +21,7 @@
 - [x] - Create a static quizzes page layout
 - [x] - Create a quizzes card component
 - [x] - Add a pagination component
-- [ ] - Add a dropdown component
+- [x] - Add a dropdown component
 - [ ] - add functionality to quizzes page
 - [ ] - add an route to create a quiz (admin only)
 - [ ] - make some quizzes, meaning questions and answers
