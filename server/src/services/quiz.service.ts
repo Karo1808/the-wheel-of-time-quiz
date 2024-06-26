@@ -75,7 +75,13 @@ export async function createQuiz(
   }
 }
 
-export async function getQuizzes(): Promise<QuizDocument[]> {
+export async function getQuizzes({
+  page,
+  limit,
+}: {
+  page: number;
+  limit: number;
+}): Promise<QuizDocument[]> {
   try {
     const result = await QuizModel.find(
       {},
@@ -94,6 +100,35 @@ export async function getQuizzes(): Promise<QuizDocument[]> {
   } catch (error: any) {
     log.error(`Error fetching quizzes: ${error.message}`);
     throw new Error("Error fetching quizzes");
+  }
+}
+
+export async function deleteQuiz({
+  quizId,
+}: {
+  quizId: string;
+}): Promise<QuizDocument> {
+  try {
+    const existingQuiz = await QuizModel.findOne(
+      { _id: quizId },
+      {
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0,
+        "questions.questionAnswer": 0,
+        "questions.answers._id": 0,
+      }
+    );
+    if (!existingQuiz) {
+      return;
+    }
+
+    await QuizModel.deleteOne({ _id: quizId });
+
+    return existingQuiz;
+  } catch (error: any) {
+    log.error(`Error deleting quiz: ${error.message}`);
+    throw new Error("Error deleting quiz");
   }
 }
 

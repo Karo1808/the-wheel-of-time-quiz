@@ -1,5 +1,6 @@
 import {
   createQuizHandler,
+  deleteQuizHandler,
   getQuestionsHandler,
   getQuestionsRandomHandler,
   getQuizzesHandler,
@@ -8,8 +9,10 @@ import {
 import { Express, NextFunction, Request, Response } from "express";
 import {
   createQuizSchema,
+  deleteQuizSchema,
   getQuestionsRandomSchema,
   getQuestionsSchema,
+  getQuizzesSchema,
   verifyAnswerSchema,
 } from "./schemas/quiz.schema";
 import validateRequest from "./middlewares/validateRequest";
@@ -21,16 +24,23 @@ import {
 import { createTagSchema, deleteTagSchema } from "./schemas/tag.schema";
 
 function routes(app: Express) {
-  // ! Quizzes
+  // ! Health Check
   app.get(
     "/healthcheck",
     (req: Request, response: Response, next: NextFunction) =>
       response.sendStatus(200)
   );
 
-  app.get("/api/quizzes", getQuizzesHandler);
+  // ! Quizzes
+  app.get("/api/quizzes", validateRequest(getQuizzesSchema), getQuizzesHandler);
 
   app.post("/api/quiz", validateRequest(createQuizSchema), createQuizHandler);
+
+  app.delete(
+    "/api/quiz/:quizId",
+    validateRequest(deleteQuizSchema),
+    deleteQuizHandler
+  );
 
   app.get(
     "/api/quiz/:quizId",

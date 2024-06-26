@@ -2,12 +2,15 @@ import { Request, Response } from "express";
 
 import {
   CreateQuizSchema,
+  DeleteQuizSchema,
   GetQuestionsRandomSchema,
   GetQuestionsSchema,
+  GetQuizzesSchema,
   VerifyAnswerSchema,
 } from "schemas/quiz.schema";
 import {
   createQuiz,
+  deleteQuiz,
   getQuestions,
   getQuestionsRandom,
   getQuizzes,
@@ -34,11 +37,32 @@ export async function createQuizHandler(
   return res.status(201).send(quiz);
 }
 
-export async function getQuizzesHandler(req: Request, res: Response) {
-  const result = await getQuizzes();
+export async function getQuizzesHandler(
+  req: Request<GetQuizzesSchema["params"]>,
+  res: Response
+) {
+  const page = req.params.page || 1;
+  const limit = req.params.limit || 10;
+
+  const result = await getQuizzes({ page, limit });
   if (!result.length) {
     return res.status(404).send("Quizzes not found");
   }
+  return res.status(200).send(result);
+}
+
+export async function deleteQuizHandler(
+  req: Request<DeleteQuizSchema["params"]>,
+  res: Response
+) {
+  const result = await deleteQuiz({
+    quizId: req.params.quizId,
+  });
+
+  if (!result) {
+    return res.status(404).send("Quiz not found");
+  }
+
   return res.status(200).send(result);
 }
 

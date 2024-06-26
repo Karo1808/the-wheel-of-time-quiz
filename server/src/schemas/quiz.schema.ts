@@ -62,7 +62,31 @@ const createQuizPayload = {
     .strict(),
 };
 
+const getQuizzesParams = {
+  params: z.object({
+    page: z
+      .number()
+      .positive({ message: "Page number must be a positive number" })
+      .optional(),
+    limit: z
+      .number()
+      .positive({ message: "Limit  must be a positive number" })
+      .lte(50, { message: "Limit must be less than or equal to 50" })
+      .optional(),
+  }),
+};
+
 const getQuestionsParams = {
+  params: z.object({
+    quizId: z
+      .string({ required_error: "Quiz id is required" })
+      .refine((val) => {
+        return mongoose.Types.ObjectId.isValid(val);
+      }),
+  }),
+};
+
+const deleteQuizParams = {
   params: z.object({
     quizId: z
       .string({ required_error: "Quiz id is required" })
@@ -105,8 +129,16 @@ export const createQuizSchema = z.object({
   ...createQuizPayload,
 });
 
+export const getQuizzesSchema = z.object({
+  ...getQuizzesParams,
+});
+
 export const getQuestionsSchema = z.object({
   ...getQuestionsParams,
+});
+
+export const deleteQuizSchema = z.object({
+  ...deleteQuizParams,
 });
 
 export const getQuestionsRandomSchema = z.object({
@@ -126,3 +158,7 @@ export type VerifyAnswerSchema = z.TypeOf<typeof verifyAnswerSchema>;
 export type GetQuestionsRandomSchema = z.TypeOf<
   typeof getQuestionsRandomSchema
 >;
+
+export type DeleteQuizSchema = z.TypeOf<typeof deleteQuizSchema>;
+
+export type GetQuizzesSchema = z.TypeOf<typeof getQuizzesSchema>;
