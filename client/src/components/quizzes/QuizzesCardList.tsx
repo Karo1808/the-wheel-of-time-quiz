@@ -5,39 +5,6 @@ import useQuizStore from "../../hooks/useQuizStore";
 import { useEffect } from "react";
 import QuizzesCard from "./QuizzesCard";
 
-function fetchDataWithDelay() {
-  let status = "pending";
-  let result;
-  const suspender = new Promise((resolve) => {
-    setTimeout(() => {
-      result = {
-        data: [
-          { id: 1, name: "Item 1" },
-          { id: 2, name: "Item 2" },
-          { id: 3, name: "Item 3" },
-        ],
-      };
-      status = "success";
-      resolve(result);
-    }, 5000); // Simulate a 5-second delay
-  }).catch((error) => {
-    status = "error";
-    result = error;
-  });
-
-  return {
-    read() {
-      if (status === "pending") {
-        throw suspender;
-      } else if (status === "error") {
-        throw result;
-      }
-      return result;
-    },
-  };
-}
-const resource = fetchDataWithDelay();
-
 const QuizzesCardList = () => {
   const { quizzes } = useQuizzesQuery();
   const navigate = useNavigate();
@@ -69,7 +36,6 @@ const QuizzesCardList = () => {
     }
   }, [setCurrentQuiz, quizzes, stateQuizzes]);
 
-  const data = resource.read();
   return (
     <div className={styles.quizzes}>
       {quizzes?.map((quiz) => (
