@@ -6,6 +6,7 @@ import SuspenseLayout from "./pages/loading/SuspenseLayout";
 import QuizPageSkeleton from "./pages/loading/QuizPageSkeleton";
 import Page404 from "./pages/404";
 import Test from "./pages/Test";
+import QuizzesPageSkeleton from "./pages/loading/QuizzesPageSkeleton";
 
 const QuizPage = lazy(() => import("./pages/QuizPage"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
@@ -29,10 +30,12 @@ const App = () => {
           <Route element={<SuspenseLayout fallback={<QuizPageSkeleton />} />}>
             <Route path="/quiz/:quizId" element={<QuizPage />} />
           </Route>
-          <Route path="/skeleton" element={<QuizPageSkeleton />}></Route>
+          <Route path="/skeleton" element={<QuizzesPageSkeleton />}></Route>
         </Route>
         <Route element={<Layout wide />}>
-          <Route element={<SuspenseLayout fallback={<Loading />} />}>
+          <Route
+            element={<SuspenseLayout fallback={<QuizzesPageSkeleton />} />}
+          >
             <Route path="/quizzes" element={<QuizzesPage />} />
           </Route>
         </Route>
