@@ -22,13 +22,22 @@ export async function createQuizHandler(
 
   // @ts-ignore
   const quiz = await createQuiz(body);
+
+  if (typeof quiz === "string") {
+    return res.status(500).send(quiz);
+  }
+
+  if (!quiz) {
+    return res.status(409).send("Quiz with that name already exists");
+  }
+
   return res.status(201).send(quiz);
 }
 
 export async function getQuizzesHandler(req: Request, res: Response) {
   const result = await getQuizzes();
   if (!result.length) {
-    return res.status(404).send("Resource not found");
+    return res.status(404).send("Quizzes not found");
   }
   return res.status(200).send(result);
 }
@@ -42,7 +51,7 @@ export async function getQuestionsHandler(
   });
 
   if (!result) {
-    return res.status(404).send("Resource not found");
+    return res.status(404).send("Quiz not found");
   }
 
   return res.status(200).send(result);
@@ -58,7 +67,7 @@ export async function getQuestionsRandomHandler(
   });
 
   if (!result) {
-    return res.status(404).send("Resource not found");
+    return res.status(404).send("Quiz not found");
   }
 
   return res.status(200).send(result);
@@ -68,14 +77,6 @@ export async function verifyAnswerHandler(
   req: Request<VerifyAnswerSchema["params"]>,
   res: Response
 ) {
-  if (
-    req.params.answer === "undefined" ||
-    req.params.questionId === "undefined" ||
-    req.params.quizId === "undefined"
-  ) {
-    return res.status(404).send("Resource not found");
-  }
-
   const result = await verifyAnswer({
     quizId: req.params.quizId,
     questionId: req.params.questionId,
@@ -83,7 +84,7 @@ export async function verifyAnswerHandler(
   });
 
   if (!result) {
-    return res.status(404).send("Resource not found");
+    return res.status(404).send("Quiz not found");
   }
 
   return res.status(200).send(result);

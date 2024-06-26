@@ -7,7 +7,8 @@ const createQuizPayload = {
       quizName: z.string({ required_error: "Quiz name is required" }).min(8, {
         message: "Quiz name must be at least 8 characters",
       }),
-
+      quizDescription: z.string().optional(),
+      tags: z.string().optional().array(),
       numberOfQuestions: z
         .number({
           invalid_type_error: "Number of questions must be a number",

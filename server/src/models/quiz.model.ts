@@ -1,7 +1,10 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import { TagDocument } from "./tag.model";
 
 export interface QuizInput {
   quizName: string;
+  quizDescription?: string;
+  tags: TagDocument["tagName"][];
   numberOfQuestions: number;
   maximumTime: number;
   questions: {
@@ -27,6 +30,11 @@ const quizSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    quizDescription: {
+      type: String,
+      required: false,
+    },
+    tags: [{ type: Schema.Types.ObjectId, ref: "Tag", required: false }],
     numberOfQuestions: {
       type: Number,
       required: false,

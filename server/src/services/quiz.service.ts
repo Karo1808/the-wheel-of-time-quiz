@@ -1,11 +1,74 @@
+import { startSession } from "mongoose";
 import QuizModel, { QuizDocument, QuizInput } from "../models/quiz.model";
+import TagModel from "../models/tag.model";
 import log from "../utils/logger";
 import { shuffleArray } from "../utils/randomize";
 
-export async function createQuiz(quiz: QuizInput): Promise<QuizDocument> {
+export async function createQuiz(
+  quiz: QuizInput
+): Promise<QuizDocument | string> {
   try {
-    const result = await QuizModel.create(quiz);
-    return result;
+    const session = await startSession();
+    session.startTransaction();
+
+    const existingQuiz = await QuizModel.findOne({
+      quizName: quiz.quizName,
+    }).session(session);
+
+    if (existingQuiz) {
+      await session.abortTransaction();
+      session.endSession();
+      return;
+    }
+
+    const tagDocuments = await TagModel.find({
+      tagName: { $in: quiz.tags },
+    }).session(session);
+
+    const validTags = tagDocuments.map((tag) => tag.tagName);
+    const invalidTags = quiz.tags.filter((tag) => !validTags.includes(tag));
+
+    if (invalidTags.length) {
+      await session.abortTransaction();
+      session.endSession();
+      return `${invalidTags.join(", ")} ${
+        invalidTags.length > 1 ? "are not valid tags" : "is not a valid tag"
+      }`;
+    }
+
+    const tagIds = tagDocuments.map((tag) => tag._id);
+
+    const result = await QuizModel.create(
+      [
+        {
+          ...quiz,
+          tags: tagIds,
+        },
+      ],
+      { session }
+    );
+
+    await Promise.all(
+      tagIds.map((tagId) =>
+        TagModel.updateOne(
+          { _id: tagId },
+          { $inc: { numberOfTags: 1 } },
+          { session }
+        )
+      )
+    );
+
+    await session.commitTransaction();
+    session.endSession();
+
+    const populatedQuiz = await QuizModel.findById(result[0]._id)
+      .populate({
+        path: "tags",
+        select: "tagName numberOfTags",
+      })
+      .exec();
+
+    return populatedQuiz as QuizDocument;
   } catch (error: any) {
     log.error(`Error creating quiz: ${error.message}`);
     throw new Error("Error creating quiz");
@@ -24,6 +87,9 @@ export async function getQuizzes(): Promise<QuizDocument[]> {
       },
       {}
     );
+
+    if (!result) return;
+
     return result;
   } catch (error: any) {
     log.error(`Error fetching quizzes: ${error.message}`);
@@ -49,9 +115,7 @@ export async function getQuestions({
       }
     );
 
-    if (!result) {
-      throw new Error("Quiz not found");
-    }
+    if (!result) return;
 
     return result;
   } catch (error: any) {
@@ -80,9 +144,7 @@ export async function getQuestionsRandom({
       }
     );
 
-    if (!result) {
-      throw new Error("Quiz not found");
-    }
+    if (!result) return;
 
     const { newArray: randomQuestions, seed: randomSeed } = shuffleArray(
       result?.questions,
@@ -120,16 +182,18 @@ export async function verifyAnswer({
   receivedAnswer: string;
 }> {
   try {
-    const {
-      questions: [{ questionAnswer }],
-    } = await QuizModel.findOne(
+    const result = await QuizModel.findOne(
       { _id: quizId, "questions._id": questionId },
       { "questions.$": 1 } // Correct projection to only include the matching question
     );
 
-    if (!questionAnswer) {
-      throw new Error("Question not found");
+    if (!result) {
+      return;
     }
+
+    const {
+      questions: [{ questionAnswer }],
+    } = result;
 
     const isCorrect = questionAnswer === answer;
     const correctAnswer = questionAnswer;
