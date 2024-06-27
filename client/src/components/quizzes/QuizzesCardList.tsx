@@ -37,15 +37,20 @@ const QuizzesCardList = () => {
   }, [setCurrentQuiz, quizzes, stateQuizzes]);
 
   return (
-    <div className={styles.quizzes}>
-      {quizzes?.map((quiz) => (
-        <QuizzesCard
-          quizId={quiz._id}
-          numberOfQuestions={quiz.numberOfQuestions}
-          key={quiz._id}
-          handleGoToQuiz={handleGoToQuiz}
-        />
-      ))}
+    <div className={styles.wrapper}>
+      <div className={styles.quizzes}>
+        {quizzes?.map((quiz) => (
+          <QuizzesCard
+            quizId={quiz._id}
+            numberOfQuestions={quiz.numberOfQuestions}
+            key={quiz._id}
+            handleGoToQuiz={handleGoToQuiz}
+            tags={quiz.tags}
+            title={quiz.quizName}
+            description={quiz.quizDescription}
+          />
+        ))}
+      </div>
     </div>
   );
 };

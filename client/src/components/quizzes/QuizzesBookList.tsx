@@ -1,9 +1,15 @@
 import styles from "../../styles/quizzesBookList.module.css";
 import { booksList } from "../../config";
 import { useState } from "react";
+import useUpdateSearchParams from "../../hooks/useUpdateSearchParams";
 
 const QuizzesBookList = () => {
   const [activeBook, setActiveBook] = useState<string>("");
+  const { updateSearchParams } = useUpdateSearchParams();
+  const handleBookClick = (bookTitle: string) => {
+    setActiveBook(bookTitle);
+    updateSearchParams({ book: bookTitle, page: "1" });
+  };
 
   return (
     <ul className={styles.list}>
@@ -18,7 +24,7 @@ const QuizzesBookList = () => {
             className={`${styles.btn} ${
               index === booksList.length - 1 && styles.last
             }`}
-            onClick={() => setActiveBook(book.title)}
+            onClick={() => handleBookClick(book.title)}
           >
             {book.icon}
             <span>{book.title}</span>

@@ -14,12 +14,21 @@ interface QuizzesCardProps {
   }) => void;
   quizId: string;
   numberOfQuestions: number;
+  tags?: {
+    tagName: string;
+    _id: string;
+  }[];
+  title: string;
+  description?: string;
 }
 
 const QuizzesCard = ({
   handleGoToQuiz,
   quizId,
   numberOfQuestions,
+  tags,
+  title,
+  description,
 }: QuizzesCardProps) => {
   return (
     <figure className={styles.card}>
@@ -30,19 +39,15 @@ const QuizzesCard = ({
           <p>The Wheel of Time Quiz</p>
         </div>
         <ul className={styles.tags}>
-          <Tag tagName="Spoilers" />
-          <Tag tagName="Dragon Reborn" />
-          <Tag tagName="The Gatherin Storm" />
-          <Tag tagName="Path of Daggers" />
+          {tags
+            ? tags.map((tag) => <Tag tagName={tag.tagName} key={tag._id} />)
+            : null}
         </ul>
       </header>
       <main className={styles.main}>
-        <h2 className={styles.title}>The Wheel of Time Quiz</h2>
+        <h2 className={styles.title}>{title}</h2>
         <p className={styles.description}>
-          Loren ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis
-          molestie nibh, ac posuere libero. Donec ornare magna fringilla ante
-          accumsan condimentum. Fusce bibendum dui eget nisi ullamcorper
-          tincidunt. Integer non mi libero. Maecenas pharetra feugiat consequat.
+          {description ? description : "No description"}
         </p>
       </main>
       <footer className={styles.footer}>

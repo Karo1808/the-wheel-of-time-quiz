@@ -11,13 +11,15 @@
   }
 }
 
-.quizzes {
-  display: flex;
-  flex-direction: column;
+.wrapper {
+  width: 100%;
   overflow-y: auto;
-  gap: 2rem;
 }
 
-.footer {
-  position: sticky;
+.quizzes {
+  display: flex;
+  overflow-y: scroll;
+  width: 100%;
+  flex-direction: column;
+  gap: 2rem;
 }

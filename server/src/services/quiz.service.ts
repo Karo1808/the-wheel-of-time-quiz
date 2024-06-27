@@ -107,11 +107,15 @@ export async function getQuizzes({
     )
       .skip(offset)
       .limit(limit)
+      .populate({
+        path: "tags",
+        select: "tagName",
+      })
       .exec();
 
     if (!result) return;
 
-    const totalItems = await QuizModel.countDocuments({});
+    const totalItems = await QuizModel.countDocuments(query);
 
     return {
       totalItems,

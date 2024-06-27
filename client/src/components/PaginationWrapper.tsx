@@ -2,16 +2,17 @@ import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 import Pagination from "rc-pagination";
 import styles from "../styles/pagination.module.css";
 import { useWindowSize } from "@uidotdev/usehooks";
+
 interface PaginationProps {
   numberOfPages: number;
   currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  handlePageChange: (page: number) => void;
 }
 
 const PaginationWrapper = ({
   numberOfPages,
   currentPage,
-  setCurrentPage,
+  handlePageChange,
 }: PaginationProps) => {
   const { width } = useWindowSize();
 
@@ -25,7 +26,7 @@ const PaginationWrapper = ({
         current={currentPage}
         total={numberOfPages}
         pageSize={1}
-        onChange={setCurrentPage}
+        onChange={handlePageChange}
         showLessItems={width < 600}
         align="center"
         className={styles.pagination}
