@@ -22,7 +22,8 @@
 - [x] - Create a quizzes card component
 - [x] - Add a pagination component
 - [x] - Add a dropdown component
-- [ ] - add functionality to quizzes page
+- [x] - add functionality to quizzes page
+- [ ] - add a quiz details page
 - [ ] - add an route to create a quiz (admin only)
 - [ ] - make some quizzes, meaning questions and answers
   <!-- !NEXT STAGE -->
@@ -36,8 +37,8 @@
 - [x] - Create a verify answer endpoint
 - [x] - change quizzes model to improve quizzes page
 - [x] - Add pagination to the quizzes endpoint
-- [ ] - Add book filters for quizzes endpoint
 - [ ] - create some quizzes
+- [ ] - Add book filters for quizzes endpoint
 - [ ] - Improve create quiz endpoint (less payload more server calculations)
 - [ ] - Add tests to the current api
 - [ ] - Add rate limiting
