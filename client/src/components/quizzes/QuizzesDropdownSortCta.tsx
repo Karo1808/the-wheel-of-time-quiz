@@ -1,6 +1,6 @@
 import { GoChevronDown, GoChevronUp } from "react-icons/go";
 import styles from "../../styles/quizzesDropdownSortCta.module.css";
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 interface Props {
@@ -45,7 +45,9 @@ const QuizzesDropdownSortCta = ({ label }: Props) => {
 
     const newUrlSortLabels = updatedSortLabels.join("|");
 
-    setSearchParams({ sortLabels: newUrlSortLabels });
+    startTransition(() => {
+      setSearchParams({ sortLabels: newUrlSortLabels });
+    });
   };
 
   return (

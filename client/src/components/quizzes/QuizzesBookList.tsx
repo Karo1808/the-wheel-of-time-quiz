@@ -1,14 +1,16 @@
 import styles from "../../styles/quizzesBookList.module.css";
 import { booksList } from "../../config";
-import { useState } from "react";
+import { startTransition, useState } from "react";
 import useUpdateSearchParams from "../../hooks/useUpdateSearchParams";
 
 const QuizzesBookList = () => {
   const [activeBook, setActiveBook] = useState<string>("");
   const { updateSearchParams } = useUpdateSearchParams();
   const handleBookClick = (bookTitle: string) => {
-    setActiveBook(bookTitle);
-    updateSearchParams({ book: bookTitle, page: "1" });
+    startTransition(() => {
+      setActiveBook(bookTitle);
+      updateSearchParams({ book: bookTitle, page: "1" });
+    });
   };
 
   return (

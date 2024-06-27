@@ -23,9 +23,12 @@
 - [x] - Add a pagination component
 - [x] - Add a dropdown component
 - [x] - add functionality to quizzes page
-- [ ] - add a quiz details page
+- [ ] - research suspense
 - [ ] - add an route to create a quiz (admin only)
 - [ ] - make some quizzes, meaning questions and answers
+- [ ] - add filters
+- [ ] - add search
+- [ ] - add a quiz details page
   <!-- !NEXT STAGE -->
 - [ ] - support user authentication
 
@@ -37,9 +40,9 @@
 - [x] - Create a verify answer endpoint
 - [x] - change quizzes model to improve quizzes page
 - [x] - Add pagination to the quizzes endpoint
+- [ ] - Improve create quiz endpoint (less payload more server calculations)
 - [ ] - create some quizzes
 - [ ] - Add book filters for quizzes endpoint
-- [ ] - Improve create quiz endpoint (less payload more server calculations)
 - [ ] - Add tests to the current api
 - [ ] - Add rate limiting
 - [ ] - Add api docs

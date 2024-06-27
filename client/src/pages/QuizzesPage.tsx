@@ -3,7 +3,7 @@ import QuizzesBookList from "../components/quizzes/QuizzesBookList";
 import QuizzesHeader from "../components/quizzes/QuizzesHeader";
 import styles from "../styles/quizzesPage.module.css";
 import PaginationWrapper from "../components/PaginationWrapper";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, startTransition, useEffect, useState } from "react";
 import QuizzesCardList from "../components/quizzes/QuizzesCardList";
 import QuizCardListSkeleton from "./loading/QuizCardListSkeleton";
 import useUpdateSearchParams from "../hooks/useUpdateSearchParams";
@@ -23,22 +23,25 @@ const QuizzesPage = () => {
   }, [searchParams, hasMore, currentPage, queryClient]);
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    updateSearchParams({ page: page.toString() });
-    if (hasMore) {
-      queryClient.prefetchQuery({
-        queryKey: [
-          "quizzes",
-          currentPage.toString() + 1,
-          searchParams.get("book"),
-        ],
-        queryFn: () =>
-          getQuizzes({
-            page: currentPage + 1,
-            book: searchParams.get("book") || "All",
-          }),
-      });
-    }
+    startTransition(() => {
+      setCurrentPage(page);
+      setCurrentPage(page);
+      updateSearchParams({ page: page.toString() });
+      if (hasMore) {
+        queryClient.prefetchQuery({
+          queryKey: [
+            "quizzes",
+            currentPage.toString() + 1,
+            searchParams.get("book"),
+          ],
+          queryFn: () =>
+            getQuizzes({
+              page: currentPage + 1,
+              book: searchParams.get("book") || "All",
+            }),
+        });
+      }
+    });
   };
 
   if (!width) return null;
