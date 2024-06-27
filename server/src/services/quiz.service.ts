@@ -85,14 +85,18 @@ interface GetQuizzesResponse {
 export async function getQuizzes({
   page,
   limit,
+  book,
 }: {
   page: number;
   limit: number;
+  book?: string;
 }): Promise<GetQuizzesResponse> {
   const offset = (page - 1) * limit;
+  const query = book === "All" ? {} : { book: book };
+
   try {
     const result = await QuizModel.find(
-      {},
+      query,
       {
         __v: 0,
         createdAt: 0,
@@ -237,7 +241,7 @@ export async function verifyAnswer({
   try {
     const result = await QuizModel.findOne(
       { _id: quizId, "questions._id": questionId },
-      { "questions.$": 1 } // Correct projection to only include the matching question
+      { "questions.$": 1 }
     );
 
     if (!result) {

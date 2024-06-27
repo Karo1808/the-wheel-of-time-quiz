@@ -1,3 +1,4 @@
+import { BOOKS_LIST } from "../config/index";
 import mongoose from "mongoose";
 import * as z from "zod";
 
@@ -9,6 +10,7 @@ const createQuizPayload = {
       }),
       quizDescription: z.string().optional(),
       tags: z.string().optional().array(),
+      book: z.string().optional(),
       numberOfQuestions: z
         .number({
           invalid_type_error: "Number of questions must be a number",
@@ -62,63 +64,75 @@ const createQuizPayload = {
     .strict(),
 };
 
-const getQuizzesParams = {
-  params: z.object({
-    page: z
-      .number()
+const getQuizzesQueryParams = {
+  query: z.object({
+    page: z.coerce
+      .number({ invalid_type_error: "Page number must be a number" })
       .positive({ message: "Page number must be a positive number" })
+      .int({ message: "Page number must be an integer" })
       .optional(),
-    limit: z
-      .number()
-      .positive({ message: "Limit  must be a positive number" })
+    limit: z.coerce
+      .number({ invalid_type_error: "Limit must be a number" })
+      .positive({ message: "Limit must be a positive number" })
+      .int({ message: "Limit must be an integer" })
       .lte(50, { message: "Limit must be less than or equal to 50" })
       .optional(),
   }),
+  book: z
+    .enum(BOOKS_LIST, {
+      message: `Book must be one of the following  ${BOOKS_LIST.join(", ")}`,
+    })
+    .optional(),
 };
 
 const getQuestionsParams = {
   params: z.object({
-    quizId: z
-      .string({ required_error: "Quiz id is required" })
-      .refine((val) => {
+    quizId: z.string({ required_error: "Quiz id is required" }).refine(
+      (val) => {
         return mongoose.Types.ObjectId.isValid(val);
-      }),
+      },
+      { message: "Quiz id is not a valid id" }
+    ),
   }),
 };
 
 const deleteQuizParams = {
   params: z.object({
-    quizId: z
-      .string({ required_error: "Quiz id is required" })
-      .refine((val) => {
+    quizId: z.string({ required_error: "Quiz id is required" }).refine(
+      (val) => {
         return mongoose.Types.ObjectId.isValid(val);
-      }),
+      },
+      { message: "Quiz id is not a valid id" }
+    ),
   }),
 };
 
 const getQuestionsRandomParams = {
   params: z.object({
-    quizId: z
-      .string({ required_error: "Quiz id is required" })
-      .refine((val) => {
+    quizId: z.string({ required_error: "Quiz id is required" }).refine(
+      (val) => {
         return mongoose.Types.ObjectId.isValid(val);
-      }),
+      },
+      { message: "Quiz id is not a valid id" }
+    ),
     seed: z.string().optional(),
   }),
 };
 
 const verifyAnswerParams = {
   params: z.object({
-    quizId: z
-      .string({ required_error: "Quiz id is required" })
-      .refine((val) => {
+    quizId: z.string({ required_error: "Quiz id is required" }).refine(
+      (val) => {
         return mongoose.Types.ObjectId.isValid(val);
-      }),
-    questionId: z
-      .string({ required_error: "Question id is required" })
-      .refine((val) => {
+      },
+      { message: "Quiz id is not a valid id" }
+    ),
+    questionId: z.string({ required_error: "Question id is required" }).refine(
+      (val) => {
         return mongoose.Types.ObjectId.isValid(val);
-      }),
+      },
+      { message: "Question id is not a valid id" }
+    ),
     answer: z.string({
       required_error: "Answer is required",
     }),
@@ -130,7 +144,7 @@ export const createQuizSchema = z.object({
 });
 
 export const getQuizzesSchema = z.object({
-  ...getQuizzesParams,
+  ...getQuizzesQueryParams,
 });
 
 export const getQuestionsSchema = z.object({

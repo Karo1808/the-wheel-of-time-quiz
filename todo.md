@@ -32,11 +32,12 @@
 
 - [x] - Create a quizzes endpoint
 - [x] - Create a quiz endpoint (fetches questions and answers in random order)
-- [x] - Create a verify answer endpoint
-- [ ] - change quizzes model to improve quizzes page
 - [x] - Add logging to the current api
+- [x] - Create a verify answer endpoint
+- [x] - change quizzes model to improve quizzes page
+- [x] - Add pagination to the quizzes endpoint
+- [ ] - Add book filters for quizzes endpoint
 - [ ] - create some quizzes
-- [ ] - Add pagination to the quizzes endpoint
 - [ ] - Improve create quiz endpoint (less payload more server calculations)
 - [ ] - Add tests to the current api
 - [ ] - Add rate limiting

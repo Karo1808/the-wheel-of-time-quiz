@@ -38,13 +38,14 @@ export async function createQuizHandler(
 }
 
 export async function getQuizzesHandler(
-  req: Request<GetQuizzesSchema["params"]>,
+  req: Request<GetQuizzesSchema["query"]>,
   res: Response
 ) {
-  const page = req.params.page || 1;
-  const limit = req.params.limit || 10;
+  const page = parseInt(req.query.page as string) || 1;
+  const limit = parseInt(req.query.limit as string) || 10;
+  const book = (req.query.book as string) || "All";
 
-  const result = await getQuizzes({ page, limit });
+  const result = await getQuizzes({ page, limit, book });
 
   if (!result) {
     return res.status(404).send("Quizzes not found");

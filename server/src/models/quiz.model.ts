@@ -1,10 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 import { TagDocument } from "./tag.model";
+import { BOOKS_LIST } from "../config/index";
 
 export interface QuizInput {
   quizName: string;
   quizDescription?: string;
   tags: TagDocument["tagName"][];
+  book?: keyof typeof BOOKS_LIST;
   numberOfQuestions: number;
   maximumTime: number;
   questions: {
@@ -35,6 +37,11 @@ const quizSchema = new mongoose.Schema(
       required: false,
     },
     tags: [{ type: Schema.Types.ObjectId, ref: "Tag", required: false }],
+    book: {
+      type: String,
+      required: false,
+      enum: BOOKS_LIST,
+    },
     numberOfQuestions: {
       type: Number,
       required: false,
