@@ -38,11 +38,28 @@ export async function createQuiz(
 
     const tagIds = tagDocuments.map((tag) => tag._id);
 
+    const processedQuestions = Array.from(
+      { length: quiz.numberOfQuestions },
+      (_, i) => {
+        const questionTemplate = quiz.questions[i];
+        return {
+          questionNumber: i + 1,
+          questionLabel: questionTemplate.questionLabel,
+          questionAnswer: questionTemplate.questionAnswer,
+          answers: questionTemplate.answers.map((answerLabel, index) => ({
+            answerNumber: index + 1,
+            answerLabel,
+          })),
+        };
+      }
+    );
+
     const result = await QuizModel.create(
       [
         {
           ...quiz,
           tags: tagIds,
+          questions: processedQuestions,
         },
       ],
       { session }

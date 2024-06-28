@@ -26,13 +26,6 @@ const createQuizPayload = {
 
       questions: z.array(
         z.object({
-          questionNumber: z
-            .number({
-              required_error: "Question number is required",
-              invalid_type_error: "Question number must be a number",
-            })
-            .positive({ message: "Question number must be positive" }),
-
           questionLabel: z
             .string({ required_error: "Question label is required" })
             .min(10, {
@@ -43,19 +36,8 @@ const createQuizPayload = {
             invalid_type_error: "Question correct index must be a string",
           }),
           answers: z.array(
-            z.object({
-              answerNumber: z
-                .number({
-                  required_error: "Answer number is required",
-                  invalid_type_error: "Answer number must be a number",
-                })
-                .positive({ message: "Answer number must be positive" })
-                .max(4, {
-                  message: "Answer number must be less than or equal to 4",
-                }),
-              answerLabel: z.string({
-                required_error: "Answer label is required",
-              }),
+            z.string({
+              required_error: "Answer label is required",
             })
           ),
         })
