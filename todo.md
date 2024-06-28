@@ -39,7 +39,7 @@
 - [x] - Create a verify answer endpoint
 - [x] - change quizzes model to improve quizzes page
 - [x] - Add pagination to the quizzes endpoint
-- [ ] - Improve create quiz endpoint (less payload more server calculations)
+- [x] - Improve create quiz endpoint (less payload more server calculations)
 - [ ] - create some quizzes
 - [ ] - Add book filters for quizzes endpoint
 - [ ] - Add tests to the current api
