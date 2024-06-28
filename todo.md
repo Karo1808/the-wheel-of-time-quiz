@@ -23,7 +23,6 @@
 - [x] - Add a pagination component
 - [x] - Add a dropdown component
 - [x] - add functionality to quizzes page
-- [ ] - research suspense
 - [ ] - add an route to create a quiz (admin only)
 - [ ] - make some quizzes, meaning questions and answers
 - [ ] - add filters

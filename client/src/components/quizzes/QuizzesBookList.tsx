@@ -3,13 +3,18 @@ import { booksList } from "../../config";
 import { startTransition, useState } from "react";
 import useUpdateSearchParams from "../../hooks/useUpdateSearchParams";
 
-const QuizzesBookList = () => {
+interface Props {
+  setIsBookDrawerOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const QuizzesBookList = ({ setIsBookDrawerOpen }: Props) => {
   const [activeBook, setActiveBook] = useState<string>("");
   const { updateSearchParams } = useUpdateSearchParams();
   const handleBookClick = (bookTitle: string) => {
     startTransition(() => {
       setActiveBook(bookTitle);
       updateSearchParams({ book: bookTitle, page: "1" });
+      if (setIsBookDrawerOpen) setIsBookDrawerOpen(false);
     });
   };
 

@@ -98,7 +98,7 @@ const QuizzesHeader = () => {
       </div>
       {isBookDrawerOpen && (
         <Drawer open={isBookDrawerOpen} setOpen={setIsBookDrawerOpen}>
-          <QuizzesBookList />
+          <QuizzesBookList setIsBookDrawerOpen={setIsBookDrawerOpen} />
         </Drawer>
       )}
     </header>
