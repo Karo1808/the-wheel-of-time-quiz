@@ -1,11 +1,12 @@
+import { useEffect, forwardRef } from "react";
 import styles from "../../styles/quizzesPage.module.css";
 import { useNavigate } from "react-router";
 import useQuizzesQuery from "../../hooks/useQuizzesQuery";
 import useQuizStore from "../../hooks/useQuizStore";
-import { useEffect } from "react";
-import QuizzesCard from "./QuizzesCard";
+import QuizCard from "../QuizCard";
+import QuizzesCardCta from "./QuizzesCardCta";
 
-const QuizzesCardList = () => {
+const QuizzesCardList = forwardRef<HTMLDivElement>((_props, ref) => {
   const { quizzes } = useQuizzesQuery();
   const navigate = useNavigate();
   const setCurrentQuiz = useQuizStore((state) => state.setCurrentQuiz);
@@ -37,22 +38,26 @@ const QuizzesCardList = () => {
   }, [setCurrentQuiz, quizzes, stateQuizzes]);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={ref}>
       <div className={styles.quizzes}>
         {quizzes?.map((quiz) => (
-          <QuizzesCard
-            quizId={quiz._id}
-            numberOfQuestions={quiz.numberOfQuestions}
+          <QuizCard
             key={quiz._id}
-            handleGoToQuiz={handleGoToQuiz}
             tags={quiz.tags}
             title={quiz.quizName}
             description={quiz.quizDescription}
+            ctaElements={
+              <QuizzesCardCta
+                quizId={quiz._id}
+                numberOfQuestions={quiz.numberOfQuestions}
+                handleGoToQuiz={handleGoToQuiz}
+              />
+            }
           />
         ))}
       </div>
     </div>
   );
-};
+});
 
 export default QuizzesCardList;

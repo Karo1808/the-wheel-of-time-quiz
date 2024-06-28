@@ -188,8 +188,11 @@ export async function getQuestions({
         __v: 0,
         createdAt: 0,
         updatedAt: 0,
-        "questions.questionAnswer": 0,
         "questions.answers._id": 0,
+        quizName: 0,
+        tags: 0,
+        maximumTime: 0,
+        quizDescription: 0,
       }
     );
 

@@ -8,10 +8,6 @@
   border: none;
   outline: none;
 
-  &:focus {
-    filter: brightness(0.9);
-  }
-
   &:disabled {
     cursor: not-allowed;
   }
@@ -37,6 +33,10 @@
   background-color: var(--red-color);
   color: var(--primary-color);
   border: 1px solid var(--red-color);
+
+  &:hover {
+    filter: brightness(1.2);
+  }
 }
 
 .none {

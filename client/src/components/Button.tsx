@@ -2,8 +2,7 @@ import React from "react";
 import styles from "../styles/button.module.css";
 import { indexToRowsAndCols } from "../utils/shared";
 
-interface Props {
-  children: React.ReactNode;
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   state:
     | "correct"
     | "incorrect"
@@ -14,8 +13,6 @@ interface Props {
     | "not_found"
     | "error"
     | "green";
-  className?: string;
-  onClick?: () => void;
   buttonRefs?: React.RefObject<(HTMLButtonElement | null)[][]>;
   index?: number;
   handleKeyDown?: (
@@ -33,6 +30,7 @@ const Button = ({
   index,
   buttonRefs,
   handleKeyDown,
+  ...rest
 }: Props) => {
   const { cols, rows } = indexToRowsAndCols(index || 0);
 
@@ -51,6 +49,7 @@ const Button = ({
       disabled={
         state === "disabled" || state === "correct" || state === "incorrect"
       }
+      {...rest}
     >
       {children}
     </button>

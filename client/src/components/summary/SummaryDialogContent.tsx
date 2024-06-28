@@ -1,18 +1,23 @@
-import { useEffect, useRef, useState } from "react";
 import styles from "../../styles/summaryDialogContent.module.css";
 import SummaryAccordion from "./SummaryAccordion";
-import useQuizQuery from "../../hooks/useQuizQuery";
 import { useShallow } from "zustand/react/shallow";
 import useQuizStore from "../../hooks/useQuizStore";
+import useRandomQuestionsQuery from "../../hooks/useRandomQuestionsQuery";
+import useAccordionControls from "../../hooks/useAccordionControls";
+import { IoMdCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
 
 interface Props {
   index?: number;
 }
 
+const COLOR_CORRECT = "#3f704d";
+const COLOR_WRONG = "#9d2933";
+
 const SummaryDialogContent = ({ index }: Props) => {
-  const [openedIndex, setOpenedIndex] = useState<number | undefined>();
-  const { quiz } = useQuizQuery();
-  const accordionRefs = useRef<HTMLDivElement[]>([]);
+  const { quiz } = useRandomQuestionsQuery();
+
+  const { openedIndex, setOpenedIndex, accordionRefs } =
+    useAccordionControls(index);
 
   const currentQuizId = useQuizStore(
     useShallow((state) => state.currentQuizId)
@@ -21,20 +26,20 @@ const SummaryDialogContent = ({ index }: Props) => {
     useShallow((state) => state.quizzes[currentQuizId])
   );
 
-  useEffect(() => {
-    setOpenedIndex(index);
-    if (index !== undefined && accordionRefs.current[index]) {
-      accordionRefs.current[index].scrollIntoView({
-        block: "center",
-      });
-    }
-  }, [index]);
-
   return (
     <div className={styles.container}>
       {quiz.quizData.questions.map((question, index) => (
         <SummaryAccordion
-          isCorrect={currentQuiz.questions[index].isAnswerCorrect}
+          Icon={
+            currentQuiz.questions[index].isAnswerCorrect ? (
+              <IoMdCheckmarkCircle
+                className={styles.icon}
+                color={COLOR_CORRECT}
+              />
+            ) : (
+              <IoMdCloseCircle className={styles.icon} color={COLOR_WRONG} />
+            )
+          }
           question={question.questionLabel}
           questionNumber={index + 1}
           setOpenedIndex={setOpenedIndex}

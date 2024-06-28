@@ -1,0 +1,149 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 5rem;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  width: 100%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo_image {
+  width: 3.5rem;
+  height: 3rem;
+}
+
+.logo_text {
+  width: 100%;
+  font-size: 2rem;
+  color: var(--fg-color);
+  display: block;
+}
+
+.search {
+  background-color: var(--gray-light-color);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+  border: none;
+  width: 50%;
+
+  &:focus-within {
+    outline: 5px solid #dfdbd8;
+  }
+}
+
+.search_button {
+  outline: none;
+  border: none;
+  color: var(--gray-color);
+  background-color: transparent;
+  margin-top: 0.2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--fg-color);
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+}
+
+.search_input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--fg-color);
+  font-size: 1.8rem;
+
+  &::placeholder {
+    color: var(--gray-color);
+  }
+
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  gap: 6rem;
+  align-items: center;
+  font-size: 1.5rem;
+  color: var(--fg-color);
+  flex-grow: 1.5;
+  justify-self: end;
+  margin: 0 1rem;
+  position: relative;
+
+  @media (min-width: 1200px) {
+    & {
+      justify-self: center;
+      margin-right: 8rem;
+      margin-left: 0;
+      color: var(--gray-color);
+      font-size: 2rem;
+    }
+  }
+}
+
+.option {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: inherit;
+  color: inherit;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  transition: all 0.3s ease;
+  background-color: var(--gray-light-color);
+  padding: 1rem 0.5rem;
+  width: 100%;
+  justify-content: center;
+  border-radius: 1rem;
+
+  &:hover {
+    color: var(--fg-color);
+  }
+
+  @media (min-width: 1200px) {
+    color: var(--gray-color);
+    background-color: transparent;
+    padding: 0;
+  }
+}
+
+.option_active {
+  color: var(--fg-color);
+}
+
+.add_quiz {
+  display: flex;
+  gap: 2rem;
+  font-size: 1.6rem;
+  background-color: var(--fg-color);
+
+  padding: 1.2rem 2rem;
+  text-wrap: nowrap;
+}

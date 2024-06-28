@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import { getQuiz } from "../api/getQuiz";
+import { getRandomQuestions } from "../api/getRandomQuestions";
 import useQuizStore from "./useQuizStore";
 import { useShallow } from "zustand/react/shallow";
 
-const useQuizQuery = () => {
+const useRandomQuestionsQuery = () => {
   const { quizId } = useParams<{ quizId?: string }>();
   const currentQuizId = useQuizStore(
     useShallow((state) => state.currentQuizId)
@@ -20,10 +20,11 @@ const useQuizQuery = () => {
     error,
   } = useSuspenseQuery({
     queryKey: ["quiz", quizId, randomSeed],
-    queryFn: () => getQuiz({ quizId: quizId!, seed: randomSeed?.toString() }),
+    queryFn: () =>
+      getRandomQuestions({ quizId: quizId!, seed: randomSeed?.toString() }),
   });
 
   return { quiz, error, refetch };
 };
 
-export default useQuizQuery;
+export default useRandomQuestionsQuery;

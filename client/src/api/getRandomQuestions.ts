@@ -1,7 +1,7 @@
 import instance from "./index";
 import { z } from "zod";
 
-const getQuizSchema = z.object({
+const getRandomQuestionsSchema = z.object({
   quizData: z.object({
     quizName: z.string({
       required_error: "Quiz name is missing in response",
@@ -39,15 +39,17 @@ const getQuizSchema = z.object({
   seed: z.number(),
 });
 
-export type GetQuizResponse = z.infer<typeof getQuizSchema>;
+export type GetRandomQuestionsResponse = z.infer<
+  typeof getRandomQuestionsSchema
+>;
 
-export const getQuiz = async ({
+export const getRandomQuestions = async ({
   quizId,
   seed,
 }: {
   quizId: string;
   seed?: string;
-}): Promise<GetQuizResponse> => {
+}): Promise<GetRandomQuestionsResponse> => {
   const result = await instance.get(`/quiz/${quizId}/random/${seed}`);
-  return getQuizSchema.parse(result.data);
+  return getRandomQuestionsSchema.parse(result.data);
 };

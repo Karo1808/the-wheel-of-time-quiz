@@ -2,12 +2,12 @@ import { useShallow } from "zustand/react/shallow";
 import { useNavigate } from "react-router";
 
 import useQuizStore from "../hooks/useQuizStore";
-import useQuizQuery from "./useQuizQuery";
 import useVerifyAnswerQuery from "./useVerifyAnswerQuery";
 import { useStopwatch } from "react-timer-hook";
 import { useEffect } from "react";
 import { formatTime } from "../utils/shared";
 import { TimeFormat } from "../types";
+import useRandomQuestionsQuery from "./useRandomQuestionsQuery";
 
 const useQuiz = () => {
   const currentQuizId = useQuizStore(
@@ -47,7 +47,11 @@ const useQuiz = () => {
 
   const navigate = useNavigate();
 
-  const { quiz, error: quizError, refetch: quizRefetch } = useQuizQuery();
+  const {
+    quiz,
+    error: quizError,
+    refetch: quizRefetch,
+  } = useRandomQuestionsQuery();
 
   const setSeed = useQuizStore(useShallow((state) => state.setSeed));
 

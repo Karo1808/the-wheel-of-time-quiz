@@ -1,37 +1,36 @@
 import { IoMdHeart } from "react-icons/io";
-import styles from "../../styles/quizzesCard.module.css";
-import Tag from "../Tag";
+import styles from "../styles/quizCard.module.css";
+import Tag from "./Tag";
 import { FaComments } from "react-icons/fa6";
-import Button from "../Button";
 
-interface QuizzesCardProps {
-  handleGoToQuiz: ({
-    quizId,
-    numberOfQuestions,
-  }: {
-    quizId: string;
-    numberOfQuestions: number;
-  }) => void;
-  quizId: string;
-  numberOfQuestions: number;
+interface Props {
   tags?: {
     tagName: string;
     _id: string;
   }[];
   title: string;
   description?: string;
+  ctaElements: React.ReactNode;
+  isActive?: boolean;
+  index?: number;
+  handleClick?: (index: number) => void;
 }
 
-const QuizzesCard = ({
-  handleGoToQuiz,
-  quizId,
-  numberOfQuestions,
+const QuizCard = ({
   tags,
   title,
   description,
-}: QuizzesCardProps) => {
+  ctaElements,
+  handleClick,
+  isActive,
+  index,
+}: Props) => {
   return (
-    <figure className={styles.card}>
+    <figure
+      onClick={() => handleClick && handleClick(index || 0)}
+      className={`${styles.card} ${isActive && styles.active_card}`}
+      style={{ cursor: handleClick ? "pointer" : "default" }}
+    >
       <header className={styles.header}>
         {/* TODO: Add image */}
         <div className={styles.profile}>
@@ -63,23 +62,10 @@ const QuizzesCard = ({
             <span className={styles.misc_item_number}>1200</span>
           </div>
         </div>
-        <div className={styles.cta}>
-          <Button className={styles.cta_button} state="none">
-            See Details
-          </Button>
-          <Button
-            onClick={() => {
-              handleGoToQuiz({ quizId, numberOfQuestions });
-            }}
-            className={styles.cta_button}
-            state="green"
-          >
-            Play Now
-          </Button>
-        </div>
+        <div className={styles.cta}>{ctaElements}</div>
       </footer>
     </figure>
   );
 };
 
-export default QuizzesCard;
+export default QuizCard;

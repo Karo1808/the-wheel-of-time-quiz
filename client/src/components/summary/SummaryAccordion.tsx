@@ -1,16 +1,9 @@
 import { forwardRef } from "react";
 import styles from "../../styles/accordion.module.css";
-import {
-  IoIosArrowDown,
-  IoIosCheckmarkCircle,
-  IoIosCloseCircle,
-} from "react-icons/io";
-
-const COLOR_CORRECT = "#3f704d";
-const COLOR_WRONG = "#9d2933";
+import { IoIosArrowDown } from "react-icons/io";
 
 interface Props {
-  isCorrect: boolean;
+  Icon: React.ReactNode;
   questionNumber: number;
   question: string;
   answers: string[];
@@ -18,13 +11,13 @@ interface Props {
   index: number;
   openedIndex?: number;
   setOpenedIndex: (index: number | undefined) => void;
-  userAnswer: string;
+  userAnswer?: string;
 }
 
 const SummaryAccordion = forwardRef<HTMLDivElement, Props>(
   (
     {
-      isCorrect,
+      Icon,
       questionNumber,
       question,
       answers,
@@ -48,16 +41,7 @@ const SummaryAccordion = forwardRef<HTMLDivElement, Props>(
 
     return (
       <div ref={ref} onClick={toggleAccordion} className={styles.container}>
-        <div>
-          {isCorrect ? (
-            <IoIosCheckmarkCircle
-              className={styles.icon}
-              color={COLOR_CORRECT}
-            />
-          ) : (
-            <IoIosCloseCircle className={styles.icon} color={COLOR_WRONG} />
-          )}
-        </div>
+        <div>{Icon}</div>
         <div className={styles.text}>
           <p className={styles.question_number}>Question {questionNumber}</p>
           <p className={styles.question}>{question}</p>

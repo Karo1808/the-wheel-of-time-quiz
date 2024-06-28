@@ -1,0 +1,14 @@
+.wrapper {
+  width: 60%;
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+}
+
+.list {
+  display: flex;
+  overflow-y: auto;
+  max-height: 80vh;
+  width: 100%;
+  flex-direction: column;
+  gap: 2rem;
+}
