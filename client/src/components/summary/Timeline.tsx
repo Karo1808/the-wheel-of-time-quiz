@@ -4,6 +4,7 @@ import { Question } from "../../types";
 import { useEffect, useRef, useState } from "react";
 import Dialog from "../Dialog";
 import SummaryDialogContent from "./SummaryDialogContent";
+import useDialogControls from "../../hooks/useDialogControls";
 
 const COLOR_CORRECT = "#3f704d";
 const COLOR_WRONG = "#9d2933";
@@ -15,33 +16,15 @@ interface Props {
 const Timeline = ({ questions }: Props) => {
   const [barWidth, setBarWidth] = useState<number>(0);
   const [index, setIndex] = useState<number | undefined>();
-  const [isOVerlayOpen, setIsOverlayOpen] = useState<boolean>(false);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const { isOverlayOpen, toggleDialog } = useDialogControls({ ref: dialogRef });
 
   const questionLength = questions.length + 1;
 
   useEffect(() => {
     setBarWidth(170 * questionLength);
   }, [setBarWidth, questionLength, barWidth]);
-
-  useEffect(() => {
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") setIsOverlayOpen(false);
-    });
-    return () => {
-      document.removeEventListener("keydown", () => {});
-    };
-  }, [setIsOverlayOpen]);
-
-  const toggleDialog = () => {
-    if (!dialogRef.current) return;
-    dialogRef.current.hasAttribute("open")
-      ? dialogRef.current.close()
-      : dialogRef.current.showModal();
-
-    setIsOverlayOpen(!isOVerlayOpen);
-  };
 
   function handleTimeLineClick(index: number) {
     toggleDialog();
@@ -77,7 +60,7 @@ const Timeline = ({ questions }: Props) => {
       <Dialog
         toggleDialog={toggleDialog}
         ref={dialogRef}
-        isOverlayOpen={isOVerlayOpen}
+        isOverlayOpen={isOverlayOpen}
       >
         {<SummaryDialogContent index={index} />}
       </Dialog>

@@ -40,6 +40,6 @@ export const getQuestions = async ({
 }: {
   quizId: string;
 }): Promise<GetQuestionsResponse> => {
-  const result = await instance.get(`/quiz/${quizId}`);
+  const result = await instance.get(`/quiz/${quizId}`, { method: "GET" });
   return getQuestionsSchema.parse(result.data);
 };

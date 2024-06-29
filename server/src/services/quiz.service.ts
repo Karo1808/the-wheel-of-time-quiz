@@ -146,11 +146,17 @@ export async function getQuizzes({
   }
 }
 
+interface DeleteQuizResponse {
+  quizId: string;
+  quizName: string;
+  ok: boolean;
+}
+
 export async function deleteQuiz({
   quizId,
 }: {
   quizId: string;
-}): Promise<QuizDocument> {
+}): Promise<DeleteQuizResponse> {
   try {
     const existingQuiz = await QuizModel.findOne(
       { _id: quizId },
@@ -168,7 +174,11 @@ export async function deleteQuiz({
 
     await QuizModel.deleteOne({ _id: quizId });
 
-    return existingQuiz;
+    return {
+      quizId: existingQuiz._id,
+      quizName: existingQuiz.quizName,
+      ok: true,
+    };
   } catch (error: any) {
     log.error(`Error deleting quiz: ${error.message}`);
     throw new Error("Error deleting quiz");

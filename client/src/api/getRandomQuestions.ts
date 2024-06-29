@@ -50,6 +50,8 @@ export const getRandomQuestions = async ({
   quizId: string;
   seed?: string;
 }): Promise<GetRandomQuestionsResponse> => {
-  const result = await instance.get(`/quiz/${quizId}/random/${seed}`);
+  const result = await instance.get(`/quiz/${quizId}/random/${seed}`, {
+    method: "GET",
+  });
   return getRandomQuestionsSchema.parse(result.data);
 };

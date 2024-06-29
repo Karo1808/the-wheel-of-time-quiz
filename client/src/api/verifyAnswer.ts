@@ -27,7 +27,8 @@ export const verifyAnswer = async ({
   answer,
 }: Params): Promise<VerifyAnswerResponse> => {
   const result = await instance.get(
-    `/quiz/${quizId}/${questionId}/${answer}/verify`
+    `/quiz/${quizId}/${questionId}/${answer}/verify`,
+    { method: "GET" }
   );
   return verifyQuestionSchema.parse(result.data);
 };

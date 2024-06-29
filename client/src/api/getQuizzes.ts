@@ -54,7 +54,10 @@ export const getQuizzes = async ({
   book?: string;
 }): Promise<GetQuizzesResponse> => {
   const result = await instance.get(
-    `/quizzes?page=${page}&limit=${limit}&book=${book}`
+    `/quizzes?page=${page}&limit=${limit}&book=${book}`,
+    {
+      method: "GET",
+    }
   );
   return getQuizzesSchema.parse(result.data);
 };
