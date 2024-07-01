@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo {
+  width: 3.5rem;
+  height: 3rem;
+}
+
+.logo_text {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--fg-color);
+}

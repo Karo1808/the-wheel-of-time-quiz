@@ -1,7 +1,7 @@
 import { useEffect, forwardRef } from "react";
 import styles from "../../styles/quizzesPage.module.css";
 import { useNavigate } from "react-router";
-import useQuizzesQuery from "../../hooks/useQuizzesQuery";
+import useQuizzesQuery from "../../hooks/queries/useQuizzesQuery";
 import useQuizStore from "../../hooks/useQuizStore";
 import QuizCard from "../QuizCard";
 import QuizzesCardCta from "./QuizzesCardCta";

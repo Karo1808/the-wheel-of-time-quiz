@@ -4,7 +4,7 @@ import Dialog from "../Dialog";
 import useDialogControls from "../../hooks/useDialogControls";
 import { useRef } from "react";
 import AdminDeleteConfirm from "./AdminDeleteConfirm";
-import useDeleteQuizQuery from "../../hooks/useDeleteQuizQuery";
+import useDeleteQuizQuery from "../../hooks/queries/useDeleteQuizQuery";
 
 const AdminCardCta = () => {
   const ref = useRef<HTMLDialogElement>(null);

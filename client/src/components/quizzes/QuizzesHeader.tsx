@@ -1,6 +1,5 @@
 import styles from "../../styles/quizzesHeader.module.css";
 import { AnimatePresence } from "framer-motion";
-import { IoIosSearch } from "react-icons/io";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { MdOutlineSortByAlpha } from "react-icons/md";
 import { PiBooks } from "react-icons/pi";
@@ -11,12 +10,13 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import Dropdown from "../Dropdown";
 import { sortList } from "../../config";
 import QuizzesSortList from "./QuizzesSortList";
+import Search from "../Search";
 
 const QuizzesHeader = () => {
   const [isBookDrawerOpen, setIsBookDrawerOpen] = useState<boolean>(false);
-  const [searchContent, setSearchContent] = useState<string>("");
 
   const [isSortHovered, setIsSortHovered] = useState<boolean>(false);
+
   const { width } = useWindowSize();
 
   if (!width) return null;
@@ -31,10 +31,6 @@ const QuizzesHeader = () => {
     setIsSortHovered(false);
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchContent(e.target.value);
-  };
-
   return (
     <header className={styles.header}>
       <div className={styles.top}>
@@ -47,16 +43,7 @@ const QuizzesHeader = () => {
           <p className={styles.logo_text}>The Wheel of Time Quiz</p>
         </div>
         <form className={styles.search} onSubmit={(e) => e.preventDefault()}>
-          <button type="submit" className={styles.search_button}>
-            <IoIosSearch size={20} />
-          </button>
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchContent}
-            onChange={handleSearchChange}
-            className={styles.search_input}
-          />
+          <Search name="search" type="text" placeholder="Search" />
         </form>
       </div>
       <div className={styles.options}>

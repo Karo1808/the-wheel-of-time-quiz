@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import { verifyAnswer } from "../api/verifyAnswer";
+import { verifyAnswer } from "../../api/verifyAnswer";
 import { useShallow } from "zustand/react/shallow";
-import useQuizStore from "./useQuizStore";
+import useQuizStore from "../useQuizStore";
 
 const useVerifyAnswerQuery = () => {
   const { quizId } = useParams<{ quizId?: string }>();

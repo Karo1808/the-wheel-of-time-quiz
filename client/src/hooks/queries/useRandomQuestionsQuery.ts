@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import { getRandomQuestions } from "../api/getRandomQuestions";
-import useQuizStore from "./useQuizStore";
+import { getRandomQuestions } from "../../api/getRandomQuestions";
+import useQuizStore from ".././useQuizStore";
 import { useShallow } from "zustand/react/shallow";
 
 const useRandomQuestionsQuery = () => {

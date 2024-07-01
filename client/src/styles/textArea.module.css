@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.label {
+  color: var(--gray-color);
+  font-size: 1.4rem;
+  margin-left: 1rem;
+}
+
+.area {
+  background-color: var(--gray-light-color);
+  font-size: 1.4rem;
+  border-radius: 1rem;
+  outline: none;
+  border: none;
+  transition: all 0.3s ease;
+  height: 15rem;
+  outline: none;
+  border: none;
+  color: var(--fg-color);
+  padding: 1rem 2rem;
+
+  &:focus {
+    outline: 5px solid #dfdbd8;
+  }
+}

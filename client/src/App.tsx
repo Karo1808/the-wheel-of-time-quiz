@@ -13,6 +13,7 @@ const WelcomePage = lazy(() => import("./pages/WelcomePage"));
 const QuizzesPage = lazy(() => import("./pages/QuizzesPage"));
 const SummaryPage = lazy(() => import("./pages/SummaryPage"));
 const AdminOverviewPage = lazy(() => import("./pages/AdminOverviewPage"));
+const AdminAddQuizPage = lazy(() => import("./pages/AdminAddQuizPage"));
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
               element={<AdminOverviewDetails />}
             />
           </Route>
+          <Route path="/admin/add-quiz" element={<AdminAddQuizPage />} />
         </Route>
         <Route path="*" element={<Page404 />}></Route>
       </Routes>

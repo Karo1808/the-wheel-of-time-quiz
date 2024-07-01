@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import useQuizCardPagination from "../../hooks/useQuizCardPagination";
-import useQuizzesQuery from "../../hooks/useQuizzesQuery";
+import useQuizzesQuery from "../../hooks/queries/useQuizzesQuery";
 import styles from "../../styles/adminCardList.module.css";
 import PaginationWrapper from "../PaginationWrapper";
 import QuizCard from "../QuizCard";

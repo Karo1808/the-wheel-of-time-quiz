@@ -2,12 +2,12 @@ import { useShallow } from "zustand/react/shallow";
 import { useNavigate } from "react-router";
 
 import useQuizStore from "../hooks/useQuizStore";
-import useVerifyAnswerQuery from "./useVerifyAnswerQuery";
+import useVerifyAnswerQuery from "./queries/useVerifyAnswerQuery";
 import { useStopwatch } from "react-timer-hook";
 import { useEffect } from "react";
 import { formatTime } from "../utils/shared";
 import { TimeFormat } from "../types";
-import useRandomQuestionsQuery from "./useRandomQuestionsQuery";
+import useRandomQuestionsQuery from "./queries/useRandomQuestionsQuery";
 
 const useQuiz = () => {
   const currentQuizId = useQuizStore(

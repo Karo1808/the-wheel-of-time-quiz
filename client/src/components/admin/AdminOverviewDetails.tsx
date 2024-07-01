@@ -1,5 +1,5 @@
 import useAccordionControls from "../../hooks/useAccordionControls";
-import useQuestionsQuery from "../../hooks/useQuestionQuery";
+import useQuestionsQuery from "../../hooks/queries/useQuestionQuery.ts";
 import styles from "../../styles/adminOverviewDetails.module.css";
 import SummaryAccordion from "../summary/SummaryAccordion";
 import { AiFillQuestionCircle } from "react-icons/ai";

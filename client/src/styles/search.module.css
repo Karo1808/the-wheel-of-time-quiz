@@ -1,0 +1,52 @@
+.wrapper {
+  background-color: var(--gray-light-color);
+  max-height: 3.2rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+  border: none;
+
+  &:focus-within {
+    outline: 5px solid #dfdbd8;
+  }
+}
+
+.button {
+  outline: none;
+  border: none;
+  color: var(--gray-color);
+  background-color: transparent;
+  margin-top: 0.2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--fg-color);
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--fg-color);
+  font-size: 1.8rem;
+
+  &::placeholder {
+    color: var(--gray-color);
+  }
+
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}

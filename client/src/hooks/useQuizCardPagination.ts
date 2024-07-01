@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { startTransition, useEffect, useState } from "react";
-import useQuizzesQuery from "./useQuizzesQuery";
+import useQuizzesQuery from "./queries/useQuizzesQuery";
 import useUpdateSearchParams from "./useUpdateSearchParams";
 import { getQuizzes } from "../api/getQuizzes";
 

@@ -22,9 +22,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Toaster
         toastOptions={{
           style: {
-            background: "#261911",
+            background: "#f5f1ed",
             border: "1px solid #f5f1ed",
-            color: "#f5f1ed",
+            color: "#261911",
+            fontSize: "16px",
             padding: "1rem",
           },
         }}

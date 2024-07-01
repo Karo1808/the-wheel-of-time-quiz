@@ -17,6 +17,7 @@
     "babel-plugin-react-compiler": "^0.0.0-experimental-487cb0e-20240529",
     "eslint-plugin-react-compiler": "^0.0.0-experimental-a97cca1-20240529",
     "framer-motion": "^11.2.10",
+    "fuse.js": "^7.0.0",
     "immer": "^10.0.4",
     "ldrs": "^1.0.1",
     "rc-pagination": "^4.1.0",

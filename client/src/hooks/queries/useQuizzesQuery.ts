@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getQuizzes } from "../api/getQuizzes";
+import { getQuizzes } from "../../api/getQuizzes";
 import { useSearchParams } from "react-router-dom";
 
 const useQuizzesQuery = () => {

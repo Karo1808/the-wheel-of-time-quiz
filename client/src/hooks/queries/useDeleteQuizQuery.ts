@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteQuiz } from "../api/deleteQuiz";
+import { deleteQuiz } from "../../api/deleteQuiz";
 import { useParams } from "react-router";
 import toast from "react-hot-toast";
 

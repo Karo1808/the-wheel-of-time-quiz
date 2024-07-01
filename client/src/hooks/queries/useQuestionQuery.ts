@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import { getQuestions } from "../api/getQuestions";
+import { getQuestions } from "../../api/getQuestions";
 
 const useQuestionsQuery = () => {
   const { quizId } = useParams<{ quizId?: string }>();

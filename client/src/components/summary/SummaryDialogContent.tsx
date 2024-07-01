@@ -2,7 +2,7 @@ import styles from "../../styles/summaryDialogContent.module.css";
 import SummaryAccordion from "./SummaryAccordion";
 import { useShallow } from "zustand/react/shallow";
 import useQuizStore from "../../hooks/useQuizStore";
-import useRandomQuestionsQuery from "../../hooks/useRandomQuestionsQuery";
+import useRandomQuestionsQuery from "../../hooks/queries/useRandomQuestionsQuery.ts";
 import useAccordionControls from "../../hooks/useAccordionControls";
 import { IoMdCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
 
