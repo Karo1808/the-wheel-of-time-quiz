@@ -26,4 +26,10 @@
   &:focus {
     outline: 5px solid #dfdbd8;
   }
+
+  & button {
+    outline: none;
+    border: none;
+    background-color: transparent;
+  }
 }

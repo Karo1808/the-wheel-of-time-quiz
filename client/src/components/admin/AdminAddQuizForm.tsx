@@ -20,7 +20,7 @@ const AdminAddQuizForm = () => {
         label="Maximum Time (seconds)"
         name="quizName"
         width="30%"
-        type="number"
+        min={0}
       />
       <SearchAndAddItem items={tags} keyProp={"tagName"} label="Tags" />
       <SearchAndAddItem items={booksList} keyProp={"title"} label="Books" />

@@ -7,3 +7,10 @@
   padding: 5rem 20rem;
   overflow-y: auto;
 }
+
+.main {
+  display: flex;
+  gap: 5rem;
+  justify-content: space-between;
+  align-items: flex-start;
+}
