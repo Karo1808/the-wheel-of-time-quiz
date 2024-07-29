@@ -14,12 +14,12 @@ const AdminAddQuizForm = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <Input label="Quiz Name" name="quizName" width="30%" />
-      <TextArea label="Description" width="30%" />
+      <Input label="Quiz Name" name="quizName" width="100%" />
+      <TextArea rows={6} label="Description" width="100%" />
       <Input
         label="Maximum Time (seconds)"
         name="quizName"
-        width="30%"
+        width="100%"
         min={0}
       />
       <SearchAndAddItem items={tags} keyProp={"tagName"} label="Tags" />

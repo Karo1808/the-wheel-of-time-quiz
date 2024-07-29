@@ -23,7 +23,9 @@
 - [x] - Add a pagination component
 - [x] - Add a dropdown component
 - [x] - add functionality to quizzes page
-- [ ] - add an route to create a quiz (admin only)
+- [x] - add an route to create a quiz (admin only)
+- [ ] - add local storage to create quiz
+- [ ] - connect form to api
 - [ ] - make some quizzes, meaning questions and answers
 - [ ] - add filters
 - [ ] - add search

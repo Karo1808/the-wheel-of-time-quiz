@@ -1,10 +1,12 @@
 import styles from "../../styles/summaryDialogContent.module.css";
-import SummaryAccordion from "./SummaryAccordion";
+import accordionStyles from "../../styles/accordion.module.css";
 import { useShallow } from "zustand/react/shallow";
 import useQuizStore from "../../hooks/useQuizStore";
 import useRandomQuestionsQuery from "../../hooks/queries/useRandomQuestionsQuery.ts";
 import useAccordionControls from "../../hooks/useAccordionControls";
 import { IoMdCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
+import Accordion from "../Accordion.tsx";
+import SummaryAccordionContent from "./SummaryAccordionContent.tsx";
 
 interface Props {
   index?: number;
@@ -29,7 +31,7 @@ const SummaryDialogContent = ({ index }: Props) => {
   return (
     <div className={styles.container}>
       {quiz.quizData.questions.map((question, index) => (
-        <SummaryAccordion
+        <Accordion
           Icon={
             currentQuiz.questions[index].isAnswerCorrect ? (
               <IoMdCheckmarkCircle
@@ -40,21 +42,34 @@ const SummaryDialogContent = ({ index }: Props) => {
               <IoMdCloseCircle className={styles.icon} color={COLOR_WRONG} />
             )
           }
-          question={question.questionLabel}
-          questionNumber={index + 1}
-          setOpenedIndex={setOpenedIndex}
+          index={index}
           openedIndex={openedIndex}
-          userAnswer={currentQuiz.questions[index].answer || ""}
-          correctAnswer={currentQuiz.questions[index].correctAnswer || ""}
           key={index}
+          setOpenedIndex={setOpenedIndex}
           ref={(element: HTMLDivElement) =>
             (accordionRefs.current[index] = element)
           }
-          index={index}
-          answers={question.answers
-            .filter((answer) => answer.answerLabel)
-            .map((answer) => answer.answerLabel)}
-        />
+          topContent={
+            <>
+              <p className={accordionStyles.question_number}>
+                Question {index + 1}
+              </p>
+              <p className={accordionStyles.question}>
+                {question.questionLabel}
+              </p>
+            </>
+          }
+        >
+          <SummaryAccordionContent
+            index={index}
+            openedIndex={openedIndex}
+            userAnswer={currentQuiz.questions[index].answer || ""}
+            correctAnswer={currentQuiz.questions[index].correctAnswer || ""}
+            answers={question.answers
+              .filter((answer) => answer.answerLabel)
+              .map((answer) => answer.answerLabel)}
+          />
+        </Accordion>
       ))}
     </div>
   );

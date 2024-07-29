@@ -1,7 +1,8 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
+  min-width: 34.8vw;
 }
 
 .label {
@@ -15,15 +16,14 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  width: 40%;
   min-height: 3rem;
+  margin-bottom: -1rem;
 }
 
 .item {
   background-color: var(--primary-color);
   border: 1px solid var(--fg-color);
   color: var(--fg-color);
-  padding: 0;
   padding: 0.5rem 1.2rem;
   font-size: 1.2rem;
   border-radius: 2rem;
@@ -60,7 +60,13 @@
 
 .clear {
   padding: 0.25rem 0.5rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+  border-radius: 2rem;
   width: fit-content;
   height: 3rem;
+}
+
+.no_results {
+  color: var(--gray-color);
+  font-size: 1.6rem;
 }

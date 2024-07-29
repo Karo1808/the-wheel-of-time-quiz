@@ -5,13 +5,28 @@ import { InputHTMLAttributes, useState } from "react";
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   width?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onEnter?: () => void;
 }
 
-const Search = ({ name, ...props }: Props) => {
+const Search = ({ name, onChange, onEnter, ...props }: Props) => {
   const [value, setValue] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
+    if (onChange) {
+      onChange(e);
+    }
+  };
+
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      if (onEnter) {
+        onEnter();
+      }
+      setValue("");
+    }
   };
 
   return (
@@ -26,9 +41,10 @@ const Search = ({ name, ...props }: Props) => {
         className={styles.input}
         onChange={(e) => {
           handleChange(e);
-          props?.onChange?.(e);
         }}
+        onKeyDown={handleEnter}
         value={value}
+        form={props?.form || "search"}
         {...props}
       />
     </div>

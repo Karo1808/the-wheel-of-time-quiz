@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../styles/searchAndAddItem.module.css";
 import Search from "./Search";
 import { IoMdClose } from "react-icons/io";
@@ -14,10 +14,11 @@ interface Props<T> {
 const SearchAndAddItem = <T,>({ items, keyProp, label }: Props<T>) => {
   const [activeItems, setActiveItems] = useState<T[]>([]);
   const [results, setResults] = useState<T[]>(items);
+  const endRef = useRef<HTMLDivElement>(null);
 
   const fuse = new Fuse(items, {
     keys: [keyProp as string],
-    threshold: 0.3,
+    threshold: 0.1,
   });
 
   const handleItemClick = (item: T) => {
@@ -28,13 +29,23 @@ const SearchAndAddItem = <T,>({ items, keyProp, label }: Props<T>) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (results.length > 0) {
-      setActiveItems([...activeItems, results[0]]);
-    }
+  const handleEnter = () => {
+    if (results.length === 0) return;
+
+    const isDuplicate =
+      activeItems.filter((item) => item[keyProp] === results[0][keyProp])
+        .length > 0;
+    if (isDuplicate) return;
+
+    setActiveItems([...activeItems, results[0]]);
+    setResults(items);
   };
+
+  useEffect(() => {
+    if (results.length > 0) {
+      endRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [results, activeItems]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -51,61 +62,68 @@ const SearchAndAddItem = <T,>({ items, keyProp, label }: Props<T>) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.wrapper}>
+    <div className={styles.wrapper}>
       <span className={styles.label}>{label}</span>
       <Search
         name="addTags"
-        width="30%"
         placeholder="Search tags"
+        onEnter={handleEnter}
         onChange={handleSearch}
+        autoComplete="off"
       />
-      <div className={styles.list}>
-        {activeItems.map((item) => (
-          <li
-            key={item[keyProp] as string}
-            onClick={() => handleItemClick(item)}
-            className={`${styles.item} ${
-              activeItems.includes(item) ? styles.active : ""
-            }`}
-          >
-            <span>{item[keyProp] as React.ReactNode}</span>
-            <button
-              className={styles.remove_item}
-              type="button"
+      {activeItems.length > 0 && (
+        <div className={styles.list}>
+          {activeItems.map((item) => (
+            <li
+              key={item[keyProp] as string}
               onClick={() => handleItemClick(item)}
+              className={`${styles.item} ${
+                activeItems.includes(item) ? styles.active : ""
+              }`}
             >
-              <IoMdClose />
-            </button>
-          </li>
-        ))}
-        {activeItems.length > 0 && (
-          <Button
-            onClick={handleClearAll}
-            type="button"
-            className={styles.clear}
-            state="none"
-          >
-            Clear All
-          </Button>
+              <span>{item[keyProp] as React.ReactNode}</span>
+              <button
+                className={styles.remove_item}
+                type="button"
+                onClick={() => handleItemClick(item)}
+              >
+                <IoMdClose />
+              </button>
+            </li>
+          ))}
+          {activeItems.length > 0 && (
+            <Button
+              onClick={handleClearAll}
+              type="button"
+              className={styles.clear}
+              state="none"
+            >
+              Clear All
+            </Button>
+          )}
+        </div>
+      )}
+      <div className={styles.list} ref={endRef}>
+        {results.length > 0 ? (
+          results
+            .filter((item) => !activeItems.includes(item))
+            .map((item) => (
+              <button
+                onClick={() => handleItemClick(item)}
+                key={item[keyProp] as string}
+                className={`${styles.item} ${
+                  activeItems.includes(item) ? styles.inactive : ""
+                }`}
+                type="button"
+              >
+                {item[keyProp] as React.ReactNode}
+              </button>
+            ))
+        ) : (
+          <p className={styles.no_results}>No results found</p>
         )}
       </div>
-      <div className={styles.list}>
-        {results
-          .filter((item) => !activeItems.includes(item))
-          .map((item) => (
-            <button
-              onClick={() => handleItemClick(item)}
-              key={item[keyProp] as string}
-              className={`${styles.item} ${
-                activeItems.includes(item) ? styles.inactive : ""
-              }`}
-              type="button"
-            >
-              {item[keyProp] as React.ReactNode}
-            </button>
-          ))}
-      </div>
-    </form>
+    </div>
   );
 };
 

@@ -3,4 +3,58 @@
   flex-direction: column;
   gap: 2rem;
   overflow-y: auto;
+  width: 35vw;
+  padding: 1rem 5rem;
+  margin-top: 5rem;
+  max-height: 80vh;
+  overflow-y: scroll;
+}
+
+.accordion_icon {
+  font-size: 1.5rem;
+  transform: translateY(0.25rem);
+}
+
+.accordion_title {
+  font-size: 1.6rem;
+}
+
+form {
+  & div {
+    margin-top: 1rem;
+    padding: 1rem 0.5rem;
+  }
+}
+
+.add_button {
+  background-color: var(--gray-light-color);
+  outline: none;
+  border: none;
+  color: var(--fg-color);
+  border-radius: 1rem;
+  padding: 1.2rem 2.2rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 0 auto;
+}
+
+.plus_icon {
+  font-size: 1.5rem;
+}
+
+.cta_button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  color: var(--gray-color);
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: var(--red-color);
+    transform: scale(1.1);
+  }
 }

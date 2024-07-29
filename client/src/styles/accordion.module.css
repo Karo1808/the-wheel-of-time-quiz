@@ -67,6 +67,7 @@
   color: var(--fg-color);
   overflow: hidden;
   grid-column: 2;
+  height: fit-content;
 
   @media screen and (min-width: 768px) {
     font-size: 2rem;
