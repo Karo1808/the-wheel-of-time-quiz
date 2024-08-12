@@ -9,9 +9,15 @@ interface Props<T> {
   label?: string;
   items: T[];
   keyProp: keyof T;
+  onChange?: (items: T[keyof T][]) => void;
 }
 
-const SearchAndAddItem = <T,>({ items, keyProp, label }: Props<T>) => {
+const SearchAndAddItem = <T,>({
+  items,
+  keyProp,
+  label,
+  onChange,
+}: Props<T>) => {
   const [activeItems, setActiveItems] = useState<T[]>([]);
   const [results, setResults] = useState<T[]>(items);
   const endRef = useRef<HTMLDivElement>(null);
@@ -23,9 +29,13 @@ const SearchAndAddItem = <T,>({ items, keyProp, label }: Props<T>) => {
 
   const handleItemClick = (item: T) => {
     if (activeItems.includes(item)) {
-      setActiveItems(activeItems.filter((i) => i !== item));
+      const newActiveItems = activeItems.filter((i) => i !== item);
+      setActiveItems(newActiveItems);
+      onChange?.(newActiveItems.map((i) => i[keyProp]));
     } else {
-      setActiveItems([...activeItems, item]);
+      const newActiveItems = [...activeItems, item];
+      setActiveItems(newActiveItems);
+      onChange?.(newActiveItems.map((i) => i[keyProp]));
     }
   };
 
@@ -37,7 +47,9 @@ const SearchAndAddItem = <T,>({ items, keyProp, label }: Props<T>) => {
         .length > 0;
     if (isDuplicate) return;
 
-    setActiveItems([...activeItems, results[0]]);
+    const newActiveItems = [...activeItems, results[0]];
+    setActiveItems(newActiveItems);
+    onChange?.(newActiveItems.map((i) => i[keyProp]));
     setResults(items);
   };
 
@@ -59,6 +71,7 @@ const SearchAndAddItem = <T,>({ items, keyProp, label }: Props<T>) => {
 
   const handleClearAll = () => {
     setActiveItems([]);
+    onChange?.([]);
   };
 
   return (

@@ -1,17 +1,23 @@
+import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 import styles from "../styles/input.module.css";
-import { InputHTMLAttributes, useState } from "react";
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+interface Props<T extends FieldValues>
+  extends React.ComponentPropsWithoutRef<"input"> {
   label: string;
-  name: string;
+  name: Path<T>;
   width?: string;
+  register: UseFormRegister<T>;
 }
 
-const Input = ({ label, name, width, ...props }: Props) => {
-  const [value, setValue] = useState<string>("");
-
+const Input = <T extends FieldValues>({
+  label,
+  name,
+  width,
+  register,
+  ...props
+}: Props<T>) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    props.onChange?.(e);
   };
 
   return (
@@ -21,11 +27,9 @@ const Input = ({ label, name, width, ...props }: Props) => {
       </label>
       <input
         className={styles.input}
-        value={value}
-        onChange={handleChange}
-        name={name}
-        style={{ width: width }}
         {...props}
+        style={{ width: width }}
+        {...register(name, { required: true, onChange: handleChange })}
       />
     </div>
   );

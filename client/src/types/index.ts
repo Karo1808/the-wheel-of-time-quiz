@@ -49,3 +49,35 @@ export interface quizzesActions {
   setCorrectAnswer: (answer?: string) => void;
   setCurrentQuizId: (id: string) => void;
 }
+
+export interface createQuizState {
+  quizName: string;
+  quizDescription: string;
+  tags: string[];
+  books: string[];
+  maximumTime: number;
+  questions: {
+    questionLabel: string;
+    questionAnswer: string;
+    answers: {
+      answerLabel: string;
+    }[];
+  }[];
+}
+
+export interface createQuizQuestion {
+  questionLabel: string;
+  questionAnswer: string;
+  answers: {
+    answerLabel: string;
+  }[];
+}
+
+export interface createQuizActions {
+  setQuizName: (name: string) => void;
+  setQuizDescription: (description: string) => void;
+  setMaximumTime: (maximumTime: number) => void;
+  setTags: (tags: string[]) => void;
+  setBooks: (books: string[]) => void;
+  setQuestions: (questions: createQuizQuestion[]) => void;
+}
