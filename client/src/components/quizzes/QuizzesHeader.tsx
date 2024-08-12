@@ -1,16 +1,21 @@
-import styles from "../../styles/quizzesHeader.module.css";
+import { useState } from "react";
+
+import { useWindowSize } from "@uidotdev/usehooks";
 import { AnimatePresence } from "framer-motion";
+
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { MdOutlineSortByAlpha } from "react-icons/md";
 import { PiBooks } from "react-icons/pi";
+
 import Drawer from "../Drawer";
-import { useState } from "react";
 import QuizzesBookList from "./QuizzesBookList";
-import { useWindowSize } from "@uidotdev/usehooks";
 import Dropdown from "../Dropdown";
-import { sortList } from "../../config";
 import QuizzesSortList from "./QuizzesSortList";
 import Search from "../Search";
+
+import { sortList } from "../../config";
+
+import styles from "../../styles/quizzesHeader.module.css";
 
 const QuizzesHeader = () => {
   const [isBookDrawerOpen, setIsBookDrawerOpen] = useState<boolean>(false);
@@ -31,6 +36,10 @@ const QuizzesHeader = () => {
     setIsSortHovered(false);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.top}>
@@ -42,8 +51,8 @@ const QuizzesHeader = () => {
           />
           <p className={styles.logo_text}>The Wheel of Time Quiz</p>
         </div>
-        <form className={styles.search} onSubmit={(e) => e.preventDefault()}>
-          <Search name="search" type="text" placeholder="Search" />
+        <form className={styles.search} onSubmit={handleSubmit}>
+          <Search name="search" type="search" placeholder="Search" />
         </form>
       </div>
       <div className={styles.options}>

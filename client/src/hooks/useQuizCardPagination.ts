@@ -1,8 +1,13 @@
+import { startTransition } from "react";
+
 import { useQueryClient } from "@tanstack/react-query";
-import { startTransition, useEffect, useState } from "react";
-import useQuizzesQuery from "./queries/useQuizzesQuery";
 import useUpdateSearchParams from "./useUpdateSearchParams";
+
+import useQuizzesQuery from "./queries/useQuizzesQuery";
+
 import { getQuizzes } from "../api/getQuizzes";
+
+import { DEFAULT_BOOK, STARTING_PAGE } from "../config";
 
 const useQuizCardPagination = <T extends HTMLElement, T2>({
   ref,
@@ -11,41 +16,32 @@ const useQuizCardPagination = <T extends HTMLElement, T2>({
   ref?: React.RefObject<T>;
   action?: (param?: T2) => void;
 }) => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const { searchParams, updateSearchParams } = useUpdateSearchParams();
   const { totalPages, hasMore } = useQuizzesQuery();
   const queryClient = useQueryClient();
-
-  useEffect(() => {
-    setCurrentPage(parseInt(searchParams.get("page") || "1"));
-  }, [searchParams, hasMore, currentPage, queryClient]);
+  const currentPage = searchParams.get("page") || STARTING_PAGE.toString();
+  const currentBook = searchParams.get("book") || DEFAULT_BOOK;
 
   const handlePageChange = (page: number) => {
     startTransition(() => {
-      setCurrentPage(page);
-      setCurrentPage(page);
-      if (ref) {
-        ref.current?.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      }
+      ref?.current?.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
 
-      if (action) {
-        action();
-      }
+      action?.();
+
       updateSearchParams({ page: page.toString() });
+
       if (hasMore) {
+        const currentPage = Number.parseInt(searchParams.get("page") || "1");
+
         queryClient.prefetchQuery({
-          queryKey: [
-            "quizzes",
-            currentPage.toString() + 1,
-            searchParams.get("book"),
-          ],
+          queryKey: ["quizzes", currentPage, currentBook],
           queryFn: () =>
             getQuizzes({
-              page: currentPage + 1,
-              book: searchParams.get("book") || "All",
+              page: currentPage,
+              book: currentBook,
             }),
         });
       }
@@ -53,7 +49,7 @@ const useQuizCardPagination = <T extends HTMLElement, T2>({
   };
 
   return {
-    currentPage,
+    currentPage: Number.parseInt(currentPage),
     totalPages,
     handlePageChange,
   };

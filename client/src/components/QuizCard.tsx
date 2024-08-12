@@ -1,7 +1,9 @@
 import { IoMdHeart } from "react-icons/io";
-import styles from "../styles/quizCard.module.css";
-import Tag from "./Tag";
 import { FaComments } from "react-icons/fa6";
+
+import Tag from "./Tag";
+
+import styles from "../styles/quizCard.module.css";
 
 interface Props {
   tags?: {

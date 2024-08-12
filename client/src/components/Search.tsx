@@ -36,8 +36,6 @@ const Search = ({ name, onChange, onEnter, ...props }: Props) => {
       </button>
       <input
         id={name}
-        type={props?.type || "text"}
-        placeholder={props?.placeholder || "placeholder"}
         className={styles.input}
         onChange={(e) => {
           handleChange(e);

@@ -1,14 +1,13 @@
 import { useRef } from "react";
 
 interface UseButtonKeysNavigationProps {
-  rows: number;
-  cols: number;
+  variant: "mobile" | "desktop";
 }
 
-const useButtonKeysNavigation = ({
-  rows,
-  cols,
-}: UseButtonKeysNavigationProps) => {
+const useButtonKeysNavigation = ({ variant }: UseButtonKeysNavigationProps) => {
+  const rows = variant === "desktop" ? 2 : 4;
+  const cols = variant === "desktop" ? 2 : 1;
+
   const buttonRefs = useRef<(HTMLButtonElement | null)[][]>(
     Array.from({ length: rows }, () => Array(cols).fill(null))
   );

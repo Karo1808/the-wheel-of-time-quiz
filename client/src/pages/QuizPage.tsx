@@ -1,12 +1,16 @@
-import styles from "../styles/quiz.module.css";
+import { useWindowSize } from "@uidotdev/usehooks";
+
 import useQuiz from "../hooks/useQuiz";
+import useButtonKeysNavigation from "../hooks/useButtonNavigation";
+
 import QuizFooter from "../components/quiz/QuizFooter";
 import QuizAnswer from "../components/quiz/QuizAnswer";
 import QuizHeader from "../components/quiz/QuizHeader";
+
 import { formatTime } from "../utils/shared";
 import { TimeFormat } from "../types";
-import useButtonKeysNavigation from "../hooks/useButtonNavigation";
-import { useWindowSize } from "@uidotdev/usehooks";
+
+import styles from "../styles/quiz.module.css";
 
 const QuizPage = () => {
   const {
@@ -20,9 +24,9 @@ const QuizPage = () => {
 
   const windowSize = useWindowSize();
 
-  const { handleKeyDown, buttonRefs } = useButtonKeysNavigation(
-    windowSize?.width || 0 > 1200 ? { rows: 2, cols: 2 } : { rows: 4, cols: 1 }
-  );
+  const { handleKeyDown, buttonRefs } = useButtonKeysNavigation({
+    variant: windowSize?.width || 0 > 1200 ? "desktop" : "mobile",
+  });
 
   function handleNext() {
     if (

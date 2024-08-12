@@ -28,8 +28,8 @@ const createQuizPayload = {
         z.object({
           questionLabel: z
             .string({ required_error: "Question label is required" })
-            .min(10, {
-              message: "Question label must be at least 10 characters",
+            .min(8, {
+              message: "Question label must be at least 8 characters",
             }),
           questionAnswer: z.string({
             required_error: "Question answer  is required",

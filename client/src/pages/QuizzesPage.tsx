@@ -1,12 +1,16 @@
-import { useWindowSize } from "@uidotdev/usehooks";
-import QuizzesBookList from "../components/quizzes/QuizzesBookList";
-import QuizzesHeader from "../components/quizzes/QuizzesHeader";
-import styles from "../styles/quizzesPage.module.css";
-import PaginationWrapper from "../components/PaginationWrapper";
 import { Suspense, useRef } from "react";
-import QuizzesCardList from "../components/quizzes/QuizzesCardList";
-import QuizCardListSkeleton from "./loading/QuizCardListSkeleton";
+
+import { useWindowSize } from "@uidotdev/usehooks";
+
 import useQuizCardPagination from "../hooks/useQuizCardPagination";
+
+import PaginationWrapper from "../components/PaginationWrapper";
+import QuizzesBookList from "../components/quizzes/QuizzesBookList";
+import QuizzesCardList from "../components/quizzes/QuizzesCardList";
+import QuizzesHeader from "../components/quizzes/QuizzesHeader";
+import QuizCardListSkeleton from "./loading/QuizCardListSkeleton";
+
+import styles from "../styles/quizzesPage.module.css";
 
 const QuizzesPage = () => {
   const { width } = useWindowSize();
@@ -16,6 +20,7 @@ const QuizzesPage = () => {
   });
 
   if (!width) return null;
+
   return (
     <>
       <QuizzesHeader />

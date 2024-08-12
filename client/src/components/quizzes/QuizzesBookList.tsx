@@ -1,7 +1,10 @@
-import styles from "../../styles/quizzesBookList.module.css";
-import { booksList } from "../../config";
 import { startTransition, useState } from "react";
+
 import useUpdateSearchParams from "../../hooks/useUpdateSearchParams";
+
+import { booksList, STARTING_PAGE } from "../../config";
+
+import styles from "../../styles/quizzesBookList.module.css";
 
 interface Props {
   setIsBookDrawerOpen?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -9,12 +12,14 @@ interface Props {
 
 const QuizzesBookList = ({ setIsBookDrawerOpen }: Props) => {
   const [activeBook, setActiveBook] = useState<string>("");
+
   const { updateSearchParams } = useUpdateSearchParams();
+
   const handleBookClick = (bookTitle: string) => {
     startTransition(() => {
       setActiveBook(bookTitle);
-      updateSearchParams({ book: bookTitle, page: "1" });
-      if (setIsBookDrawerOpen) setIsBookDrawerOpen(false);
+      updateSearchParams({ book: bookTitle, page: STARTING_PAGE.toString() });
+      setIsBookDrawerOpen?.(false);
     });
   };
 

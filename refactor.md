@@ -1,0 +1,3 @@
+- refactor React code
+- refactor Server side code
+- refactor css modules to tailwind

@@ -1,6 +1,9 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getQuizzes } from "../../api/getQuizzes";
 import { useSearchParams } from "react-router-dom";
+import { useSuspenseQuery } from "@tanstack/react-query";
+
+import { getQuizzes } from "../../api/getQuizzes";
+
+import { DEFAULT_BOOK, STARTING_PAGE } from "../../config";
 
 const useQuizzesQuery = () => {
   const [searchParams] = useSearchParams();
@@ -14,7 +17,10 @@ const useQuizzesQuery = () => {
   } = useSuspenseQuery({
     queryKey: ["quizzes", page, book],
     queryFn: () =>
-      getQuizzes({ page: parseInt(page as string) || 1, book: book || "All" }),
+      getQuizzes({
+        page: parseInt(page as string) || STARTING_PAGE,
+        book: book || DEFAULT_BOOK,
+      }),
   });
 
   return {

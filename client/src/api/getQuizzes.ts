@@ -1,5 +1,8 @@
-import instance from "./index";
 import { z } from "zod";
+
+import instance from "./index";
+
+import { DEFAULT_BOOK, DEFAULT_PAGE_LIMIT, STARTING_PAGE } from "../config";
 
 const getQuizzesSchema = z.object({
   totalItems: z.number({
@@ -45,9 +48,9 @@ const getQuizzesSchema = z.object({
 export type GetQuizzesResponse = z.infer<typeof getQuizzesSchema>;
 
 export const getQuizzes = async ({
-  page = 1,
-  limit = 10,
-  book = "All",
+  page = STARTING_PAGE,
+  limit = DEFAULT_PAGE_LIMIT,
+  book = DEFAULT_BOOK,
 }: {
   page?: number;
   limit?: number;

@@ -2,20 +2,20 @@ type digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export type TimeFormat = number | `${digit}${digit}:${digit}${digit}`;
 
-type QuizId = string;
+export type QuizId = string;
 
-export interface State {
+export interface quizzesState {
   currentQuizId: QuizId;
-  quizzes: { [quizName: QuizId]: Quiz };
+  quizzes: Record<QuizId, Quiz>;
 }
 
 export interface Quiz {
-  quizId: string;
+  quizId: QuizId;
   currentQuestionNumber: number;
   currentScore: number;
   numberOfQuestionsAnswered: number;
   questions: Question[];
-  currentTime: number;
+  currentTime: 0 | TimeFormat;
   randomSeed?: number;
   currentQuestionId?: string;
 }
@@ -28,7 +28,7 @@ export interface Question {
   correctAnswer?: string;
 }
 
-export interface Actions {
+export interface quizzesActions {
   setCurrentQuiz: (quizName: string, initial?: boolean) => void;
   resetQuiz: () => void;
   setAnswer: ({

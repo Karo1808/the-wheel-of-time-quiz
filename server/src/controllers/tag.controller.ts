@@ -4,7 +4,7 @@ import { createTag, deleteTag, getTags } from "../services/tag.service";
 export async function getTagsHandler(req: Request, res: Response) {
   const result = await getTags();
   if (!result.length) {
-    return res.status(404).send("Tag not found");
+    return res.status(404).send("Tags not found");
   }
   return res.status(200).send(result);
 }

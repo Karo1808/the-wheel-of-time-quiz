@@ -1,6 +1,6 @@
 import styles from "../../styles/quizzesSortList.module.css";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLUListElement> {
   options: {
     label: string;
     icon: React.ReactNode;
@@ -8,9 +8,9 @@ interface Props {
   }[];
 }
 
-const QuizzesSortList = ({ options }: Props) => {
+const QuizzesSortList = ({ options, ...props }: Props) => {
   return (
-    <ul className={styles.list}>
+    <ul className={styles.list} {...props}>
       {options.map((item) => (
         <li key={item.label} className={styles.item}>
           <div className={styles.container}>

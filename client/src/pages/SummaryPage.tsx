@@ -14,6 +14,7 @@ import Button from "../components/Button";
 import { useState } from "react";
 import Drawer from "../components/Drawer";
 import SummaryDialogContent from "../components/summary/SummaryDialogContent";
+import useQuizzesQuery from "../hooks/queries/useQuizzesQuery";
 
 const SummaryPage = () => {
   const currentQuizId = useQuizStore(
@@ -30,6 +31,10 @@ const SummaryPage = () => {
   const setCurrentQuizId = useQuizStore(
     useShallow((state) => state.setCurrentQuizId)
   );
+
+  const { quizzes } = useQuizzesQuery();
+  const quizIndex = quizzes.findIndex((quiz) => quiz._id === currentQuizId);
+  const maximumTime = quizzes[quizIndex].maximumTime;
 
   const navigate = useNavigate();
 
@@ -77,8 +82,9 @@ const SummaryPage = () => {
       <main className={styles.page}>
         <section className={styles.graphs}>
           <ResultsGraph
-            value={currentQuiz.currentTime}
-            maxValue={formatTime("00:03") as number}
+            value={currentQuiz.currentTime as number}
+            // TODO dynamic max value
+            maxValue={maximumTime}
             type="time"
             color="#4B0082"
             label={formatTime(currentQuiz.currentTime) as string}

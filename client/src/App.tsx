@@ -1,19 +1,23 @@
-import { Route, Routes } from "react-router";
-import Layout from "./pages/Layout";
 import { lazy } from "react";
+
+import { Route, Routes } from "react-router";
+
+import Layout from "./pages/Layout";
 import Loading from "./pages/loading/Loading";
 import SuspenseLayout from "./pages/loading/SuspenseLayout";
-import QuizPageSkeleton from "./pages/loading/QuizPageSkeleton";
-import Page404 from "./pages/404";
 import QuizzesPageSkeleton from "./pages/loading/QuizzesPageSkeleton";
-import AdminOverviewDetails from "./components/admin/AdminOverviewDetails";
+import QuizPageSkeleton from "./pages/loading/QuizPageSkeleton";
 
-const QuizPage = lazy(() => import("./pages/QuizPage"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
+const QuizPage = lazy(() => import("./pages/QuizPage"));
 const QuizzesPage = lazy(() => import("./pages/QuizzesPage"));
 const SummaryPage = lazy(() => import("./pages/SummaryPage"));
 const AdminOverviewPage = lazy(() => import("./pages/AdminOverviewPage"));
 const AdminAddQuizPage = lazy(() => import("./pages/AdminAddQuizPage"));
+const Page404 = lazy(() => import("./pages/404"));
+const AdminOverviewDetails = lazy(
+  () => import("./components/admin/AdminOverviewDetails")
+);
 
 const App = () => {
   return (

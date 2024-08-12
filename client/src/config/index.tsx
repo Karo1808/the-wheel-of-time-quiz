@@ -1,4 +1,4 @@
-import { State } from "../types";
+import { createQuizState, quizzesState } from "../types";
 import { IoCalendarClearSharp, IoEyeSharp } from "react-icons/io5";
 import { TiSortAlphabetically } from "react-icons/ti";
 import {
@@ -19,7 +19,11 @@ import { FaLeaf } from "react-icons/fa6";
 import { PiBooks } from "react-icons/pi";
 import QuizzesDropdownSortCta from "../components/quizzes/QuizzesDropdownSortCta";
 
-export const initialState: State = {
+export const STARTING_PAGE = 1;
+export const DEFAULT_PAGE_LIMIT = 10;
+export const DEFAULT_BOOK = "All";
+
+export const quizzesInitialState: quizzesState = {
   currentQuizId: "",
   quizzes: {
     "": {
@@ -40,6 +44,15 @@ export const initialState: State = {
       ],
     },
   },
+};
+
+export const createQuzInitialState: createQuizState = {
+  quizName: "",
+  quizDescription: "",
+  tags: [],
+  books: [],
+  maximumTime: 0,
+  questions: [],
 };
 
 export const booksList = [

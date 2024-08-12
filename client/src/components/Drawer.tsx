@@ -4,8 +4,9 @@ import {
   useMotionValue,
   useAnimate,
 } from "framer-motion";
-import styles from "../styles/drawer.module.css";
 import { useMeasure } from "@uidotdev/usehooks";
+
+import styles from "../styles/drawer.module.css";
 
 interface Props {
   open: boolean;

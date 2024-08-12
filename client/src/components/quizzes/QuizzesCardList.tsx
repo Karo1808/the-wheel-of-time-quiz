@@ -1,14 +1,23 @@
 import { useEffect, forwardRef } from "react";
-import styles from "../../styles/quizzesPage.module.css";
+
 import { useNavigate } from "react-router";
+
 import useQuizzesQuery from "../../hooks/queries/useQuizzesQuery";
 import useQuizStore from "../../hooks/useQuizStore";
+
 import QuizCard from "../QuizCard";
 import QuizzesCardCta from "./QuizzesCardCta";
 
-const QuizzesCardList = forwardRef<HTMLDivElement>((_props, ref) => {
-  const { quizzes } = useQuizzesQuery();
+import styles from "../../styles/quizzesPage.module.css";
+
+type Props = React.HTMLAttributes<HTMLDivElement>;
+type Ref = HTMLDivElement;
+
+const QuizzesCardList = forwardRef<Ref, Props>((props, ref) => {
   const navigate = useNavigate();
+
+  const { quizzes } = useQuizzesQuery();
+
   const setCurrentQuiz = useQuizStore((state) => state.setCurrentQuiz);
   const setCurrentQuizId = useQuizStore((state) => state.setCurrentQuizId);
   const stateQuizzes = useQuizStore((state) => state.quizzes);
@@ -21,7 +30,11 @@ const QuizzesCardList = forwardRef<HTMLDivElement>((_props, ref) => {
     numberOfQuestions: number;
   }) => {
     setCurrentQuizId(quizId);
-    if (stateQuizzes[quizId].numberOfQuestionsAnswered === numberOfQuestions) {
+
+    const numberOfQuestionsAnswered =
+      stateQuizzes[quizId]?.numberOfQuestionsAnswered;
+
+    if (numberOfQuestionsAnswered === numberOfQuestions) {
       navigate(`/quiz/${quizId}/summary`);
       return;
     }
@@ -38,7 +51,7 @@ const QuizzesCardList = forwardRef<HTMLDivElement>((_props, ref) => {
   }, [setCurrentQuiz, quizzes, stateQuizzes]);
 
   return (
-    <div className={styles.wrapper} ref={ref}>
+    <div className={styles.wrapper} ref={ref} {...props}>
       <div className={styles.quizzes}>
         {quizzes?.map((quiz) => (
           <QuizCard
