@@ -58,3 +58,29 @@ form {
     transform: scale(1.1);
   }
 }
+
+.answer {
+  display: flex;
+  gap: 1rem;
+
+  & button {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform: translateY(18px);
+    color: var(--gray-color);
+
+    &:hover {
+      color: var(--green-color);
+      transform: translateY(18px);
+    }
+  }
+}
+
+.answer--active {
+  button {
+    color: var(--green-color) !important;
+  }
+}

@@ -1,13 +1,19 @@
 import { useState } from "react";
 import styles from "../styles/textArea.module.css";
-import { FieldValues, Path, UseFormRegister } from "react-hook-form";
+import {
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+} from "react-hook-form";
 
 interface Props<T extends FieldValues>
   extends React.ComponentPropsWithoutRef<"textarea"> {
   name: Path<T>;
   label: string;
   width?: string;
-  register: UseFormRegister<T>;
+  register?: UseFormRegister<T>;
+  errors?: FieldErrors[keyof FieldValues];
 }
 
 const TextArea = <T extends FieldValues>({
@@ -15,6 +21,7 @@ const TextArea = <T extends FieldValues>({
   width,
   register,
   name,
+  errors,
   ...props
 }: Props<T>) => {
   const [value, setValue] = useState<string>("");
@@ -23,6 +30,8 @@ const TextArea = <T extends FieldValues>({
     setValue(e.target.value);
     props.onChange?.(e);
   };
+
+  const errorMessage = errors?.message as React.ReactNode;
 
   return (
     <div className={styles.wrapper}>
@@ -34,8 +43,11 @@ const TextArea = <T extends FieldValues>({
         className={styles.area}
         {...props}
         value={value}
-        {...register(name, { required: true, onChange: handleChange })}
+        {...(register &&
+          register(name, { required: true, onChange: handleChange }))}
+        onChange={handleChange}
       />
+      {errors && <p className={styles.error}>{errorMessage}</p>}
     </div>
   );
 };

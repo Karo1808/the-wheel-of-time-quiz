@@ -1,4 +1,9 @@
-import { FieldValues, Path, UseFormRegister } from "react-hook-form";
+import {
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+} from "react-hook-form";
 import styles from "../styles/input.module.css";
 
 interface Props<T extends FieldValues>
@@ -6,7 +11,9 @@ interface Props<T extends FieldValues>
   label: string;
   name: Path<T>;
   width?: string;
-  register: UseFormRegister<T>;
+  register?: UseFormRegister<T>;
+  errors?: FieldErrors[keyof FieldValues];
+  required?: boolean;
 }
 
 const Input = <T extends FieldValues>({
@@ -14,11 +21,15 @@ const Input = <T extends FieldValues>({
   name,
   width,
   register,
+  errors,
+  required,
   ...props
 }: Props<T>) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.onChange?.(e);
   };
+
+  const errorMessage = errors?.message as React.ReactNode;
 
   return (
     <div className={styles.wrapper}>
@@ -29,8 +40,10 @@ const Input = <T extends FieldValues>({
         className={styles.input}
         {...props}
         style={{ width: width }}
-        {...register(name, { required: true, onChange: handleChange })}
+        {...(register && register(name, { required, onChange: handleChange }))}
+        onChange={handleChange}
       />
+      {errors && <p className={styles.error}>{errorMessage}</p>}
     </div>
   );
 };

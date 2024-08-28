@@ -26,3 +26,8 @@
     outline: 5px solid #dfdbd8;
   }
 }
+
+.error {
+  color: var(--red-color);
+  font-size: 1.4rem;
+}

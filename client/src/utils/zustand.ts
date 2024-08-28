@@ -1,9 +1,9 @@
-import { initialState } from "../config";
-import { QuizId, State, TimeFormat } from "../types";
+import { quizzesInitialState } from "../config";
+import { QuizId, quizzesState, TimeFormat } from "../types";
 import { formatTime } from "./shared";
 
 type Params = {
-  state: State;
+  state: quizzesState;
 };
 
 type setCurrentQuizParams = Params & {
@@ -18,7 +18,7 @@ export const setCurrentQuiz = ({
 }: setCurrentQuizParams) => {
   state.currentQuizId = quizId;
   if (initial) {
-    state.quizzes[quizId] = initialState.quizzes[""];
+    state.quizzes[quizId] = quizzesInitialState.quizzes[""];
   }
   return state;
 };
@@ -35,7 +35,7 @@ export const setCurrentQuizId = ({ quizId, state }: setCurrentQuizIdParams) => {
 type resetQuizParams = Params;
 
 export const resetQuiz = ({ state }: resetQuizParams) => {
-  state.quizzes[state.currentQuizId] = initialState.quizzes[""];
+  state.quizzes[state.currentQuizId] = quizzesInitialState.quizzes[""];
   return state;
 };
 
@@ -92,7 +92,7 @@ export const setAnswer = ({
   currentQuizId.numberOfQuestionsAnswered++;
 
   if (numberOfQuestions !== currentQuizId.numberOfQuestionsAnswered) {
-    currentQuizId.questions.push(initialState.quizzes[""].questions[0]);
+    currentQuizId.questions.push(quizzesInitialState.quizzes[""].questions[0]);
   }
 
   currentQuizId.currentTime = formatTime(
