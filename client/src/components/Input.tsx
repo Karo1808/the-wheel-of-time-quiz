@@ -14,6 +14,7 @@ interface Props<T extends FieldValues>
   register?: UseFormRegister<T>;
   errors?: FieldErrors[keyof FieldValues];
   required?: boolean;
+  cta?: React.ReactNode;
 }
 
 const Input = <T extends FieldValues>({
@@ -23,6 +24,7 @@ const Input = <T extends FieldValues>({
   register,
   errors,
   required,
+  cta,
   ...props
 }: Props<T>) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,13 +38,17 @@ const Input = <T extends FieldValues>({
       <label htmlFor={name} className={styles.label}>
         {label}
       </label>
-      <input
-        className={styles.input}
-        {...props}
-        style={{ width: width }}
-        {...(register && register(name, { required, onChange: handleChange }))}
-        onChange={handleChange}
-      />
+      <div className={styles.input_wrapper}>
+        <input
+          className={styles.input}
+          {...props}
+          style={{ width: width }}
+          {...(register &&
+            register(name, { required, onChange: handleChange }))}
+          onChange={handleChange}
+        />
+        {cta}
+      </div>
       {errors && <p className={styles.error}>{errorMessage}</p>}
     </div>
   );

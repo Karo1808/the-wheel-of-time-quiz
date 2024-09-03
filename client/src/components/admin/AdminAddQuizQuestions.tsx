@@ -22,9 +22,9 @@ const AdminAddQuizQuestions = ({
   questions,
   onChange,
 }: AdminAddQuizQuestionsProps) => {
-  const { trigger, control, watch, formState } =
+  const { trigger, control, watch, formState, setError, setValue } =
     useFormContext<CreateQuizSchema>(); // Access form context
-  const { fields, append, remove, update } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: "questions", // Field name in the form state
   });
@@ -44,9 +44,15 @@ const AdminAddQuizQuestions = ({
     if (index !== -1) {
       await trigger("questions");
 
+      const questionAnswer = watchQuestions[index].questionAnswer;
+
+      if (!questionAnswer) {
+        setError("questions", { type: "nonexisting" }, { shouldFocus: true });
+      }
+
       if (formState.errors.questions) {
+        console.log(formState.errors.questions[0]?.answers);
         onChange?.(watchQuestions);
-        console.log(formState.errors.questions);
         return;
       }
     }
@@ -73,13 +79,16 @@ const AdminAddQuizQuestions = ({
     questionIndex: number;
     answerIndex: number;
   }) => {
-    console.log("clicked");
-    update(questionIndex, {
-      ...watchQuestions[questionIndex],
-      questionAnswer: watchQuestions[questionIndex].answers[answerIndex],
-    });
-    watchQuestions[questionIndex].questionAnswer =
-      watchQuestions[questionIndex].answers[answerIndex];
+    const currentQuestion = watchQuestions[questionIndex];
+
+    // Update only the specific field
+    setValue(
+      `questions.${questionIndex}.questionAnswer`,
+      currentQuestion.answers[answerIndex]
+    );
+
+    // Optionally, trigger validation or re-render
+    trigger(`questions.${questionIndex}.questionAnswer`);
   };
 
   useEffect(() => {
@@ -125,15 +134,14 @@ const AdminAddQuizQuestions = ({
             <Controller
               name={`questions.${i}.questionLabel`}
               control={control}
-              render={({ field: { onChange } }) => (
+              render={({ field }) => (
                 <TextArea
-                  name={`questions.${i}.questionLabel`}
                   label="Title"
                   {...field}
+                  name={`questions.${i}.questionLabel`}
                   width="100%"
                   rows={3}
                   errors={formState.errors.questions?.[i]?.questionLabel}
-                  onChange={onChange}
                 />
               )}
             />
@@ -149,26 +157,42 @@ const AdminAddQuizQuestions = ({
                       {...field}
                       width="100%"
                       errors={formState.errors.questions?.[i]?.answers?.[j]}
-                    />
-                    <button
-                      onClick={() =>
-                        handleSelectAnswer({ questionIndex: i, answerIndex: j })
+                      cta={
+                        <button
+                          onClick={() =>
+                            handleSelectAnswer({
+                              questionIndex: i,
+                              answerIndex: j,
+                            })
+                          }
+                          className={`${
+                            watchQuestions?.[i]?.answers?.indexOf(
+                              watchQuestions[i]?.questionAnswer || ""
+                            ) === j
+                              ? styles.answer_active
+                              : ""
+                          }`}
+                          type="button"
+                        >
+                          <IoMdCheckmarkCircle size={20} />
+                        </button>
                       }
-                      className={`${
-                        watchQuestions?.[i]?.answers?.indexOf(
-                          watchQuestions[i]?.questionAnswer || ""
-                        ) === j
-                          ? styles.answer_active
-                          : ""
-                      }`}
-                      type="button"
-                    >
-                      <IoMdCheckmarkCircle size={20} />
-                    </button>
+                    />
                   </div>
                 )}
               />
             ))}
+            <span className={styles.error}>
+              {formState.errors.questions &&
+                formState.errors.questions.type === "nonexisting" && (
+                  <div>Question answer is required</div>
+                )}
+
+              {formState.errors.questions &&
+                formState.errors.questions[0]?.answers && (
+                  <div>No duplicate answers allowed</div>
+                )}
+            </span>
           </Accordion>
         </div>
       ))}

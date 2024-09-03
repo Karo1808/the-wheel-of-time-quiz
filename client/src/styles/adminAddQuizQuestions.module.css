@@ -21,7 +21,6 @@
 
 form {
   & div {
-    margin-top: 1rem;
     padding: 1rem 0.5rem;
   }
 }
@@ -60,7 +59,6 @@ form {
 }
 
 .answer {
-  display: flex;
   gap: 1rem;
 
   & button {
@@ -69,18 +67,20 @@ form {
     background-color: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
-    transform: translateY(18px);
     color: var(--gray-color);
 
     &:hover {
       color: var(--green-color);
-      transform: translateY(18px);
     }
   }
 }
 
-.answer--active {
-  button {
-    color: var(--green-color) !important;
-  }
+.answer_active {
+  color: var(--green-color) !important;
+}
+
+.error {
+  color: var(--red-color);
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
 }

@@ -52,7 +52,6 @@ const AdminAddQuizForm = () => {
   };
 
   const onSubmit: SubmitHandler<CreateQuizSchema> = (data) => {
-    console.log("idk");
     const formData = {
       quizName: data.quizName,
       quizDescription: data.quizDescription,
@@ -61,7 +60,8 @@ const AdminAddQuizForm = () => {
       books: data.books,
       questions: data.questions,
     };
-    console.log(formData, formState);
+
+    console.log(formData);
   };
 
   return (
@@ -133,7 +133,7 @@ const AdminAddQuizForm = () => {
             )}
           ></Controller>
         </section>
-        {/* <button type="submit">Submit</button> */}
+        <button type="submit">Submit</button>
       </form>
     </FormProvider>
   );

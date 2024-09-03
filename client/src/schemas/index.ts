@@ -25,7 +25,7 @@ export const createQuizSchema = z
           })
       ),
     tags: z.string().array().optional(),
-    books: z.string().array().length(1).optional(),
+    books: z.string().array().optional(),
     questions: z.array(
       z.object({
         questionLabel: z
@@ -34,11 +34,21 @@ export const createQuizSchema = z
             message: "Question label must be at least 8 characters",
           }),
         questionAnswer: z.string().optional(),
-        answers: z.array(
-          z.string({
-            required_error: "Answer label is required",
-          })
-        ),
+        answers: z
+          .array(
+            z.string({
+              required_error: "Answer label is required",
+            })
+          )
+          .refine(
+            (array) => {
+              const uniqueSet = new Set(array);
+              return array.length === uniqueSet.size;
+            },
+            {
+              message: "No duplicate answers allowed",
+            }
+          ),
       })
     ),
   })
