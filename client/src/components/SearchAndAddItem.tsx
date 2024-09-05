@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "../styles/searchAndAddItem.module.css";
 import Search from "./Search";
 import { IoMdClose } from "react-icons/io";
@@ -43,79 +43,66 @@ const SearchAndAddItem = <T,>({
   }, [items, defaultValue, variant]);
 
   // Fuse.js instance for search functionality
-  const fuse = new Fuse(items, {
-    threshold: 0.1,
-  });
+  const fuse = useMemo(() => new Fuse(items, { threshold: 0.1 }), [items]);
 
-  // Handle item click to add/remove items
-  const handleItemClick = (item: T) => {
-    if (activeItems.includes(item)) {
-      // Remove item from active items
-      const newActiveItems = activeItems.filter((i) => i !== item);
-      setActiveItems(newActiveItems);
-      onChange?.(newActiveItems);
-      setResults([...results, item]); // Add back to results
-    } else {
-      if (variant === "single") {
-        setActiveItems([item]);
-        onChange?.([item]);
-        setResults(items.filter((i) => i !== item)); // Update results
-        return;
+  const handleItemClick = useCallback(
+    (item: T) => {
+      if (activeItems.includes(item)) {
+        const newActiveItems = activeItems.filter((i) => i !== item);
+        setActiveItems(newActiveItems);
+        onChange?.(newActiveItems);
+      } else {
+        if (variant === "single") {
+          setActiveItems([item]);
+          onChange?.([item]);
+        } else {
+          const newActiveItems = [...activeItems, item];
+          setActiveItems(newActiveItems);
+          onChange?.(newActiveItems);
+        }
       }
-      // Add item to active items
-      const newActiveItems = [...activeItems, item];
-      setActiveItems(newActiveItems);
-      onChange?.(newActiveItems);
-      setResults(results.filter((i) => i !== item)); // Remove from results
-    }
-  };
+    },
+    [activeItems, onChange, variant]
+  );
 
-  // Handle when Enter is pressed
-  const handleEnter = () => {
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      if (value.trim() !== "") {
+        const result = fuse.search(value);
+        setResults(result.map((r) => r.item));
+      } else {
+        setResults(items.filter((item) => !activeItems.includes(item)));
+      }
+    },
+    [fuse, activeItems, items]
+  );
+
+  const handleEnter = useCallback(() => {
     if (results.length === 0) return;
-
     const isDuplicate = activeItems.includes(results[0]);
     if (isDuplicate) return;
 
     if (variant === "single") {
       setActiveItems([results[0]]);
       onChange?.([results[0]]);
-      setResults(items.filter((i) => i !== results[0])); // Reset results
-      return;
+    } else {
+      const newActiveItems = [...activeItems, results[0]];
+      setActiveItems(newActiveItems);
+      onChange?.(newActiveItems);
     }
+  }, [results, activeItems, variant, onChange]);
 
-    const newActiveItems = [...activeItems, results[0]];
-    setActiveItems(newActiveItems);
-    onChange?.(newActiveItems);
-    setResults(results.filter((i) => i !== results[0])); // Remove from results
-  };
+  const handleClearAll = useCallback(() => {
+    setActiveItems([]);
+    onChange?.([]);
+  }, [onChange]);
 
-  // Scroll to the end of the list when results or active items change
   useEffect(() => {
     if (results.length > 0) {
       endRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [results, activeItems]);
-
-  // Handle search input changes
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (value.trim() !== "") {
-      const result = fuse.search(value);
-      setResults(
-        result.map((r) => r.item).filter((item) => !activeItems.includes(item))
-      );
-    } else {
-      setResults(items.filter((item) => !activeItems.includes(item))); // Filter out active items
-    }
-  };
-
-  // Clear all active items
-  const handleClearAll = () => {
-    setActiveItems([]);
-    onChange?.([]);
-    setResults(items); // Reset results when clearing all
-  };
 
   return (
     <div className={styles.wrapper}>

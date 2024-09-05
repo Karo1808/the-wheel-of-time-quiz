@@ -1,3 +1,4 @@
+import React, { FormEventHandler, useMemo, useCallback } from "react";
 import Input from "../Input";
 import styles from "../../styles/adminAddQuizForm.module.css";
 import SearchAndAddItem from "../SearchAndAddItem";
@@ -9,14 +10,19 @@ import useCreateQuizStore from "../../hooks/useCreateQuizStore";
 import { Controller, useFormContext } from "react-hook-form";
 import { CreateQuizSchema } from "../../schemas";
 import AdminAddQuizQuestions from "./AdminAddQuizQuestions";
-import { FormEventHandler } from "react";
+import useQuizQuery from "../../hooks/queries/useQuizQuery";
 import { createQuizState } from "../../types";
 
 interface AdminAddQuizFormProps extends React.ComponentPropsWithoutRef<"form"> {
   onSubmit: FormEventHandler<HTMLFormElement>;
+  variant: "edit" | "add";
 }
 
-const AdminAddQuizForm = ({ onSubmit, ...props }: AdminAddQuizFormProps) => {
+const AdminQuizForm = ({
+  onSubmit,
+  variant,
+  ...props
+}: AdminAddQuizFormProps) => {
   const { tags } = useTagsQuery();
   const {
     setQuizName,
@@ -34,32 +40,69 @@ const AdminAddQuizForm = ({ onSubmit, ...props }: AdminAddQuizFormProps) => {
     useShallow((state) => state.questions)
   );
 
-  const handleInputQuizName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuizName(e.target.value);
-  };
+  const { quiz: defaultValues } = useQuizQuery();
 
-  const handleInputQuizDescription = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setQuizDescription(e.target.value);
-  };
+  const defaultQueryTags = useMemo(
+    () => defaultValues?.tags?.map((tag) => tag.tagName),
+    [defaultValues?.tags]
+  );
 
-  const handleInputMaximumTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMaximumTime(Number(e.target.value));
-  };
+  const defaultQueryBook = useMemo(
+    () => defaultValues?.books?.[0],
+    [defaultValues?.books]
+  );
 
-  const handleSelectTags = (tags: (string | number)[]) => {
-    setTags(tags as string[]);
-  };
+  const defaultQueryQuestions = useMemo(
+    () =>
+      defaultValues?.questions?.map((question) => ({
+        questionLabel: question.questionLabel,
+        answers: question.answers.map((answer) => answer.answerLabel),
+        questionAnswer: question.questionAnswer,
+      })),
+    [defaultValues?.questions]
+  );
 
-  const handleSelectBooks = (book: string) => {
-    setBook(book);
-  };
+  const handleInputQuizName = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setQuizName(e.target.value);
+    },
+    [setQuizName]
+  );
 
-  const handleSelectQuestions = (questions: createQuizState["questions"]) => {
-    console.log(questions);
-    setQuestions(questions);
-  };
+  const handleInputQuizDescription = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setQuizDescription(e.target.value);
+    },
+    [setQuizDescription]
+  );
+
+  const handleInputMaximumTime = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setMaximumTime(Number(e.target.value));
+    },
+    [setMaximumTime]
+  );
+
+  const handleSelectTags = useCallback(
+    (tags: (string | number)[]) => {
+      setTags(tags as string[]);
+    },
+    [setTags]
+  );
+
+  const handleSelectBooks = useCallback(
+    (book: string) => {
+      setBook(book);
+    },
+    [setBook]
+  );
+
+  const handleSelectQuestions = useCallback(
+    (questions: createQuizState["questions"]) => {
+      setQuestions(questions);
+    },
+    [setQuestions]
+  );
 
   return (
     <form className={styles.form} onSubmit={onSubmit} {...props}>
@@ -69,7 +112,7 @@ const AdminAddQuizForm = ({ onSubmit, ...props }: AdminAddQuizFormProps) => {
           name="quizName"
           width="100%"
           register={register}
-          onChange={handleInputQuizName}
+          onChange={variant === "add" ? handleInputQuizName : undefined}
           type="text"
           errors={formState.errors.quizName}
           required
@@ -78,7 +121,7 @@ const AdminAddQuizForm = ({ onSubmit, ...props }: AdminAddQuizFormProps) => {
           rows={6}
           label="Description"
           width="100%"
-          onChange={handleInputQuizDescription}
+          onChange={variant === "add" ? handleInputQuizDescription : undefined}
           name="quizDescription"
           register={register}
         />
@@ -87,7 +130,7 @@ const AdminAddQuizForm = ({ onSubmit, ...props }: AdminAddQuizFormProps) => {
           label="Maximum Time (seconds)"
           name="maximumTime"
           width="100%"
-          onChange={handleInputMaximumTime}
+          onChange={variant === "add" ? handleInputMaximumTime : undefined}
           register={register}
           errors={formState.errors.maximumTime}
           required
@@ -99,12 +142,14 @@ const AdminAddQuizForm = ({ onSubmit, ...props }: AdminAddQuizFormProps) => {
           render={({ field: { onChange } }) => (
             <SearchAndAddItem<string>
               variant="many"
-              defaultValue={defaultTags}
+              defaultValue={
+                variant === "add" ? defaultTags || [] : defaultQueryTags || []
+              }
               items={tags.map((tag) => tag.tagName)}
               label="Tags"
               onChange={(tags) => {
-                handleSelectTags(tags);
-                onChange(tags);
+                variant === "add" ? handleSelectTags(tags) : undefined;
+                onChange(tags as string[]);
               }}
             />
           )}
@@ -115,12 +160,14 @@ const AdminAddQuizForm = ({ onSubmit, ...props }: AdminAddQuizFormProps) => {
           defaultValue={["All"]}
           render={({ field: { onChange } }) => (
             <SearchAndAddItem<string>
-              defaultValue={defaultBook}
+              defaultValue={
+                variant === "add" ? defaultBook : defaultQueryBook || ""
+              }
               variant="single"
               items={booksList.map((book) => book.title)}
               label="Book"
               onChange={(book) => {
-                handleSelectBooks(book[0]);
+                variant === "add" ? handleSelectBooks(book[0]) : undefined;
                 onChange(book);
               }}
             />
@@ -135,12 +182,16 @@ const AdminAddQuizForm = ({ onSubmit, ...props }: AdminAddQuizFormProps) => {
           render={({ field: { onChange } }) => (
             <AdminAddQuizQuestions
               onChange={(questions) => {
-                handleSelectQuestions(
-                  questions as createQuizState["questions"]
-                );
+                variant === "add"
+                  ? handleSelectQuestions(
+                      questions as createQuizState["questions"]
+                    )
+                  : undefined;
                 onChange(questions);
               }}
-              questions={defaultQuestions}
+              questions={
+                variant === "add" ? defaultQuestions : defaultQueryQuestions
+              }
             />
           )}
         ></Controller>
@@ -149,4 +200,4 @@ const AdminAddQuizForm = ({ onSubmit, ...props }: AdminAddQuizFormProps) => {
   );
 };
 
-export default AdminAddQuizForm;
+export default AdminQuizForm;

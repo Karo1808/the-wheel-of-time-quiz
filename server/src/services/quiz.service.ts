@@ -147,6 +147,36 @@ export async function getQuizzes({
   }
 }
 
+export async function getQuiz({
+  quizId,
+}: {
+  quizId: string;
+}): Promise<QuizDocument> {
+  try {
+    const result = await QuizModel.findOne(
+      { _id: quizId },
+      {
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0,
+        "questions.answers._id": 0,
+      }
+    )
+      .populate({
+        path: "tags",
+        select: "tagName",
+      })
+      .exec();
+
+    if (!result) return;
+
+    return result;
+  } catch (error: any) {
+    log.error(`Error fetching quiz: ${error.message}`);
+    throw new Error("Error fetching quiz");
+  }
+}
+
 interface DeleteQuizResponse {
   quizId: string;
   quizName: string;

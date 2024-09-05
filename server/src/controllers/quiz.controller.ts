@@ -5,6 +5,7 @@ import {
   DeleteQuizSchema,
   GetQuestionsRandomSchema,
   GetQuestionsSchema,
+  GetQuizSchema,
   GetQuizzesSchema,
   VerifyAnswerSchema,
 } from "schemas/quiz.schema";
@@ -13,6 +14,7 @@ import {
   deleteQuiz,
   getQuestions,
   getQuestionsRandom,
+  getQuiz,
   getQuizzes,
   verifyAnswer,
 } from "../services/quiz.service";
@@ -49,6 +51,18 @@ export async function getQuizzesHandler(
 
   if (!result) {
     return res.status(404).send("Quizzes not found");
+  }
+  return res.status(200).send(result);
+}
+
+export async function getQuizHandler(
+  req: Request<GetQuizSchema["params"]>,
+  res: Response
+) {
+  const result = await getQuiz({ quizId: req.params.quizId });
+
+  if (!result) {
+    return res.status(404).send("Quiz not found");
   }
   return res.status(200).send(result);
 }

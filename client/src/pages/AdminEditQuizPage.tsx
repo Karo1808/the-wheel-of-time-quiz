@@ -5,22 +5,24 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { createQuizSchema, CreateQuizSchema } from "../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useCreateQuizMutation from "../hooks/queries/useCreateQuizMutation";
-import useCreateQuizStore from "../hooks/useCreateQuizStore";
-import { useShallow } from "zustand/react/shallow";
+import useQuizQuery from "../hooks/queries/useQuizQuery";
 import AdminQuizForm from "../components/admin/AdminAddQuizForm";
 
 const AdminAddQuizPage = () => {
-  const defaultValues = useCreateQuizStore(useShallow((state) => state));
+  // Change to endpoint
+  const { quiz: defaultValues } = useQuizQuery();
   const methods = useForm<CreateQuizSchema>({
     resolver: zodResolver(createQuizSchema),
     defaultValues: {
       quizName: defaultValues.quizName,
       quizDescription: defaultValues.quizDescription,
       maximumTime: defaultValues.maximumTime,
-      tags: defaultValues.tags,
-      book: defaultValues.book,
+      tags: defaultValues.tags?.map((tag) => tag.tagName),
+      book: defaultValues.books?.[0],
     },
   });
+
+  //   change mutation
   const { addQuiz } = useCreateQuizMutation();
 
   const { handleSubmit } = methods;
@@ -46,7 +48,7 @@ const AdminAddQuizPage = () => {
           reset={methods.reset}
         />
         <main className={styles.main}>
-          <AdminQuizForm onSubmit={handleSubmit(onSubmit)} variant="add" />
+          <AdminQuizForm onSubmit={handleSubmit(onSubmit)} variant="edit" />
         </main>
       </div>
     </FormProvider>

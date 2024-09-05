@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import { getQuestions } from "../../api/getQuestions";
+import { getQuiz } from "../../api/getQuiz";
 
-const useQuestionsQuery = () => {
+const useQuizQuery = () => {
   const { quizId } = useParams<{ quizId?: string }>();
 
   const {
@@ -10,11 +10,11 @@ const useQuestionsQuery = () => {
     refetch,
     error,
   } = useSuspenseQuery({
-    queryKey: ["question", quizId],
-    queryFn: () => getQuestions({ quizId: quizId! }),
+    queryKey: ["quiz", quizId],
+    queryFn: () => getQuiz({ quizId: quizId! }),
   });
 
   return { quiz, error, refetch };
 };
 
-export default useQuestionsQuery;
+export default useQuizQuery;

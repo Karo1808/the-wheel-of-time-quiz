@@ -34,7 +34,7 @@ const useVerifyAnswerQuery = () => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["quiz", quizId, currentQuestionId, answer],
+    queryKey: ["question", quizId, currentQuestionId, answer],
     queryFn: () =>
       verifyAnswer({
         quizId: quizId!,

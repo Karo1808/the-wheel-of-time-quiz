@@ -61,6 +61,17 @@ const getQuizzesQueryParams = {
     .optional(),
 };
 
+const getQuizParams = {
+  params: z.object({
+    quizId: z.string({ required_error: "Quiz id is required" }).refine(
+      (val) => {
+        return mongoose.Types.ObjectId.isValid(val);
+      },
+      { message: "Quiz id is not a valid id" }
+    ),
+  }),
+};
+
 const getQuestionsParams = {
   params: z.object({
     quizId: z.string({ required_error: "Quiz id is required" }).refine(
@@ -123,6 +134,10 @@ export const getQuizzesSchema = z.object({
   ...getQuizzesQueryParams,
 });
 
+export const getQuizSchema = z.object({
+  ...getQuizParams,
+});
+
 export const getQuestionsSchema = z.object({
   ...getQuestionsParams,
 });
@@ -140,6 +155,8 @@ export const verifyAnswerSchema = z.object({
 });
 
 export type CreateQuizSchema = z.TypeOf<typeof createQuizSchema>;
+
+export type GetQuizSchema = z.TypeOf<typeof getQuizSchema>;
 
 export type GetQuestionsSchema = z.TypeOf<typeof getQuestionsSchema>;
 

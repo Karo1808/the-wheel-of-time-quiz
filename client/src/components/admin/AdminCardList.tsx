@@ -27,7 +27,7 @@ const AdminCardList = () => {
 
   useEffect(() => {
     navigate(`/admin/overview/${quizzes[activeIndex]._id}${location.search}`);
-  }, [activeIndex, navigate, quizzes]);
+  }, [activeIndex, navigate, quizzes, location.search]);
 
   return (
     <div className={styles.wrapper}>

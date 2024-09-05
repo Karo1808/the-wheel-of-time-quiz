@@ -3,6 +3,7 @@ import {
   deleteQuizHandler,
   getQuestionsHandler,
   getQuestionsRandomHandler,
+  getQuizHandler,
   getQuizzesHandler,
   verifyAnswerHandler,
 } from "./controllers/quiz.controller";
@@ -12,6 +13,7 @@ import {
   deleteQuizSchema,
   getQuestionsRandomSchema,
   getQuestionsSchema,
+  getQuizSchema,
   getQuizzesSchema,
   verifyAnswerSchema,
 } from "./schemas/quiz.schema";
@@ -34,6 +36,8 @@ function routes(app: Express) {
   // ! Quizzes
   app.get("/api/quizzes", validateRequest(getQuizzesSchema), getQuizzesHandler);
 
+  app.get("/api/quiz/:quizId", validateRequest(getQuizSchema), getQuizHandler);
+
   app.post("/api/quiz", validateRequest(createQuizSchema), createQuizHandler);
 
   app.delete(
@@ -42,20 +46,22 @@ function routes(app: Express) {
     deleteQuizHandler
   );
 
+  // ! Questions
+
   app.get(
-    "/api/quiz/:quizId",
+    "/api/questions/:quizId",
     validateRequest(getQuestionsSchema),
     getQuestionsHandler
   );
 
   app.get(
-    "/api/quiz/:quizId/random/:seed?",
+    "/api/questions/:quizId/random/:seed?",
     validateRequest(getQuestionsRandomSchema),
     getQuestionsRandomHandler
   );
 
   app.get(
-    "/api/quiz/:quizId/:questionId/:answer/verify",
+    "/api/questions/:quizId/:questionId/:answer/verify",
     validateRequest(verifyAnswerSchema),
     verifyAnswerHandler
   );

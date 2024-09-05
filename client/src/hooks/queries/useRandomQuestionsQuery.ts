@@ -19,7 +19,7 @@ const useRandomQuestionsQuery = () => {
     refetch,
     error,
   } = useSuspenseQuery({
-    queryKey: ["quiz", quizId, randomSeed],
+    queryKey: ["question", quizId, randomSeed],
     queryFn: () =>
       getRandomQuestions({ quizId: quizId!, seed: randomSeed?.toString() }),
   });
