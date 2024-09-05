@@ -12,11 +12,15 @@ import { CreateQuizSchema, QuestionsSchema } from "../../schemas";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import Input from "../Input";
 import { IoMdCheckmarkCircle } from "react-icons/io";
+import FormError from "../FormError";
+import { createQuizQuestion } from "../../types";
 
 interface AdminAddQuizQuestionsProps {
   questions: QuestionsSchema["questions"];
   onChange?: (questions: QuestionsSchema["questions"]) => void;
 }
+
+const GRAY_COLOR = "#867d77";
 
 const AdminAddQuizQuestions = ({
   questions,
@@ -32,11 +36,15 @@ const AdminAddQuizQuestions = ({
   const watchQuestions = watch("questions");
 
   const ref = useRef<HTMLDialogElement>(null);
-  const endRef = useRef<HTMLDivElement>(null);
+  const questionRefs = useRef<HTMLDivElement[] | null[]>([]);
 
   const { isOverlayOpen, toggleDialog } = useDialogControls({ ref });
   const { openedIndex, setOpenedIndex, accordionRefs } =
     useAccordionControls(0);
+
+  useEffect(() => {
+    setValue("questions", questions);
+  }, [questions, setValue]);
 
   const handleAddQuestion = async () => {
     const index = fields.length - 1;
@@ -50,26 +58,46 @@ const AdminAddQuizQuestions = ({
         setError("questions", { type: "nonexisting" }, { shouldFocus: true });
       }
 
-      if (formState.errors.questions) {
-        console.log(formState.errors.questions[0]?.answers);
+      const errors = formState?.errors?.questions;
+      const errorIndex = errors?.findIndex?.((error) => error);
+      setOpenedIndex(errorIndex);
+      const errorRef = questionRefs.current[errorIndex || 0];
+
+      if (errorRef) {
+        errorRef.scrollIntoView({ behavior: "smooth" });
+      }
+
+      const errorsExcludingMissingQuestions =
+        formState?.errors?.questions?.filter?.(
+          (error) => error?.message !== "At least three questions are required"
+        );
+
+      if (errorsExcludingMissingQuestions) {
         onChange?.(watchQuestions);
         return;
       }
     }
 
-    append({
+    const newQuestion: createQuizQuestion = {
       questionLabel: "",
       answers: ["", "", "", ""],
       questionAnswer: "Answer",
-    });
+    };
 
-    setOpenedIndex(fields.length);
-    onChange?.(watchQuestions);
+    append(newQuestion);
+
+    const newWatchQuestions = [...watchQuestions, newQuestion];
+    setValue("questions", newWatchQuestions);
+    onChange?.(newWatchQuestions);
+    setOpenedIndex(newWatchQuestions.length - 1);
   };
 
   const handleDeleteQuestion = (index: number) => {
     remove(index);
     toggleDialog();
+    const newWatchQuestions = watchQuestions.filter((_, i) => i !== index);
+    setValue("questions", newWatchQuestions);
+    onChange?.(newWatchQuestions);
   };
 
   const handleSelectAnswer = ({
@@ -94,16 +122,18 @@ const AdminAddQuizQuestions = ({
   useEffect(() => {
     if (fields.length === 0) return;
     setTimeout(() => {
-      if (endRef.current) {
-        endRef.current.scrollIntoView({ behavior: "smooth" });
+      const errors = formState?.errors?.questions;
+      const endRef = questionRefs.current[fields.length - 1];
+      if (endRef && !errors) {
+        endRef.scrollIntoView({ behavior: "smooth" });
       }
     }, 400);
-  }, [fields]);
+  }, [fields, questionRefs, formState]);
 
   return (
     <div className={styles.wrapper}>
       {fields.map((field, i) => (
-        <div key={field.id}>
+        <div key={field.id} ref={(el) => (questionRefs.current[i] = el)}>
           <Dialog
             toggleDialog={toggleDialog}
             ref={ref}
@@ -112,11 +142,19 @@ const AdminAddQuizQuestions = ({
             <AdminDeleteConfirm
               onCancel={toggleDialog}
               onDelete={() => handleDeleteQuestion(i)}
+              Icon={<FaTrashCan size={50} color={GRAY_COLOR} />}
+              title="Are you sure you want to delete this question?"
+              description="This action cannot be undone"
+              action="Delete"
             />
           </Dialog>
           <Accordion
             Icon={
-              <button className={styles.cta_button} onClick={toggleDialog}>
+              <button
+                className={styles.cta_button}
+                onClick={toggleDialog}
+                type="button"
+              >
                 <FaTrashCan className={styles.accordion_icon} />
               </button>
             }
@@ -182,21 +220,19 @@ const AdminAddQuizQuestions = ({
                 )}
               />
             ))}
-            <span className={styles.error}>
-              {formState.errors.questions &&
-                formState.errors.questions.type === "nonexisting" && (
-                  <div>Question answer is required</div>
-                )}
+            {formState.errors.questions &&
+              formState.errors.questions.type === "nonexisting" && (
+                <FormError errorMessage="Question answer is required" />
+              )}
 
-              {formState.errors.questions &&
-                formState.errors.questions[0]?.answers && (
-                  <div>No duplicate answers allowed</div>
-                )}
-            </span>
+            {formState.errors.questions &&
+              formState.errors.questions[0]?.answers && (
+                <FormError errorMessage="No duplicate answers allowed" />
+              )}
           </Accordion>
         </div>
       ))}
-      <div ref={endRef} className={styles.add_question}>
+      <div className={styles.add_question}>
         <button
           onClick={handleAddQuestion}
           className={styles.add_button}
@@ -206,6 +242,13 @@ const AdminAddQuizQuestions = ({
           <AiOutlinePlus className={styles.plus_icon} />
         </button>
       </div>
+      {formState?.errors?.questions?.message ===
+        "At least three questions are required" && (
+        <FormError
+          errorMessage="At least three questions are required"
+          style={{ margin: "0 auto" }}
+        />
+      )}
     </div>
   );
 };

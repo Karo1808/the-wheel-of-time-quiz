@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "../styles/textArea.module.css";
 import {
   FieldErrors,
@@ -6,12 +5,14 @@ import {
   Path,
   UseFormRegister,
 } from "react-hook-form";
+import FormError from "./FormError";
 
 interface Props<T extends FieldValues>
   extends React.ComponentPropsWithoutRef<"textarea"> {
   name: Path<T>;
   label: string;
   width?: string;
+  required?: boolean;
   register?: UseFormRegister<T>;
   errors?: FieldErrors[keyof FieldValues];
 }
@@ -20,14 +21,12 @@ const TextArea = <T extends FieldValues>({
   label,
   width,
   register,
+  required,
   name,
   errors,
   ...props
 }: Props<T>) => {
-  const [value, setValue] = useState<string>("");
-
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value);
     props.onChange?.(e);
   };
 
@@ -42,12 +41,10 @@ const TextArea = <T extends FieldValues>({
         style={{ width: width }}
         className={styles.area}
         {...props}
-        value={value}
-        {...(register &&
-          register(name, { required: true, onChange: handleChange }))}
+        {...(register && register(name, { required, onChange: handleChange }))}
         onChange={handleChange}
       />
-      {errors && <p className={styles.error}>{errorMessage}</p>}
+      <FormError errorMessage={errorMessage} />
     </div>
   );
 };

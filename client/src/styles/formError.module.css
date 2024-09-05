@@ -1,0 +1,9 @@
+.error {
+  color: var(--red-color);
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-weight: bold;
+}

@@ -19,7 +19,6 @@ export async function createBookHandler(req: Request, res: Response) {
 
 export async function deleteBookHandler(req: Request, res: Response) {
   const result = await deleteBook(req.params.BookName);
-  console.log(result);
   if (!result) {
     return res.status(404).send("Book not found");
   }

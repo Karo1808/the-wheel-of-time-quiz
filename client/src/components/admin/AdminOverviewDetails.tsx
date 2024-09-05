@@ -12,39 +12,41 @@ const AdminOverviewDetails = () => {
     useAccordionControls(0);
 
   return (
-    <div className={styles.container}>
-      {quiz.questions.map((question, index) => (
-        <Accordion
-          setOpenedIndex={setOpenedIndex}
-          Icon={<AiFillQuestionCircle className={styles.icon} />}
-          openedIndex={openedIndex}
-          key={index}
-          ref={(element: HTMLDivElement) =>
-            (accordionRefs.current[index] = element)
-          }
-          index={index}
-          topContent={
-            <>
-              <p className={accordionStyles.question_number}>
-                Question {index + 1}
-              </p>
-              <p className={accordionStyles.question}>
-                {question.questionLabel}
-              </p>
-            </>
-          }
-        >
-          <SummaryAccordion
-            correctAnswer={question.questionAnswer}
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
+        {quiz.questions.map((question, index) => (
+          <Accordion
+            setOpenedIndex={setOpenedIndex}
+            Icon={<AiFillQuestionCircle className={styles.icon} />}
+            openedIndex={openedIndex}
             key={index}
+            ref={(element: HTMLDivElement) =>
+              (accordionRefs.current[index] = element)
+            }
             index={index}
-            answers={question.answers
-              .filter((answer) => answer.answerLabel)
-              .map((answer) => answer.answerLabel)}
-          />
-        </Accordion>
-      ))}
-      ;
+            topContent={
+              <>
+                <p className={accordionStyles.question_number}>
+                  Question {index + 1}
+                </p>
+                <p className={accordionStyles.question}>
+                  {question.questionLabel}
+                </p>
+              </>
+            }
+          >
+            <SummaryAccordion
+              correctAnswer={question.questionAnswer}
+              key={index}
+              index={index}
+              answers={question.answers
+                .filter((answer) => answer.answerLabel)
+                .map((answer) => answer.answerLabel)}
+            />
+          </Accordion>
+        ))}
+        ;
+      </div>
     </div>
   );
 };

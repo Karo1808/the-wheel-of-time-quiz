@@ -42,9 +42,3 @@
     background-color: transparent;
   }
 }
-
-.error {
-  color: var(--red-color);
-  font-size: 1.4rem;
-  margin-top: 0.5rem;
-}

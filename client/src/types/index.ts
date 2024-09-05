@@ -54,23 +54,15 @@ export interface createQuizState {
   quizName: string;
   quizDescription: string;
   tags: string[];
-  books: string[];
+  book: string;
   maximumTime: number;
-  questions: {
-    questionLabel: string;
-    questionAnswer: string;
-    answers: {
-      answerLabel: string;
-    }[];
-  }[];
+  questions: createQuizQuestion[];
 }
 
 export interface createQuizQuestion {
   questionLabel: string;
   questionAnswer: string;
-  answers: {
-    answerLabel: string;
-  }[];
+  answers: string[];
 }
 
 export interface createQuizActions {
@@ -78,6 +70,7 @@ export interface createQuizActions {
   setQuizDescription: (description: string) => void;
   setMaximumTime: (maximumTime: number) => void;
   setTags: (tags: string[]) => void;
-  setBooks: (books: string[]) => void;
+  setBook: (book: string) => void;
   setQuestions: (questions: createQuizQuestion[]) => void;
+  resetStore: () => void;
 }

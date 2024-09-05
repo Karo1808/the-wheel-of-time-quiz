@@ -39,7 +39,7 @@ export async function createQuiz(
     const tagIds = tagDocuments.map((tag) => tag._id);
 
     const processedQuestions = Array.from(
-      { length: quiz.numberOfQuestions },
+      { length: quiz.questions.length },
       (_, i) => {
         const questionTemplate = quiz.questions[i];
         return {
@@ -60,6 +60,7 @@ export async function createQuiz(
           ...quiz,
           tags: tagIds,
           questions: processedQuestions,
+          numberOfQuestions: processedQuestions.length,
         },
       ],
       { session }

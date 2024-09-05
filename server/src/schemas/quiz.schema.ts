@@ -11,12 +11,6 @@ const createQuizPayload = {
       quizDescription: z.string().optional(),
       tags: z.string().optional().array(),
       book: z.string().optional(),
-      numberOfQuestions: z
-        .number({
-          invalid_type_error: "Number of questions must be a number",
-        })
-        .positive({ message: "Number of questions must be positive" }),
-
       maximumTime: z
         .number({
           required_error: "Maximum time is required",

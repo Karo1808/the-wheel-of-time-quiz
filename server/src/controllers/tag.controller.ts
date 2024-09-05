@@ -19,7 +19,6 @@ export async function createTagHandler(req: Request, res: Response) {
 
 export async function deleteTagHandler(req: Request, res: Response) {
   const result = await deleteTag(req.params.tagName);
-  console.log(result);
   if (!result) {
     return res.status(404).send("Tag not found");
   }

@@ -1,12 +1,18 @@
+.wrapper {
+  width: 80%;
+  height: 100%;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   background-color: var(--primary-color);
   padding: 1rem 1rem;
-  width: 80%;
+  width: 100%;
   overflow-y: auto;
-  height: 80vh;
 }
 
 .icon {

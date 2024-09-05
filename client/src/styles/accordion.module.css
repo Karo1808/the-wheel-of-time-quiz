@@ -70,7 +70,7 @@
   color: var(--fg-color);
   overflow: hidden;
   grid-column: 2;
-  height: fit-content;
+  min-height: fit-content;
   overflow-y: auto;
 
   @media screen and (min-width: 768px) {

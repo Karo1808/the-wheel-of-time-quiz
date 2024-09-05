@@ -1,22 +1,28 @@
 import styles from "../../styles/adminDeleteConfirm.module.css";
-import { FaTrashCan } from "react-icons/fa6";
 import Button from "../Button";
-
-const GRAY_COLOR = "#867d77";
 
 interface Props {
   onCancel: () => void;
   onDelete: () => void;
+  title: string;
+  Icon: React.ReactNode;
+  description: string;
+  action: string;
 }
 
-const AdminDeleteConfirm = ({ onCancel, onDelete }: Props) => {
+const AdminDeleteConfirm = ({
+  onCancel,
+  onDelete,
+  Icon,
+  title,
+  description,
+  action,
+}: Props) => {
   return (
     <div className={styles.container}>
-      <FaTrashCan size={50} color={GRAY_COLOR} />
-      <h1 className={styles.title}>
-        Are you sure you want to delete this quiz?
-      </h1>
-      <p className={styles.description}>This action cannot be undone</p>
+      {Icon}
+      <h1 className={styles.title}>{title}</h1>
+      <p className={styles.description}>{description}</p>
       <div className={styles.cta}>
         <Button className={styles.cta_button} state="none" onClick={onCancel}>
           Cancel
@@ -27,7 +33,7 @@ const AdminDeleteConfirm = ({ onCancel, onDelete }: Props) => {
           disabled={false}
           onClick={onDelete}
         >
-          Delete
+          {action}
         </Button>
       </div>
     </div>

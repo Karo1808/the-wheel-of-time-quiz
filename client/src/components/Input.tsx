@@ -5,6 +5,7 @@ import {
   UseFormRegister,
 } from "react-hook-form";
 import styles from "../styles/input.module.css";
+import FormError from "./FormError";
 
 interface Props<T extends FieldValues>
   extends React.ComponentPropsWithoutRef<"input"> {
@@ -41,6 +42,7 @@ const Input = <T extends FieldValues>({
       <div className={styles.input_wrapper}>
         <input
           className={styles.input}
+          defaultValue={props.defaultValue?.toString()}
           {...props}
           style={{ width: width }}
           {...(register &&
@@ -49,7 +51,7 @@ const Input = <T extends FieldValues>({
         />
         {cta}
       </div>
-      {errors && <p className={styles.error}>{errorMessage}</p>}
+      <FormError errorMessage={errorMessage} />
     </div>
   );
 };

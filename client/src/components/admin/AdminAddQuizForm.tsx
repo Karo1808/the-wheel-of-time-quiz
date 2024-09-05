@@ -6,28 +6,33 @@ import { booksList } from "../../config";
 import TextArea from "../TextArea";
 import { useShallow } from "zustand/react/shallow";
 import useCreateQuizStore from "../../hooks/useCreateQuizStore";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Controller,
-  FormProvider,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
-import { CreateQuizSchema, createQuizSchema } from "../../schemas";
+import { Controller, useFormContext } from "react-hook-form";
+import { CreateQuizSchema } from "../../schemas";
 import AdminAddQuizQuestions from "./AdminAddQuizQuestions";
+import { FormEventHandler } from "react";
+import { createQuizState } from "../../types";
 
-const AdminAddQuizForm = () => {
+interface AdminAddQuizFormProps extends React.ComponentPropsWithoutRef<"form"> {
+  onSubmit: FormEventHandler<HTMLFormElement>;
+}
+
+const AdminAddQuizForm = ({ onSubmit, ...props }: AdminAddQuizFormProps) => {
   const { tags } = useTagsQuery();
-  const { setQuizName, setQuizDescription, setMaximumTime, setTags, setBooks } =
-    useCreateQuizStore(useShallow((state) => state));
-  const { tags: storeTags, books } = useCreateQuizStore(
-    useShallow((state) => state)
-  );
+  const {
+    setQuizName,
+    setQuizDescription,
+    setMaximumTime,
+    setTags,
+    setBook,
+    setQuestions,
+  } = useCreateQuizStore(useShallow((state) => state));
 
-  const methods = useForm<CreateQuizSchema>({
-    resolver: zodResolver(createQuizSchema),
-  });
-  const { register, handleSubmit, watch, formState, control } = methods;
+  const { formState, control, register } = useFormContext<CreateQuizSchema>();
+  const defaultTags = useCreateQuizStore(useShallow((state) => state.tags));
+  const defaultBook = useCreateQuizStore(useShallow((state) => state.book));
+  const defaultQuestions = useCreateQuizStore(
+    useShallow((state) => state.questions)
+  );
 
   const handleInputQuizName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuizName(e.target.value);
@@ -47,95 +52,100 @@ const AdminAddQuizForm = () => {
     setTags(tags as string[]);
   };
 
-  const handleSelectBooks = (books: (string | JSX.Element)[]) => {
-    setBooks(books as string[]);
+  const handleSelectBooks = (book: string) => {
+    setBook(book);
   };
 
-  const onSubmit: SubmitHandler<CreateQuizSchema> = (data) => {
-    const formData = {
-      quizName: data.quizName,
-      quizDescription: data.quizDescription,
-      maximumTime: data.maximumTime,
-      tags: data.tags,
-      books: data.books,
-      questions: data.questions,
-    };
-
-    console.log(formData);
+  const handleSelectQuestions = (questions: createQuizState["questions"]) => {
+    console.log(questions);
+    setQuestions(questions);
   };
 
   return (
-    <FormProvider {...methods}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <section className={styles.left}>
-          <Input<CreateQuizSchema>
-            label="Quiz Name"
-            name="quizName"
-            width="100%"
-            register={register}
-            onChange={handleInputQuizName}
-            type="text"
-            errors={formState.errors.quizName}
-            required
-          />
-          <TextArea<CreateQuizSchema>
-            rows={6}
-            label="Description"
-            width="100%"
-            onChange={handleInputQuizDescription}
-            name="quizDescription"
-            register={register}
-          />
-          <Input<CreateQuizSchema>
-            type="number"
-            label="Maximum Time (seconds)"
-            name="maximumTime"
-            width="100%"
-            onChange={handleInputMaximumTime}
-            register={register}
-            errors={formState.errors.maximumTime}
-            required
-          />
-          <Controller
-            name="tags"
-            control={control}
-            defaultValue={[]}
-            render={({ field: { onChange } }) => (
-              <SearchAndAddItem
-                items={tags}
-                keyProp={"tagName"}
-                label="Tags"
-                onChange={onChange}
-              />
-            )}
-          />
-          <Controller
-            name="books"
-            control={control}
-            defaultValue={["All"]}
-            render={({ field: { onChange } }) => (
-              <SearchAndAddItem
-                items={booksList}
-                keyProp={"title"}
-                label="Books"
-                onChange={onChange}
-              />
-            )}
-          ></Controller>
-        </section>
-        <section>
-          <Controller
-            name="questions"
-            control={control}
-            defaultValue={[]}
-            render={({ field: { onChange } }) => (
-              <AdminAddQuizQuestions onChange={onChange} questions={[]} />
-            )}
-          ></Controller>
-        </section>
-        <button type="submit">Submit</button>
-      </form>
-    </FormProvider>
+    <form className={styles.form} onSubmit={onSubmit} {...props}>
+      <section className={styles.left}>
+        <Input<CreateQuizSchema>
+          label="Quiz Name"
+          name="quizName"
+          width="100%"
+          register={register}
+          onChange={handleInputQuizName}
+          type="text"
+          errors={formState.errors.quizName}
+          required
+        />
+        <TextArea<CreateQuizSchema>
+          rows={6}
+          label="Description"
+          width="100%"
+          onChange={handleInputQuizDescription}
+          name="quizDescription"
+          register={register}
+        />
+        <Input<CreateQuizSchema>
+          type="number"
+          label="Maximum Time (seconds)"
+          name="maximumTime"
+          width="100%"
+          onChange={handleInputMaximumTime}
+          register={register}
+          errors={formState.errors.maximumTime}
+          required
+        />
+        <Controller
+          name="tags"
+          control={control}
+          defaultValue={[]}
+          render={({ field: { onChange } }) => (
+            <SearchAndAddItem<string>
+              variant="many"
+              defaultValue={defaultTags}
+              items={tags.map((tag) => tag.tagName)}
+              label="Tags"
+              onChange={(tags) => {
+                handleSelectTags(tags);
+                onChange(tags);
+              }}
+            />
+          )}
+        />
+        <Controller
+          name="book"
+          control={control}
+          defaultValue={["All"]}
+          render={({ field: { onChange } }) => (
+            <SearchAndAddItem<string>
+              defaultValue={defaultBook}
+              variant="single"
+              items={booksList.map((book) => book.title)}
+              label="Book"
+              onChange={(book) => {
+                handleSelectBooks(book[0]);
+                onChange(book);
+              }}
+            />
+          )}
+        ></Controller>
+      </section>
+      <section>
+        <Controller
+          name="questions"
+          control={control}
+          defaultValue={[]}
+          render={({ field: { onChange } }) => (
+            <AdminAddQuizQuestions
+              onChange={(questions) => {
+                handleSelectQuestions(
+                  questions as createQuizState["questions"]
+                );
+                onChange(questions);
+              }}
+              questions={defaultQuestions}
+            />
+          )}
+        ></Controller>
+      </section>
+    </form>
   );
 };
 

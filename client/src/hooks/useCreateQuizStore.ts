@@ -35,15 +35,18 @@ const useCreateQuizStore = create<createQuizState & createQuizActions>()(
               state.tags = tags;
             });
           },
-          setBooks: (books: string[]) => {
+          setBook: (book: string) => {
             set((state) => {
-              state.books = books;
+              state.book = book;
             });
           },
           setQuestions: (questions: createQuizQuestion[]) => {
             set((state) => {
               state.questions = questions;
             });
+          },
+          resetStore: () => {
+            set(createQuzInitialState);
           },
         }),
         {

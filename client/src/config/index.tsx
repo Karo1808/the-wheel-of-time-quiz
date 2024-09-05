@@ -50,7 +50,7 @@ export const createQuzInitialState: createQuizState = {
   quizName: "",
   quizDescription: "",
   tags: [],
-  books: [],
+  book: "All",
   maximumTime: 0,
   questions: [],
 };

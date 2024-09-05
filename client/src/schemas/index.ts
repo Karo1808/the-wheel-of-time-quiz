@@ -25,32 +25,34 @@ export const createQuizSchema = z
           })
       ),
     tags: z.string().array().optional(),
-    books: z.string().array().optional(),
-    questions: z.array(
-      z.object({
-        questionLabel: z
-          .string({ required_error: "Question label is required" })
-          .min(8, {
-            message: "Question label must be at least 8 characters",
-          }),
-        questionAnswer: z.string().optional(),
-        answers: z
-          .array(
-            z.string({
-              required_error: "Answer label is required",
-            })
-          )
-          .refine(
-            (array) => {
-              const uniqueSet = new Set(array);
-              return array.length === uniqueSet.size;
-            },
-            {
-              message: "No duplicate answers allowed",
-            }
-          ),
-      })
-    ),
+    book: z.union([z.string(), z.array(z.string())]),
+    questions: z
+      .array(
+        z.object({
+          questionLabel: z
+            .string({ required_error: "Question label is required" })
+            .min(8, {
+              message: "Question label must be at least 8 characters",
+            }),
+          questionAnswer: z.string().optional(),
+          answers: z
+            .array(
+              z.string({
+                required_error: "Answer label is required",
+              })
+            )
+            .refine(
+              (array) => {
+                const uniqueSet = new Set(array);
+                return array.length === uniqueSet.size;
+              },
+              {
+                message: "No duplicate answers allowed",
+              }
+            ),
+        })
+      )
+      .min(3, { message: "At least three questions are required" }),
   })
   .strict();
 
