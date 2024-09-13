@@ -24,8 +24,10 @@
 - [x] - Add a dropdown component
 - [x] - add functionality to quizzes page
 - [x] - add an route to create a quiz (admin only)
-- [ ] - add local storage to create quiz
-- [ ] - connect form to api
+- [x] - add local storage to create quiz
+- [x] - connect form to api
+- [x] - add a route to edit a quiz (admin only)
+- [ ] - fix wrong type on maximum time in form
 - [ ] - make some quizzes, meaning questions and answers
 - [ ] - add filters
 - [ ] - add search
