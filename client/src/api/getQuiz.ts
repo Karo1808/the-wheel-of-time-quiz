@@ -7,7 +7,7 @@ const getQuizSchema = z.object({
     message: "Quiz name must be at least 8 characters",
   }),
   quizDescription: z.string().optional(),
-  books: z.string().array().optional(),
+  book: z.string().optional(),
   tags: z
     .array(
       z.object({

@@ -1,11 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createQuiz } from "../../api/createQuiz";
+import { updateQuiz } from "../../api/updateQuiz";
 import toast from "react-hot-toast";
+import { useParams } from "react-router";
 
-const useCreateQuizMutation = () => {
+const useEditQuizMutation = () => {
+  const { quizId } = useParams<{ quizId?: string }>();
+
   const client = useQueryClient();
-  const { mutate: addQuiz } = useMutation({
-    mutationFn: createQuiz,
+  const { mutate: editQuiz } = useMutation({
+    mutationFn: (editedQuiz) =>
+      updateQuiz({ quizId: quizId!, body: editedQuiz }),
     onMutate: () => {
       toast.loading("Updating quiz...");
     },
@@ -32,10 +36,13 @@ const useCreateQuizMutation = () => {
       client.invalidateQueries({
         queryKey: ["quizzes"],
       });
+      client.invalidateQueries({
+        queryKey: ["quiz", quizId],
+      });
     },
   });
 
-  return { addQuiz };
+  return { editQuiz };
 };
 
-export default useCreateQuizMutation;
+export default useEditQuizMutation;

@@ -7,6 +7,7 @@ import {
   GetQuestionsSchema,
   GetQuizSchema,
   GetQuizzesSchema,
+  UpdateQuizSchema,
   VerifyAnswerSchema,
 } from "schemas/quiz.schema";
 import {
@@ -16,8 +17,10 @@ import {
   getQuestionsRandom,
   getQuiz,
   getQuizzes,
+  updateQuiz,
   verifyAnswer,
 } from "../services/quiz.service";
+import QuizModel from "models/quiz.model";
 
 export async function createQuizHandler(
   req: Request<{}, {}, CreateQuizSchema["body"]>,
@@ -64,6 +67,22 @@ export async function getQuizHandler(
   if (!result) {
     return res.status(404).send("Quiz not found");
   }
+  return res.status(200).send(result);
+}
+
+export async function updateQuizHandler(
+  req: Request<UpdateQuizSchema["params"]>,
+  res: Response
+) {
+  const result = await updateQuiz({
+    quizId: req.params.quizId,
+    body: req.body,
+  });
+
+  if (!result) {
+    return res.status(404).send("Quiz not found");
+  }
+
   return res.status(200).send(result);
 }
 

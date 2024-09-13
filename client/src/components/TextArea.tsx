@@ -1,10 +1,5 @@
 import styles from "../styles/textArea.module.css";
-import {
-  FieldErrors,
-  FieldValues,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
+import { FieldErrors, FieldValues, Path } from "react-hook-form";
 import FormError from "./FormError";
 
 interface Props<T extends FieldValues>
@@ -12,16 +7,12 @@ interface Props<T extends FieldValues>
   name: Path<T>;
   label: string;
   width?: string;
-  required?: boolean;
-  register?: UseFormRegister<T>;
   errors?: FieldErrors[keyof FieldValues];
 }
 
 const TextArea = <T extends FieldValues>({
   label,
   width,
-  register,
-  required,
   name,
   errors,
   ...props
@@ -41,7 +32,6 @@ const TextArea = <T extends FieldValues>({
         style={{ width: width }}
         className={styles.area}
         {...props}
-        {...(register && register(name, { required, onChange: handleChange }))}
         onChange={handleChange}
       />
       <FormError errorMessage={errorMessage} />

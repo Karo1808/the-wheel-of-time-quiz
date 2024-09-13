@@ -40,6 +40,59 @@ const createQuizPayload = {
     .strict(),
 };
 
+const updateQuizPayload = {
+  body: z
+    .object({
+      quizName: z.string().optional(),
+      quizDescription: z.string().optional(),
+      tags: z
+        .array(
+          z.object({
+            tagName: z.string({
+              required_error: "Tag name is required",
+            }),
+            _id: z.string({
+              required_error: "Tag id is required",
+            }),
+          })
+        )
+        .optional(),
+      book: z.string().optional(),
+      maximumTime: z
+        .number({
+          required_error: "Maximum time is required",
+          invalid_type_error: "Maximum time must be a number",
+        })
+        .positive({ message: "Maximum time must be positive" })
+        .optional(),
+
+      questions: z
+        .array(
+          z.object({
+            questionNumber: z.number({
+              required_error: "Question number is required",
+            }),
+            questionLabel: z.string({
+              required_error: "Question label is required",
+            }),
+            questionAnswer: z.string({
+              required_error: "Question answer  is required",
+              invalid_type_error: "Question correct index must be a string",
+            }),
+            answers: z.array(
+              z.string({
+                required_error: "Answer label is required",
+              })
+            ),
+          })
+        )
+        .optional(),
+    })
+    .refine((data) => Object.keys(data).length === 0, {
+      message: "At least one field is required",
+    }),
+};
+
 const getQuizzesQueryParams = {
   query: z.object({
     page: z.coerce
@@ -62,6 +115,17 @@ const getQuizzesQueryParams = {
 };
 
 const getQuizParams = {
+  params: z.object({
+    quizId: z.string({ required_error: "Quiz id is required" }).refine(
+      (val) => {
+        return mongoose.Types.ObjectId.isValid(val);
+      },
+      { message: "Quiz id is not a valid id" }
+    ),
+  }),
+};
+
+const updateQuizParams = {
   params: z.object({
     quizId: z.string({ required_error: "Quiz id is required" }).refine(
       (val) => {
@@ -138,6 +202,10 @@ export const getQuizSchema = z.object({
   ...getQuizParams,
 });
 
+export const updateQuizSchema = z.object({
+  ...updateQuizParams,
+});
+
 export const getQuestionsSchema = z.object({
   ...getQuestionsParams,
 });
@@ -169,3 +237,5 @@ export type GetQuestionsRandomSchema = z.TypeOf<
 export type DeleteQuizSchema = z.TypeOf<typeof deleteQuizSchema>;
 
 export type GetQuizzesSchema = z.TypeOf<typeof getQuizzesSchema>;
+
+export type UpdateQuizSchema = z.TypeOf<typeof updateQuizSchema>;

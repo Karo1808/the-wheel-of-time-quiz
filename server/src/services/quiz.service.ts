@@ -3,6 +3,7 @@ import QuizModel, { QuizDocument, QuizInput } from "../models/quiz.model";
 import TagModel from "../models/tag.model";
 import log from "../utils/logger";
 import { shuffleArray } from "../utils/randomize";
+import { UpdateQuizSchema } from "schemas/quiz.schema";
 
 export async function createQuiz(
   quiz: QuizInput
@@ -174,6 +175,34 @@ export async function getQuiz({
   } catch (error: any) {
     log.error(`Error fetching quiz: ${error.message}`);
     throw new Error("Error fetching quiz");
+  }
+}
+
+export async function updateQuiz({
+  quizId,
+  body,
+}: {
+  quizId: string;
+  body: UpdateQuizSchema;
+}) {
+  try {
+    const updatedQuiz = await QuizModel.findByIdAndUpdate(quizId, body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedQuiz) {
+      return;
+    }
+
+    return {
+      quizId: updatedQuiz._id,
+      quizName: updatedQuiz.quizName,
+      ok: true,
+    };
+  } catch (error: any) {
+    log.error(`Error updating quiz: ${error.message}`);
+    throw new Error("Error updating quiz");
   }
 }
 

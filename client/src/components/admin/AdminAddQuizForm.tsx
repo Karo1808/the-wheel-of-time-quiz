@@ -33,7 +33,7 @@ const AdminQuizForm = ({
     setQuestions,
   } = useCreateQuizStore(useShallow((state) => state));
 
-  const { formState, control, register } = useFormContext<CreateQuizSchema>();
+  const { formState, control } = useFormContext<CreateQuizSchema>();
   const defaultTags = useCreateQuizStore(useShallow((state) => state.tags));
   const defaultBook = useCreateQuizStore(useShallow((state) => state.book));
   const defaultQuestions = useCreateQuizStore(
@@ -48,8 +48,8 @@ const AdminQuizForm = ({
   );
 
   const defaultQueryBook = useMemo(
-    () => defaultValues?.books?.[0],
-    [defaultValues?.books]
+    () => defaultValues.book,
+    [defaultValues?.book]
   );
 
   const defaultQueryQuestions = useMemo(
@@ -107,33 +107,70 @@ const AdminQuizForm = ({
   return (
     <form className={styles.form} onSubmit={onSubmit} {...props}>
       <section className={styles.left}>
-        <Input<CreateQuizSchema>
-          label="Quiz Name"
+        <Controller
           name="quizName"
-          width="100%"
-          register={register}
-          onChange={variant === "add" ? handleInputQuizName : undefined}
-          type="text"
-          errors={formState.errors.quizName}
-          required
+          control={control}
+          defaultValue={defaultValues?.quizName}
+          rules={{ required: true }}
+          render={({ field: { onChange } }) => (
+            <Input<CreateQuizSchema>
+              label="Quiz Name"
+              name="quizName"
+              onChange={(quizName) => {
+                variant === "add" ? handleInputQuizName(quizName) : undefined;
+                onChange(quizName);
+              }}
+              width="100%"
+              type="text"
+              errors={formState.errors.quizName}
+              required
+              defaultValue={defaultValues?.quizName}
+            />
+          )}
         />
-        <TextArea<CreateQuizSchema>
-          rows={6}
-          label="Description"
-          width="100%"
-          onChange={variant === "add" ? handleInputQuizDescription : undefined}
+        <Controller
           name="quizDescription"
-          register={register}
+          control={control}
+          defaultValue={defaultValues?.quizDescription}
+          rules={{ required: false }}
+          render={({ field: { onChange } }) => (
+            <TextArea<CreateQuizSchema>
+              rows={6}
+              label="Description"
+              width="100%"
+              onChange={(quizDescription) => {
+                variant === "add"
+                  ? handleInputQuizDescription(quizDescription)
+                  : undefined;
+                onChange(quizDescription);
+              }}
+              name="quizDescription"
+              defaultValue={defaultValues?.quizDescription}
+            />
+          )}
         />
-        <Input<CreateQuizSchema>
-          type="number"
-          label="Maximum Time (seconds)"
+        <Controller
           name="maximumTime"
-          width="100%"
-          onChange={variant === "add" ? handleInputMaximumTime : undefined}
-          register={register}
-          errors={formState.errors.maximumTime}
-          required
+          control={control}
+          defaultValue={defaultValues?.maximumTime}
+          rules={{ required: true }}
+          render={({ field: { onChange } }) => (
+            <Input<CreateQuizSchema>
+              type="number"
+              label="Maximum Time (seconds)"
+              name="maximumTime"
+              width="100%"
+              onChange={(maximumTime) => {
+                variant === "add"
+                  ? handleInputMaximumTime(maximumTime)
+                  : undefined;
+                onChange(maximumTime);
+              }}
+              errors={formState.errors.maximumTime}
+              required
+              defaultValue={defaultValues?.maximumTime}
+            />
+          )}
         />
         <Controller
           name="tags"

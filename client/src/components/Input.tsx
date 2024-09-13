@@ -2,6 +2,7 @@ import {
   FieldErrors,
   FieldValues,
   Path,
+  useFormContext,
   UseFormRegister,
 } from "react-hook-form";
 import styles from "../styles/input.module.css";
@@ -12,9 +13,7 @@ interface Props<T extends FieldValues>
   label: string;
   name: Path<T>;
   width?: string;
-  register?: UseFormRegister<T>;
   errors?: FieldErrors[keyof FieldValues];
-  required?: boolean;
   cta?: React.ReactNode;
 }
 
@@ -22,9 +21,7 @@ const Input = <T extends FieldValues>({
   label,
   name,
   width,
-  register,
   errors,
-  required,
   cta,
   ...props
 }: Props<T>) => {
@@ -42,12 +39,10 @@ const Input = <T extends FieldValues>({
       <div className={styles.input_wrapper}>
         <input
           className={styles.input}
-          defaultValue={props.defaultValue?.toString()}
-          {...props}
           style={{ width: width }}
-          {...(register &&
-            register(name, { required, onChange: handleChange }))}
+          defaultValue={props.defaultValue?.toString()}
           onChange={handleChange}
+          {...props}
         />
         {cta}
       </div>

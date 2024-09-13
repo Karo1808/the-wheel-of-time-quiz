@@ -5,6 +5,7 @@ import {
   getQuestionsRandomHandler,
   getQuizHandler,
   getQuizzesHandler,
+  updateQuizHandler,
   verifyAnswerHandler,
 } from "./controllers/quiz.controller";
 import { Express, NextFunction, Request, Response } from "express";
@@ -15,6 +16,7 @@ import {
   getQuestionsSchema,
   getQuizSchema,
   getQuizzesSchema,
+  updateQuizSchema,
   verifyAnswerSchema,
 } from "./schemas/quiz.schema";
 import validateRequest from "./middlewares/validateRequest";
@@ -39,6 +41,12 @@ function routes(app: Express) {
   app.get("/api/quiz/:quizId", validateRequest(getQuizSchema), getQuizHandler);
 
   app.post("/api/quiz", validateRequest(createQuizSchema), createQuizHandler);
+
+  app.patch(
+    "/api/quiz/:quizId",
+    validateRequest(updateQuizSchema),
+    updateQuizHandler
+  );
 
   app.delete(
     "/api/quiz/:quizId",

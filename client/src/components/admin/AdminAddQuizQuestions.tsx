@@ -87,7 +87,7 @@ const AdminAddQuizQuestions = ({
     append(newQuestion);
 
     const newWatchQuestions = [...watchQuestions, newQuestion];
-    setValue("questions", newWatchQuestions);
+    // setValue("questions", newWatchQuestions);
     onChange?.(newWatchQuestions);
     setOpenedIndex(newWatchQuestions.length - 1);
   };
